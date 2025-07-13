@@ -1,0 +1,74 @@
+#contact {
+    background-color: var(--light-gray); /* Fondo gris suave */
+}
+
+#contact .form-label {
+    font-weight: 500;
+    color: var(--primary-blue); /* Azul oscuro para labels */
+}
+
+#contact .form-control {
+    border-radius: 12px; /* Bordes más redondeados */
+    padding: 16px 20px; /* Más padding */
+    border: 1px solid var(--medium-gray); /* Borde gris medio */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 1.1rem;
+}
+
+#contact .form-control:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 0.25rem rgba(74, 144, 226, 0.2); /* Sombra de foco azul brillante suave */
+}
+
+#contact .btn-primary {
+    background-color: var(--accent-blue);
+    border-color: var(--accent-blue);
+    border-radius: 50px;
+    padding: 15px 35px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+#contact .btn-primary:hover {
+    background-color: var(--secondary-blue);
+    border-color: var(--secondary-blue);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3);
+}
+
+
+.contact-info {
+    background-color: var(--white-color);
+    border-radius: 20px; /* Más redondeado */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12); /* Sombra más pronunciada */
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    border: 2px solid rgba(10, 61, 98, 0.1); /* Borde azul sutil */
+    padding: 35px; /* Más padding */
+}
+
+.contact-info:hover {
+    transform: translateY(-10px); /* Mayor elevación */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.contact-info i {
+    color: var(--accent-blue); /* Iconos en azul brillante */
+    margin-bottom: 25px; /* Más espacio */
+    font-size: 4rem; /* Iconos más grandes */
+}
+
+.contact-info h5 {
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: var(--primary-blue);
+    margin-bottom: 12px;
+}
+
+.contact-info p {
+    color: var(--dark-text);
+    font-size: 1.05rem;
+}

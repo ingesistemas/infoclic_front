@@ -1,0 +1,242 @@
+/* Variables CSS - ¡Azul Protagonista! */
+:root {
+    --primary-blue: #00487b;    /* Azul Oscuro Principal (casi navy, muy profesional) */
+    --secondary-blue: #71aad6;  /* Azul Medio para acentos y hovers */
+    --accent-blue: #00428e;     /* Azul Brillante para elementos interactivos y destacados */
+    --light-gray: #F0F2F5;      /* Gris Muy Suave para fondos de sección */
+    --medium-gray: #CFD8DC;     /* Gris Medio para bordes sutiles o texto secundario */
+    --dark-text: #263238;       /* Gris Oscuro para texto principal */
+    --light-text: #ECEFF1;      /* Gris Muy Claro para texto sobre fondos oscuros */
+    --white-color: #FFFFFF;     /* Blanco puro */
+    --azul-propio: rgb(1, 146, 194);
+    --azul-active:rgb(0, 56, 119);
+
+    --font-family-sans-serif: 'Poppins', sans-serif;
+}
+
+body {
+    font-family: var(--font-family-sans-serif);
+    line-height: 1.6;
+    color: var(--dark-text); /* Color de texto principal */
+    overflow-x: hidden; /* Evitar scroll horizontal por animaciones */
+    background-color: var(--light-gray); /* Fondo general muy suave */
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--light-gray);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-blue); /* Azul brillante para el scrollbar */
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-blue);
+}
+
+
+
+/* Global Section Styling */
+section {
+    padding: 100px 0; /* Más padding vertical */
+    position: relative;
+    overflow: hidden;
+}
+
+section h2 {
+    font-size: 3.5rem; /* Títulos de sección más grandes */
+    font-weight: 700;
+    position: relative;
+    margin-bottom: 4rem; /* Más espacio */
+    color: var(--primary-blue); /* Color de texto azul oscuro para títulos */
+}
+
+section h2::after {
+    content: '';
+    display: block;
+    width: 100px; /* Línea más larga */
+    height: 6px; /* Línea más gruesa */
+    background: var(--accent-blue); /* Línea en azul brillante */
+    margin: 20px auto 0;
+    border-radius: 3px;
+}
+
+
+
+.geometric-figure {
+    background-color: var(--white-color);
+    border-radius: 20px; /* Bordes suaves */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); /* Sombra profunda */
+    padding: 40px; /* Buen padding interno */
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    border: 2px solid rgba(10, 61, 98, 0.1); /* Borde sutil del azul primario */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.geometric-figure:hover {
+    transform: translateY(-15px); /* Efecto de elevación al hover */
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25); /* Sombra más intensa al hover */
+}
+
+.geometric-figure h3 {
+    color: var(--primary-blue); /* Azul principal para los títulos */
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.geometric-figure p {
+    color: var(--dark-text);
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+/* Formas Geométricas Específicas */
+.figure-circle {
+    /* Aquí podrías añadir un fondo de imagen circular o un ::before para la forma */
+    /* Para un círculo visual solo en el fondo o borde, se necesitaría un enfoque más complejo con SVG o pseudo-elementos avanzados */
+    /* Por ahora, es una tarjeta con estilo que sugiere una forma por el ícono central */
+}
+
+.figure-square {
+    /* Por defecto, es una tarjeta cuadrada. */
+}
+
+.figure-triangle {
+    /* Similar al círculo, la forma geométrica se "sugiere" con el contenido y un diseño limpio */
+}
+
+
+
+
+/* Media Queries para Responsividad */
+@media (max-width: 992px) {
+    .navbar-dark .navbar-nav .nav-link {
+        padding: 0.5rem 1rem;
+        text-align: center;
+    }
+
+    .banner-content h1 {
+        font-size: 2.8rem;
+    }
+
+    .banner-content p {
+        font-size: 1.3rem;
+    }
+
+    section {
+        padding: 80px 0;
+    }
+
+    section h2 {
+        font-size: 3rem;
+    }
+    .service-card, .team-member, .contact-info, .geometric-figure { /* Incluir figuras geométricas */
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .banner-content h1 {
+        font-size: 2.2rem;
+    }
+
+    .banner-content p {
+        font-size: 1.1rem;
+    }
+
+    .banner-content .btn {
+        padding: 12px 30px;
+        font-size: 1.1rem;
+    }
+
+    section {
+        padding: 60px 0;
+    }
+
+    section h2 {
+        font-size: 2.5rem;
+    }
+
+    .swiper {
+        height: 70vh; /* Ajuste para tablets */
+    }
+
+    .service-img {
+        height: 200px;
+    }
+    .service-content {
+        padding: 25px;
+    }
+    .service-content h3 {
+        font-size: 1.6rem;
+    }
+    .team-member img {
+        width: 150px;
+        height: 150px;
+    }
+    .team-member h5 {
+        font-size: 1.4rem;
+    }
+    .contact-info i {
+        font-size: 3.5rem;
+    }
+    .geometric-figure i {
+        font-size: 3.5rem;
+    }
+    .geometric-figure h3 {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 1.5rem !important;
+    }
+
+    .banner-content {
+        padding: 20px;
+    }
+
+    .banner-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .banner-content p {
+        font-size: 0.9rem;
+    }
+
+    .swiper-button-next, .swiper-button-prev {
+        display: none;
+    }
+
+    section h2 {
+        font-size: 2rem;
+    }
+    .service-content h3 {
+        font-size: 1.4rem;
+    }
+    .team-member h5 {
+        font-size: 1.3rem;
+    }
+    .contact-info i {
+        font-size: 2.8rem;
+    }
+    .geometric-figure i {
+        font-size: 2.8rem;
+    }
+    .geometric-figure h3 {
+        font-size: 1.4rem;
+    }
+}/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

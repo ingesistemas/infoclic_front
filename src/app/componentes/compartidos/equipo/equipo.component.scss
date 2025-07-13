@@ -1,0 +1,57 @@
+#team {
+    background-color: var(--white-color); /* Fondo blanco */
+}
+
+.team-member {
+    border: none;
+    border-radius: 25px; /* Más redondeado */
+    background-color: var(--light-gray); /* Fondo gris suave para cada tarjeta de miembro */
+    padding: 35px; /* Más padding */
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1); /* Sombra más visible y profesional */
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.team-member:hover {
+    transform: translateY(-15px); /* Mayor elevación */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+.team-member img {
+    width: 180px; /* Imagen más grande */
+    height: 180px;
+    object-fit: cover;
+    margin-bottom: 25px;
+    border: 7px solid var(--secondary-blue); /* Borde azul medio más grueso */
+    box-shadow: 0 0 0 7px rgba(30, 96, 145, 0.3); /* Borde exterior azul con transparencia */
+    transition: border-color 0.4s ease, transform 0.4s ease;
+}
+
+.team-member:hover img {
+    border-color: var(--accent-blue); /* Azul brillante al hover */
+    transform: scale(1.05); /* Ligero zoom en la imagen */
+}
+
+.team-member h5 {
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--primary-blue);
+    margin-bottom: 10px;
+}
+
+.team-member p {
+    color: var(--dark-text);
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.team-member .social-icons a {
+    color: var(--secondary-blue); /* Iconos de redes sociales en azul medio */
+    transition: color 0.3s ease, transform 0.3s ease;
+    margin: 0 10px;
+    font-size: 1.5rem;
+}
+
+.team-member .social-icons a:hover {
+    color: var(--accent-blue); /* Azul brillante al hover */
+    transform: translateY(-5px);
+}

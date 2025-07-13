@@ -1,0 +1,156 @@
+.contieneFormulario{
+    background-color: rgb(255, 255, 255);
+}
+
+.formulario{
+    margin: 0 auto;
+    border: 1px solid #efefef;
+    border-radius: 10px;
+    background-color: #ffffff;
+
+}
+
+.contieneInput{
+    padding: 15px;
+}
+
+label{
+    color: rgba(6, 112, 174, 0.886);
+    margin-bottom: 0px !important;
+}
+
+.tituloFormulario, .botonera{
+     background-color: #e6eef5;
+    font-weight: bold;
+    font-size: 1.2rem;
+    height: 50px;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+}
+.tituloFormulario{
+    color: #007ab8;
+}
+
+.botonera{
+     border-radius: 0 0 10px 10px;
+     padding: 10px 10px 50px 20px;
+}
+
+input{
+    color: #545454 !important;
+}
+input:focus, select:focus{
+    box-shadow: rgba(80, 128, 165, 0.536) 0px 10px 15px !important;
+    color: #00367c !important;
+    border: 1px solid rgb(27, 116, 205) !important;
+    background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(245, 249, 255), rgb(209, 228, 255), rgb(192, 218, 255), rgb(195, 226, 255));
+
+}
+
+select, option:hover{
+    cursor: pointer;
+    color: #545454 !important;
+}
+
+.btn-cancelar{
+    background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(221, 221, 221), rgb(232, 232, 232), rgb(212, 212, 212));
+    color: #e62300;
+}
+.btn-cancelar:hover{
+    background: rgb(234, 234, 234);
+     background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(199, 199, 199), rgb(243, 243, 243), rgb(254, 254, 254));
+    
+    color: #a80000;
+}
+
+.btn-aceptar, .btn-cancelar{
+    border: 1px solid #ccc;
+}
+
+.btn-aceptar{
+    background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(0, 99, 152), rgb(5, 115, 174), rgb(5, 98, 174), rgb(1, 83, 142));
+    color: #FFF;
+}
+
+.btn-aceptar:hover{
+    color: #ffffff;
+    background: rgb(0, 104, 174) !important;
+}
+
+
+/* Label fotantes*/
+.floating-label-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.floating-label-group input {
+    height: 38px;
+    font-size: 14px;
+    padding: 15px 10px 10px 10px;
+    width: 100%;
+}
+
+.floating-label-group label {
+    position: absolute;
+    pointer-events: none;
+    top: 32%;
+    left: 10px;
+    transform: translateY(-50%);
+    background: white;
+    padding: 0 4px;
+    color: #0067a7;
+    font-size: 14px;
+    transition: 0.2s ease all;
+}
+
+.floating-label-group input:focus + label,
+.floating-label-group input:not(:placeholder-shown) + label {
+    top: 0;
+    font-size: 14px;
+    color: #025a98;
+}
+
+  /* Flotar label cuando hay selección válida o focus */
+.floating-label-group select:focus + label,
+.floating-label-group select:valid + label {
+  top: 0;
+  font-size: 0.75rem;
+  color: #007bff;
+}
+
+.floating-label-group select {
+    cursor: pointer !important;
+    padding: 7px;
+}
+
+.contieneMensaje{
+    margin: 0px auto !important;
+    border-radius: 10px;
+
+}
+
+.mensaje{
+    text-align: justify;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+}
+
+.tituloMensajeError{
+    background-color: #f1f1f1;
+    color: #ff0400;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+    font-size: 20px;
+}
+
+.labelError{
+    color: rgb(174, 1, 1);
+    font-size: .8rem !important;
+    margin-left: 10px;
+}
+
+.contieneLabelError{
+    margin-top: -8px !important;
+    text-align: right;
+}

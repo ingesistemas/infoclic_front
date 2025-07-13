@@ -1,0 +1,58 @@
+/* src/app/vision-mission-section/vision-mission-section.component.scss */
+#vision-mission {
+    background-color: var(--light-gray);
+    padding: 80px 0;
+}
+
+.geometric-figure {
+    background-color: var(--white-color);
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    padding: 40px;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    border: 2px solid rgba(10, 61, 98, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.geometric-figure:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+}
+
+.geometric-figure h3 {
+    color: var(--primary-blue);
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.geometric-figure p {
+    color: var(--dark-text);
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+/* Media Queries específicas */
+@media (max-width: 992px) {
+    .geometric-figure {
+        margin-bottom: 30px;
+    }
+}
+@media (max-width: 768px) {
+    .geometric-figure i {
+        font-size: 3.5rem;
+    }
+    .geometric-figure h3 {
+        font-size: 1.6rem;
+    }
+}
+@media (max-width: 576px) {
+    .geometric-figure i {
+        font-size: 2.8rem;
+    }
+    .geometric-figure h3 {
+        font-size: 1.4rem;
+    }
+}

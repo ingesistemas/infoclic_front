@@ -1,0 +1,32 @@
+.contieneSpiner{
+    background-color: #FFF;
+}
+.contieneSpiner p{
+    color: #01139b;
+}
+/* Media Queries para Responsividad */
+@media (max-width: 5000px) {
+    .contieneMensajeError {
+        width: 30%;
+    }
+ 
+}
+
+@media (max-width: 992px) {
+    .contieneMensajeError {
+        width: 40%;
+    }
+ 
+}
+
+@media (max-width: 768px) {
+    .contieneMensajeError {
+        width: 50% !important;
+    }
+}
+
+@media (max-width: 576px) {
+     .contieneMensajeError {
+        width: 70% !important;
+    }
+}

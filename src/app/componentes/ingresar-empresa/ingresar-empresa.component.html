@@ -1,0 +1,61 @@
+<form class="formulario" autocomplete="off" [formGroup]="formulario">
+    <div class="tituloFormulario">
+        Ingresar
+    </div>
+
+    <div class="contieneInput">
+        <div class="mb-2 floating-label-group">
+            <input type="text" id="usuario" class="form-control form-control-sm" formControlName="usuario" placeholder=" " />
+            <label for="usuario">Usuario</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('usuario')}}&nbsp;</small>
+            </div>
+        </div>
+        <div class="mb-2 floating-label-group">
+            <input type="password" class="form-control form-control-sm" id="password" formControlName="password"  placeholder=" ">
+            <label for="password" class="form-label">Contraseña</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('password')}}&nbsp;</small>
+            </div>
+        </div>
+        <div class="mb-2 floating-label-group">            
+            <input type="text" class="form-control form-control-sm" id="nit" formControlName="nit" placeholder=" " (blur)="obternerSucursales()">
+            <label for="nit" class="form-label">NIT</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('nit')}}&nbsp;</small>
+            </div>
+        </div>
+
+        @if(mostrarSucursales){
+            <div class="mb-2 floating-label-group">
+                <select id="id_sucursal" class="form-select form-select-sm" formControlName="id_sucursal" required>
+                    @for (sucursal of sucursales; track $index) {
+                        <option value="{{ sucursal.id }}">{{ sucursal.sucursal }}</option>
+                        {{ sucursal.sucursal }}
+                    }
+                </select>
+                <label for="id_sucursal" class="form-label">Sucursal</label>
+                <div class="contieneLabelError">
+                    <small class="labelError">{{ retotnaError('id_sucursal')}}&nbsp;</small>
+                </div>
+            </div>
+        }
+        @if(mostrarCargandoSucursales){
+            <div style="text-align: center;" class="alert alert-primary" role="alert">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Cargando sucursales...
+            </div>
+        }    
+    </div>
+
+    <div class="botonera">  
+        <div class="btn-group" role="group" aria-label="Basic example">
+            @if(mostrarSucursales && formulario.valid){
+                <button type="button" class="btn btn-aceptar" (click)="ingresar()" >Ingresar</button>
+            }
+
+            <button type="button" class="btn btn-cancelar" (click)="cerrarModal()">Cancelar</button>
+        </div>
+    </div>
+</form>
+

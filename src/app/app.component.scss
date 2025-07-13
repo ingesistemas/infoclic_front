@@ -1,0 +1,102 @@
+/* src/styles.scss */
+
+/* Variables CSS - ¡Azul Protagonista! */
+:root {
+    --primary-blue: #0A3D62;
+    --secondary-blue: #1E6091;
+    --accent-blue: #4A90E2;
+    --light-gray: #F0F2F5;
+    --medium-gray: #CFD8DC;
+    --dark-text: #263238;
+    --light-text: #ECEFF1;
+    --white-color: #FFFFFF;
+
+    --font-family-sans-serif: 'Poppins', sans-serif;
+}
+
+body {
+    font-family: var(--font-family-sans-serif);
+    line-height: 1.6;
+    color: var(--dark-text);
+    overflow-x: hidden;
+    background-color: var(--light-gray);
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--light-gray);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-blue);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-blue);
+}
+
+/* Global Section Styling (aplicar a cada sección componente) */
+section {
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+section h2 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    position: relative;
+    margin-bottom: 4rem;
+    color: var(--primary-blue);
+    text-align: center; /* Asegúrate de centrarlo si el original lo hace */
+}
+
+section h2::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 6px;
+    background: var(--accent-blue);
+    margin: 20px auto 0;
+    border-radius: 3px;
+}
+
+/* Animaciones AOS (mantener aquí) */
+/* Fade in down */
+[data-aos="fade-down"] {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+[data-aos="fade-down"].aos-animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* ... Repite para fade-up, fade-right, fade-left, zoom-in, etc. ... */
+/* Puedes copiar las animaciones de tu style.css original para AOS */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

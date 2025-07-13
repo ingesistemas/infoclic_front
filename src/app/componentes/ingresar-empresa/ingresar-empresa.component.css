@@ -1,0 +1,27 @@
+/* Media Queries para Responsividad */
+@media (max-width: 5000px) {
+    .formulario {
+        width: 30%;
+    }
+ 
+}
+
+@media (max-width: 992px) {
+    .formulario {
+        width: 40%;
+    }
+ 
+}
+
+@media (max-width: 768px) {
+    .formulario {
+        width: 50% !important;
+    }
+}
+
+@media (max-width: 576px) {
+     .formulario {
+        width: 70% !important;
+    }
+}
+

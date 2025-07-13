@@ -1,0 +1,144 @@
+footer {
+    background-color: var(--primary-blue); /* Fondo azul oscuro principal para el footer */
+    padding: 50px 0; /* Más padding */
+    color: var(--light-text);
+}
+
+footer p {
+    margin-bottom: 15px;
+    color: var(--medium-gray); /* Gris medio para texto del footer */
+}
+
+footer .social-links a {
+    color: var(--light-text); /* Iconos de redes sociales en gris claro */
+    transition: color 0.3s ease, transform 0.3s ease;
+    margin: 0 15px; /* Más espacio entre iconos */
+    font-size: 1.6rem; /* Iconos más grandes */
+}
+
+footer .social-links a:hover {
+    color: var(--accent-blue); /* Azul brillante al hover */
+    transform: translateY(-5px);
+}
+
+
+/* Media Queries para Responsividad */
+@media (max-width: 992px) {
+    .navbar-dark .navbar-nav .nav-link {
+        padding: 0.5rem 1rem;
+        text-align: center;
+    }
+
+    .banner-content h1 {
+        font-size: 2.8rem;
+    }
+
+    .banner-content p {
+        font-size: 1.3rem;
+    }
+
+    section {
+        padding: 80px 0;
+    }
+
+    section h2 {
+        font-size: 3rem;
+    }
+    .service-card, .team-member, .contact-info, .geometric-figure { /* Incluir figuras geométricas */
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .banner-content h1 {
+        font-size: 2.2rem;
+    }
+
+    .banner-content p {
+        font-size: 1.1rem;
+    }
+
+    .banner-content .btn {
+        padding: 12px 30px;
+        font-size: 1.1rem;
+    }
+
+    section {
+        padding: 60px 0;
+    }
+
+    section h2 {
+        font-size: 2.5rem;
+    }
+
+    .swiper {
+        height: 70vh; /* Ajuste para tablets */
+    }
+
+    .service-img {
+        height: 200px;
+    }
+    .service-content {
+        padding: 25px;
+    }
+    .service-content h3 {
+        font-size: 1.6rem;
+    }
+    .team-member img {
+        width: 150px;
+        height: 150px;
+    }
+    .team-member h5 {
+        font-size: 1.4rem;
+    }
+    .contact-info i {
+        font-size: 3.5rem;
+    }
+    .geometric-figure i {
+        font-size: 3.5rem;
+    }
+    .geometric-figure h3 {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 1.5rem !important;
+    }
+
+    .banner-content {
+        padding: 20px;
+    }
+
+    .banner-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .banner-content p {
+        font-size: 0.9rem;
+    }
+
+    .swiper-button-next, .swiper-button-prev {
+        display: none;
+    }
+
+    section h2 {
+        font-size: 2rem;
+    }
+    .service-content h3 {
+        font-size: 1.4rem;
+    }
+    .team-member h5 {
+        font-size: 1.3rem;
+    }
+    .contact-info i {
+        font-size: 2.8rem;
+    }
+    .geometric-figure i {
+        font-size: 2.8rem;
+    }
+    .geometric-figure h3 {
+        font-size: 1.4rem;
+    }
+}

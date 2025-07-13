@@ -1,0 +1,72 @@
+/* src/app/navbar/navbar.component.scss */
+.navbar {
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background-color: var(--primary-blue) !important;
+    padding-top: 1rem; /* Añade un poco de padding para altura inicial */
+    padding-bottom: 1rem;
+}
+
+.navbar-dark .navbar-brand {
+    font-weight: bold;
+    font-size: 1.8rem;
+    color: var(--white-color);
+    color: rgb(0, 225, 255);
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgb(255, 255, 255);
+    font-weight: normal;
+    padding: 0.8rem 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link.active {
+    color: #FFF;
+    background-color: var(--azul-active);
+}
+
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Estilo para la navbar al hacer scroll (añadido via JS) */
+.navbar-scrolled {
+    background-color: rgba(10, 61, 98, 0.98) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    padding-top: 0.7rem; /* Reduce un poco el padding al scrollear */
+    padding-bottom: 0.7rem;
+}
+.navbar-scrolled .navbar-brand,
+.navbar-scrolled .nav-link {
+    color: var(--white-color) !important;
+}
+.navbar-scrolled .nav-link.active {
+    color: #FFF !important;
+     background-color: var(--azul-active);
+}
+
+/* Media Queries específicas si no están en global styles */
+@media (max-width: 992px) {
+    .navbar-dark .navbar-nav .nav-link {
+        padding: 0.5rem 1rem;
+        text-align: center;
+    }
+}
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 1.5rem !important;
+    }
+}
+
+/* Mostrar dropdown al hacer hover */
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+  margin-top: 0; /* evita salto */
+ 
+}
+
+.nav-item ul li a:hover{
+ background-color: rgb(230, 230, 230);
+}

@@ -1,0 +1,24 @@
+#about {
+    background-color: var(--white-color); /* Fondo blanco para esta sección */
+}
+
+#about img {
+    border-radius: 25px; /* Más redondeado */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
+    transition: transform 0.5s ease;
+    border: 3px solid var(--medium-gray); /* Borde gris suave */
+}
+
+#about img:hover {
+    transform: scale(1.03); /* Ligero zoom al hover */
+}
+
+#about p {
+    font-size: 1.2rem; /* Texto más grande */
+    line-height: 1.8;
+    color: var(--dark-text);
+}
+
+#about strong {
+    color: var(--primary-blue);
+}
