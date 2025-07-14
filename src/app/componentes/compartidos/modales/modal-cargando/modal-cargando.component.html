@@ -1,0 +1,7 @@
+<div class="custom-modal" [class.show]="mostrarModal" data-aos="zoom-in" >
+  <div class="modal-content">
+    <ng-container *ngIf="componente">
+      <ng-container *ngComponentOutlet="componente"></ng-container>
+    </ng-container>
+  </div>
+</div>

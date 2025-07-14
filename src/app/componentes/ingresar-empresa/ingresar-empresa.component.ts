@@ -6,9 +6,10 @@ import { PeticionService } from '../../servicios/peticion.service';
 import { ISucursales } from '../../interfaces/ISucursales';
 import { ErrorComponent } from '../compartidos/mensajes/error/error.component';
 import { MensajesService } from '../../servicios/mensajes.service';
-import { CargandoComponent } from '../compartidos/cargando/cargando.component';
 import { SonidoErrorService } from '../../servicios/sonido-error.service';
 import { RetornarErroresService } from '../../servicios/retornar-errores.service';
+import { AutenticaService } from '../../servicios/autentica.service';
+import { CargandoComponent } from '../compartidos/cargando/cargando.component';
 
 
 @Component({
@@ -32,12 +33,14 @@ export class IngresarEmpresaComponent implements OnInit {
   private router = inject(Router)
   private peticionsServicios = inject(PeticionService)
   private retornaErroresService = inject(RetornarErroresService)
+  private autenticaServicio = inject(AutenticaService)
+ 
 
   formulario = this.fb.group({
     id : [0],
-    usuario: ['' , [Validators.required, Validators.minLength(5)]],
-    password: ['' , [Validators.required, Validators.minLength(5)]],
-    nit: ['' , [Validators.required, Validators.minLength(5)]],
+    usuario: ['sinfhos' , [Validators.required, Validators.minLength(5)]],
+    password: ['123456' , [Validators.required, Validators.minLength(5)]],
+    nit: ['900800800' , [Validators.required, Validators.minLength(5)]],
     id_sucursal: ['', [Validators.required]],
     
   })
@@ -79,7 +82,7 @@ export class IngresarEmpresaComponent implements OnInit {
                 });
               } 
             this.mensajeErrorServicios.actualizarError(this.mensaje, '')
-              this.tamanioForm.actualizar( true, ErrorComponent)
+            this.tamanioForm.actualizar( true, ErrorComponent)
           }else{
            
             if(data.Data.length == 0){
@@ -94,17 +97,23 @@ export class IngresarEmpresaComponent implements OnInit {
               if(url == '/sucursalesUsuarios'){
                 this.mostrarSucursales = true
                 this.sucursales = data.Data
-              }/* else if(url == '/login'){
-                data.Data.forEach((item: any, index: number) => {
-                  this.mensaje = "El usuario no se encuentra activo"
-                  if(item.activo == 0){
-                    alert('activo')
-                  }
-                });
-              } */
+              }
               
             }
-            //this.router.navigateByUrl("/obtener-clientes")
+            if(url == '/login'){
+              
+             this.tamanioForm.actualizarCargando(true, CargandoComponent)
+              console.log(data.Data)
+              this.tamanioForm.actualizar( false, null)
+              this.autenticaServicio.actualizarAplicacionActual('1','Turnity')
+              this.router.navigateByUrl('/turnity')
+                
+              setTimeout(()=>{
+                this.tamanioForm.actualizarCargando(false, null)
+              },2000)
+              
+            }
+
           }
         }else{
           this.mensaje = "Se presentó un error interno, posiblemente problemas de conexiones. Verifica el acceso a internet o comunícate con un asesor de Infoclic."
