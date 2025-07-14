@@ -3,6 +3,7 @@ import { InicioTurnityComponent } from './componentes/aplicaciones/turnity/inici
 import { IngresarEmpresaComponent } from './componentes/ingresar-empresa/ingresar-empresa.component';
 import { InicioInfoclicComponent } from './inicio-infoclic/inicio-infoclic.component';
 import { AuthGuard } from './guards/auth.guard';
+import { configuracionGeneral } from './componentes/configuracion-general/configuracion-general.routes';
 
 export const routes: Routes = [
     {
@@ -10,12 +11,15 @@ export const routes: Routes = [
         component: InicioInfoclicComponent,
     },
     {
-        path: 'turnity',
+    path: 'turnity',
         component: InicioTurnityComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'usuario',
-        component: IngresarEmpresaComponent
+        canActivate: [AuthGuard],
+        children: [
+            {
+                path: 'configuracion-general',
+                children: configuracionGeneral
+            }
+        ]
     }
+
 ];

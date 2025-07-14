@@ -173,3 +173,10 @@ select, option:hover{
     cursor: pointer;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
+
+.contenedor{
+    padding-top: 100px;
+    margin : 0px auto;
+    width: 90%;
+    height: 100vh;
+}
