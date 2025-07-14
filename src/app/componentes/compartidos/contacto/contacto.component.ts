@@ -9,7 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ContactoComponent {
 
-   readonly dialog = inject(MatDialog);
+   //readonly dialog = inject(MatDialog);
 
  /*  abrirModal() {
     this.dialog.open(ModalFormComponent, {

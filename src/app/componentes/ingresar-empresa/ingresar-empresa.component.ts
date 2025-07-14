@@ -102,14 +102,27 @@ export class IngresarEmpresaComponent implements OnInit {
             }
             if(url == '/login'){
               
-             this.tamanioForm.actualizarCargando(true, CargandoComponent)
+              this.tamanioForm.actualizarCargando(true, CargandoComponent)
               console.log(data.Data)
+              console.log(data.token)
+              console.log(data)
+              
+              const usuario = data.Data?.[0];
+              console.log("id usuario: ", usuario.id)
+              console.log("Nombre :", usuario.nombre)
+              console.log("Email : ", usuario.email)
+              let id_sucursal = this.formulario.controls['id_sucursal'].value
+
               this.tamanioForm.actualizar( false, null)
-              this.autenticaServicio.actualizarAplicacionActual('1','Turnity')
-              this.router.navigateByUrl('/turnity')
+              
+              //this.autenticaServicio.actualizarUsuarioActual()
+              
                 
               setTimeout(()=>{
                 this.tamanioForm.actualizarCargando(false, null)
+                this.autenticaServicio.actualizarAplicacionActual('1','Turnity')
+                this.autenticaServicio.actualizarUsuarioActual(usuario.id, usuario.nombre, usuario.email, id_sucursal!, data.token! )
+                this.router.navigateByUrl('/turnity')
               },2000)
               
             }

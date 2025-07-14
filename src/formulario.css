@@ -154,3 +154,22 @@ select, option:hover{
     margin-top: -8px !important;
     text-align: right;
 }
+
+.ul-vertical {
+    list-style-type: none;
+    background-color: #f3f3f3;
+    color: #007cb1;
+    padding-top: 20px;
+    border-radius: 5px;
+}
+
+.li-vertical{
+     padding: 7px 0px 7px 15px
+}
+
+.li-vertical:hover{
+    background-color: #005ea5;
+    color: #FFF;
+    cursor: pointer;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}

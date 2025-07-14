@@ -17,16 +17,14 @@ export class HortizontalTurnityComponent {
   isScrolled = false;
   modalForm = inject(TamanioFormModalService)
   aplicacionActual = this.autenticaServicio.aplicacionActual
+  nombreUsuarioActual = this.autenticaServicio.nombreUsuarioActual
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
     this.isScrolled = window.scrollY > 50; // Agrega la clase 'navbar-scrolled' si el scroll es > 50px
   }
 
-  turnity(){
-    this.modalForm.actualizar( true, IngresarEmpresaComponent)
-  }
-
+  
   cerrarSesion(){
     this.autenticaServicio.actualizarUsuarioActual('','','','','')
     this.autenticaServicio.actualizarAplicacionActual('', '');

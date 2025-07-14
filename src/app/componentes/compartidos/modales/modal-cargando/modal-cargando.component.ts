@@ -10,13 +10,13 @@ import { TamanioFormModalService } from '../../../../servicios/tamanio-form-moda
 })
 export class ModalCargandoComponent {
   mostrarModal: boolean = false
-  componente: any = null;
+  componenteCargando: any = null;
   tamanioForm = inject(TamanioFormModalService)
 
   constructor(){
     effect(() => {
       this.mostrarModal = this.tamanioForm.mostrarModalCargando()
-      this.componente = this.tamanioForm.componenteCargando();
+      this.componenteCargando = this.tamanioForm.componenteCargando();
     });
   }
   ngOnInit(): void {

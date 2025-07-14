@@ -1,7 +1,7 @@
-export interface IRespuesta {
-  Data: [],
+export interface IRespuesta<T = any> {
+  Data: T,
   Message: string,
   Error: boolean,
   Status: number,
-  access_token?: string
+  token?: string
 }

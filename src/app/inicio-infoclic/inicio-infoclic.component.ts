@@ -42,5 +42,10 @@ export class InicioInfoclicComponent {
       duration: 1200, // Duración global para las animaciones
       once: true,     // Si las animaciones deben ejecutarse solo una vez
     });
+
+     history.pushState(null, '', location.href);
+  window.onpopstate = () => {
+   
+  };
   }
 }

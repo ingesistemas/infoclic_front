@@ -1,10 +1,9 @@
 import { Component, effect, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { InicioInfoclicComponent } from "./inicio-infoclic/inicio-infoclic.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, InicioInfoclicComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
