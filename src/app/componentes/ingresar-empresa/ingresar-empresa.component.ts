@@ -21,19 +21,22 @@ import { CargandoComponent } from '../compartidos/cargando/cargando.component';
   styleUrl: './ingresar-empresa.component.css'
 })
 export class IngresarEmpresaComponent implements OnInit {
-
-  tamanioForm = inject(TamanioFormModalService)
-  mensajeErrorServicios = inject(MensajesService)
-  sucursales!: any
-  mensaje: string = ""
-  mostrarSucursales: boolean = false
-  mostrarCargandoSucursales: boolean = false
-  sonidoErrorServicio = inject(SonidoErrorService)
   private fb = inject(FormBuilder)
   private router = inject(Router)
   private peticionsServicios = inject(PeticionService)
   private retornaErroresService = inject(RetornarErroresService)
   private autenticaServicio = inject(AutenticaService)
+  private tamanioForm = inject(TamanioFormModalService)
+  private mensajeErrorServicios = inject(MensajesService)
+  
+  sucursales!: any
+  mensaje: string = ""
+  mostrarSucursales: boolean = false
+  mostrarCargandoSucursales: boolean = false
+  sonidoErrorServicio = inject(SonidoErrorService)
+  idAplicacion = this.autenticaServicio.idAplicacionActual()
+  aplicacion: string = ''
+  aplicacionSelect = this.autenticaServicio.aplicacionSelect()
  
 
   formulario = this.fb.group({
@@ -42,7 +45,6 @@ export class IngresarEmpresaComponent implements OnInit {
     password: ['123456' , [Validators.required, Validators.minLength(5)]],
     nit: ['900800800' , [Validators.required, Validators.minLength(5)]],
     id_sucursal: ['', [Validators.required]],
-    
   })
 
   ngOnInit(): void {
@@ -63,6 +65,8 @@ export class IngresarEmpresaComponent implements OnInit {
   }
 
   peticion(url:string){
+    let nit = this.formulario.controls['nit'].value
+    this.autenticaServicio.actualizarUsuarioActual('','','','','',nit!)
     if(url == '/sucursalesUsuarios'){
       this.mostrarCargandoSucursales = true
     }
@@ -101,7 +105,7 @@ export class IngresarEmpresaComponent implements OnInit {
               
             }
             if(url == '/login'){
-              
+              this.autenticaServicio.actualizarAplicacionActual(this.idAplicacion, this.aplicacionSelect, '')
               this.tamanioForm.actualizarCargando(true, CargandoComponent)
               console.log(data.Data)
               console.log(data.token)
@@ -119,9 +123,9 @@ export class IngresarEmpresaComponent implements OnInit {
               
                 
               setTimeout(()=>{
+                let nit = this.formulario.controls['nit'].value
                 this.tamanioForm.actualizarCargando(false, null)
-                this.autenticaServicio.actualizarAplicacionActual('1','Turnity')
-                this.autenticaServicio.actualizarUsuarioActual(usuario.id, usuario.nombre, usuario.email, id_sucursal!, data.token! )
+                this.autenticaServicio.actualizarUsuarioActual(usuario.id, usuario.nombre, usuario.email, id_sucursal!, data.token!, nit! )
                 this.router.navigateByUrl('/turnity')
               },2000)
               

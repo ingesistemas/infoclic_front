@@ -51,7 +51,7 @@
             <ul class="ul-vertical">
               <li class="li-vertical">Módulos de atención</li>
               <li class="li-vertical">Salas de espera</li>
-              <li class="li-vertical" [routerLink]="['/turnity/configuracion-general/sucursales']" routerLinkActive="router-link-active" >Sucursales</li>
+              <li class="li-vertical" [routerLink]="['/turnity/configuracion-general/sucursales']" (click)="cerrarVertical()" routerLinkActive="router-link-active" >Sucursales</li>
               <li class="li-vertical">Operarios</li>
               <li class="li-vertical">Profesiones</li>
               <li class="li-vertical">Especialidades</li>

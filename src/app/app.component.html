@@ -1,2 +1,8 @@
+@if(modalForm.mostrarModalForm()){
+    <app-modal-form></app-modal-form>
+}
 
+@if(modalForm.mostrarModalCargando()){
+    <app-modal-cargando></app-modal-cargando>
+}
 <router-outlet />

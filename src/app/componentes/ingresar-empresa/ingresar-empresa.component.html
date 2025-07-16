@@ -5,21 +5,21 @@
 
     <div class="contieneInput">
         <div class="mb-2 floating-label-group">
-            <input type="text" id="usuario" class="form-control form-control-sm" formControlName="usuario" placeholder=" " />
+            <input type="text" id="usuario" class="form-control form-control-sm miInput" formControlName="usuario" placeholder=" " />
             <label for="usuario">Usuario</label>
             <div class="contieneLabelError">
                 <small class="labelError">{{ retotnaError('usuario')}}&nbsp;</small>
             </div>
         </div>
         <div class="mb-2 floating-label-group">
-            <input type="password" class="form-control form-control-sm" id="password" formControlName="password"  placeholder=" ">
+            <input type="password" class="form-control form-control-sm miInput"  id="password" formControlName="password"  placeholder=" ">
             <label for="password" class="form-label">Contraseña</label>
             <div class="contieneLabelError">
                 <small class="labelError">{{ retotnaError('password')}}&nbsp;</small>
             </div>
         </div>
         <div class="mb-2 floating-label-group">            
-            <input type="text" class="form-control form-control-sm" id="nit" formControlName="nit" placeholder=" " (blur)="obternerSucursales()">
+            <input type="text" class="form-control form-control-sm miInput" id="nit" formControlName="nit" placeholder=" " (blur)="obternerSucursales()">
             <label for="nit" class="form-label">NIT</label>
             <div class="contieneLabelError">
                 <small class="labelError">{{ retotnaError('nit')}}&nbsp;</small>
@@ -28,7 +28,7 @@
 
         @if(mostrarSucursales){
             <div class="mb-2 floating-label-group">
-                <select id="id_sucursal" class="form-select form-select-sm" formControlName="id_sucursal" required>
+                <select id="id_sucursal" class="form-select form-select-sm miInput" formControlName="id_sucursal" required>
                     @for (sucursal of sucursales; track $index) {
                         <option value="{{ sucursal.id }}">{{ sucursal.sucursal }}</option>
                         {{ sucursal.sucursal }}

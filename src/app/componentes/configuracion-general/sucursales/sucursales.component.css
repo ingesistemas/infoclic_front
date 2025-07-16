@@ -1,0 +1,36 @@
+
+.contiene-tabla-scroll{
+    margin: 0 auto;
+    width: 80%;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    overflow-y: scroll;
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 5000px) {
+    .tabla{
+        width: 80%;
+    }
+ 
+}
+
+@media (max-width: 992px) {
+    .tabla{
+        width: 150%;
+    }
+ 
+}
+
+@media (max-width: 768px) {
+     .tabla{
+        width: 180%;
+    }
+}
+
+@media (max-width: 576px) {
+      .tabla{
+        width: 200%;
+    }
+}

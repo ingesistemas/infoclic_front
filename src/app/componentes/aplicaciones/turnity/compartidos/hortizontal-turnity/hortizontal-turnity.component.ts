@@ -3,6 +3,7 @@ import { AutenticaService } from '../../../../../servicios/autentica.service';
 import { TamanioFormModalService } from '../../../../../servicios/tamanio-form-modal.service';
 import { IngresarEmpresaComponent } from '../../../../ingresar-empresa/ingresar-empresa.component';
 import { Router } from '@angular/router';
+import { VerticalService } from '../../../../../servicios/vertical.service';
 
 @Component({
   selector: 'app-hortizontal-turnity',
@@ -13,6 +14,8 @@ import { Router } from '@angular/router';
 export class HortizontalTurnityComponent {
   private autenticaServicio = inject(AutenticaService)
   private router = inject(Router)
+   mostrarVerticalServicio = inject(VerticalService)
+  //mostrarVerticalTurnity = this.mostrarVerticalServicio.mostrarVerticalTurnity()
   
   isScrolled = false;
   modalForm = inject(TamanioFormModalService)
@@ -26,8 +29,14 @@ export class HortizontalTurnityComponent {
 
   
   cerrarSesion(){
-    this.autenticaServicio.actualizarUsuarioActual('','','','','')
-    this.autenticaServicio.actualizarAplicacionActual('', '');
+    this.autenticaServicio.actualizarUsuarioActual('','','','','','')
+    this.autenticaServicio.actualizarAplicacionActual('', '', '');
     this.router.navigate(['/']);
   }
+  
+  abrirVerical(){
+    //this.mostrarVerticalServicio.actualizarVerticalTurnity(true)
+  }
+
+  
 }

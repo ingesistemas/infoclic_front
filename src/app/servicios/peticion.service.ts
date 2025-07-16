@@ -1,13 +1,15 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { IRespuesta } from '../interfaces/IRespuesta';
+import { AutenticaService } from './autentica.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PeticionService {
+  private autenticaServicio = inject(AutenticaService)
   private apiUrl = 'http://127.0.0.1:8000/api'; // Ajusta a tu URL real
   //private apiUrl = 'https://nabuapi.atenea.ai/api/nabu'
 
@@ -15,9 +17,12 @@ export class PeticionService {
 
   // Método para obtener comandos
   peticionPOST(url: string, datos:any){
+    let nitActual = this.autenticaServicio.nitActual()
+    let idAplicacionActual = this.autenticaServicio.idAplicacionActual()
+
     const headers = new HttpHeaders({
-        'X-Empresa-NIT': `${datos.nit}`,
-        'X-Aplicacion-ID': '1'
+        'X-Empresa-NIT': nitActual,
+        'X-Aplicacion-ID': idAplicacionActual, 
       });
     return this.http.post<IRespuesta>(this.apiUrl + url, datos, { headers }).pipe(
       map(response => response), // asumimos que la API devuelve { status, data }
@@ -37,7 +42,8 @@ export class PeticionService {
     )
   }
 
-  peticionPOSTToken(url: string, datos:any, jwtToken: string|null){
+  peticionPOSTToken(url: string, datos:any){
+    let jwtToken = this.autenticaServicio.tokenActual()
     if (!jwtToken) {
       console.error('Token JWT ausente');
       return throwError(() => new Error('No hay token de autenticación.'));
@@ -55,7 +61,8 @@ export class PeticionService {
     }
   }
 
-  peticionGETToken(url: string, jwtToken: string|null){
+  peticionGETToken(url: string){
+    let jwtToken = this.autenticaServicio.tokenActual()
     if (!jwtToken) {
       console.error('Token JWT ausente');
       return throwError(() => new Error('No hay token de autenticación.'));

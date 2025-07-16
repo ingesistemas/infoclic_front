@@ -1,3 +1,6 @@
+@use '@angular/material' as mat;
+
+
 /* Variables CSS - ¡Azul Protagonista! */
 :root {
     --primary-blue: #00487b;    /* Azul Oscuro Principal (casi navy, muy profesional) */
@@ -12,6 +15,17 @@
     --azul-active:rgb(0, 56, 119);
 
     --font-family-sans-serif: 'Poppins', sans-serif;
+
+    @include mat.form-field-overrides((
+        filled-focus-active-indicator-color : rgb(0, 167, 217),
+        filled-container-color: rgb(255, 255, 255),
+        filled-active-indicator-color: rgb(185, 185, 185)
+    ));
+
+    @include mat.menu-overrides((
+        item-label-text-color: rgb(0, 67, 123),
+        item-icon-color: rgb(2, 110, 134),
+    ));
 }
 
 body {
@@ -19,7 +33,9 @@ body {
     line-height: 1.6;
     color: var(--dark-text); /* Color de texto principal */
     overflow-x: hidden; /* Evitar scroll horizontal por animaciones */
-    background-color: var(--light-gray); /* Fondo general muy suave */
+    background-color: #ffffff; /* Fondo general muy suave */
+    overflow-y: scroll;
+    height: 100vh !important;
 }
 
 /* Scrollbar personalizado */
@@ -113,8 +129,6 @@ section h2::after {
 .figure-triangle {
     /* Similar al círculo, la forma geométrica se "sugiere" con el contenido y un diseño limpio */
 }
-
-
 
 
 /* Media Queries para Responsividad */

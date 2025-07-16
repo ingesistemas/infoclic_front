@@ -34,7 +34,9 @@
               "node_modules/swiper/swiper-bundle.min.css",
               "node_modules/aos/dist/aos.css",
               "src/styles.scss",
-              "src/formulario.css"
+              "src/formulario.css",
+              "src/tablas.css"
+              
             ],
             "scripts": [
                 "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",

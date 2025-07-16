@@ -36,10 +36,10 @@ label{
      padding: 10px 10px 50px 20px;
 }
 
-input{
+.miInput{
     color: #545454 !important;
 }
-input:focus, select:focus{
+.miInput:focus, select:focus{
     box-shadow: rgba(80, 128, 165, 0.536) 0px 10px 15px !important;
     color: #00367c !important;
     border: 1px solid rgb(27, 116, 205) !important;
@@ -63,7 +63,7 @@ select, option:hover{
     color: #a80000;
 }
 
-.btn-aceptar, .btn-cancelar{
+.btn-aceptar, .btn-cancelar .btn-nuevo{
     border: 1px solid #ccc;
 }
 
@@ -75,6 +75,16 @@ select, option:hover{
 .btn-aceptar:hover{
     color: #ffffff;
     background: rgb(0, 104, 174) !important;
+}
+
+.btn-nuevo{
+     background: rgb(14, 139, 201) !important;
+    color: #FFF;
+}
+
+.btn-nuevo:hover{
+    color: #ffffff;
+     background: rgb(1, 83, 124) !important;
 }
 
 
@@ -179,4 +189,14 @@ select, option:hover{
     margin : 0px auto;
     width: 90%;
     height: 100vh;
+    background-color: #ffffff;
 }
+
+.contiene-tabla, .contiene-contenido{
+    margin: 0 auto;
+    width: 100% !important;
+    background-color: #ffffff;
+    padding: 60px;
+}
+
+

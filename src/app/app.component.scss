@@ -1,4 +1,4 @@
-/* src/styles.scss */
+
 
 /* Variables CSS - ¡Azul Protagonista! */
 :root {
@@ -13,6 +13,7 @@
 
     --font-family-sans-serif: 'Poppins', sans-serif;
 }
+
 
 body {
     font-family: var(--font-family-sans-serif);
@@ -100,3 +101,4 @@ section h2::after {
         transform: translateY(0);
     }
 }
+

@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TamanioFormModalService } from '../../../../../servicios/tamanio-form-modal.service';
+import { VerticalService } from '../../../../../servicios/vertical.service';
+declare const bootstrap: any;
 
 @Component({
   selector: 'app-vertical-turnity-admin',
@@ -8,5 +11,18 @@ import { RouterLink } from '@angular/router';
   styleUrl: './vertical-turnity-admin.css'
 })
 export class VerticalTurnityAdmin {
+  mostrarModalCargando: boolean = false
+  modalForm = inject(TamanioFormModalService)
+  mostrarVertical = inject(VerticalService)
+  
 
+
+  cerrarVertical(){
+    const offcanvasElement = document.getElementById('offcanvasExample');
+    if (offcanvasElement) {
+      const offcanvasInstance = bootstrap.Offcanvas.getInstance(offcanvasElement)
+        || new bootstrap.Offcanvas(offcanvasElement);
+      offcanvasInstance.hide();
+    }
+  }
 }

@@ -24,6 +24,7 @@ export class MenuHorizontalPrincipalComponent {
   }
 
   turnity(){
+    this.autenticaServicio.actualizarAplicacionActual('1', '', 'Turniy')
     this.modalForm.actualizar( true, IngresarEmpresaComponent)
   }
 
