@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TamanioFormModalService } from '../../../../../servicios/tamanio-form-modal.service';
 import { VerticalService } from '../../../../../servicios/vertical.service';
+import { timeout } from 'rxjs';
 declare const bootstrap: any;
 
 @Component({
@@ -14,7 +15,12 @@ export class VerticalTurnityAdmin {
   mostrarModalCargando: boolean = false
   modalForm = inject(TamanioFormModalService)
   mostrarVertical = inject(VerticalService)
+  private actualizaDatos = inject(TamanioFormModalService)
   
+  actualizarDatos(){
+     this.actualizaDatos.actualizar(false, null)
+     this.cerrarVertical()
+  }
 
 
   cerrarVertical(){

@@ -9,24 +9,22 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { NgClass } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { PeticionService } from '../../../servicios/peticion.service';
-import { AutenticaService } from '../../../servicios/autentica.service';
-import { RetornarErroresService } from '../../../servicios/retornar-errores.service';
-import { TamanioFormModalService } from '../../../servicios/tamanio-form-modal.service';
-import { MensajesService } from '../../../servicios/mensajes.service';
-import { ErrorComponent } from '../../compartidos/mensajes/error/error.component';
-import { CargandoComponent } from '../../compartidos/cargando/cargando.component';
+
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import {MatMenuModule} from '@angular/material/menu';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-
+import { PeticionService } from '../../../../servicios/peticion.service';
+import { AutenticaService } from '../../../../servicios/autentica.service';
+import { RetornarErroresService } from '../../../../servicios/retornar-errores.service';
+import { TamanioFormModalService } from '../../../../servicios/tamanio-form-modal.service';
+import { MensajesService } from '../../../../servicios/mensajes.service';
+import { CargandoComponent } from '../../../compartidos/cargando/cargando.component';
+import { ErrorComponent } from '../../../compartidos/mensajes/error/error.component';
 
 @Component({
-  encapsulation: ViewEncapsulation.None,
-  selector: 'app-sucursales',
-  standalone: true,
+  selector: 'app-obtener-pisos',
   imports: [
     NgClass,
     MatButtonModule,
@@ -42,11 +40,12 @@ import { ToastModule } from 'primeng/toast';
     MatMenuModule,
     ToastModule
   ],
-  templateUrl: './sucursales.component.html',
-  styleUrl: './sucursales.component.css',
+  templateUrl: './obtener-pisos.component.html',
+  styleUrl: './obtener-pisos.component.css',
   providers: [MessageService],
 })
-export class SucursalesComponent implements OnInit {
+export class ObtenerPisosComponent {
+
   private fb = inject(FormBuilder)
   private peticionsServicios = inject(PeticionService)
   private autenticaServicio = inject(AutenticaService)
@@ -59,10 +58,10 @@ export class SucursalesComponent implements OnInit {
   constructor(private messageService: MessageService) {
     this.dataSource = new MatTableDataSource();
   }
- 
-  displayedColumns: string[] = ['opciones', 'id', 'sucursal', 'direccion', 'tels', 'email', 'creado'];
+  
+  displayedColumns: string[] = ['opciones', 'id', 'piso', 'creado'];
   dataSource: MatTableDataSource<any>;
-  sucursales: any[] = []
+  pisos: any[] = []
   mensaje: string = ''
   mensajeToast: string = ''
 
@@ -78,7 +77,7 @@ export class SucursalesComponent implements OnInit {
 
   ngOnInit(): void {
     this.tamanioForm.actualizarCargando(false, CargandoComponent)
-    this.peticion('/obtener-sucursales')
+    this.peticion('/obtener-pisos')
     //console.log(localStorage.getItem('ciudades'))
   }
 
@@ -93,7 +92,7 @@ export class SucursalesComponent implements OnInit {
 
   nuevo(){
     this.tamanioForm.actualizar(false, null, 'Crear')
-    this.router.navigateByUrl('/turnity/configuracion-general/crear-sucursal')
+    this.router.navigateByUrl('/turnity/configuracion-general/crear-piso')
   }
 
   mostrarToast() {
@@ -102,7 +101,7 @@ export class SucursalesComponent implements OnInit {
 
   editar(objeto: any){
     this.tamanioForm.actualizar(false, null, 'Editar')
-    this.router.navigate(['//turnity/configuracion-general/crear-sucursal'], {
+    this.router.navigate(['//turnity/configuracion-general/crear-piso'], {
       state: { datos: objeto }
     });
   }
@@ -110,7 +109,7 @@ export class SucursalesComponent implements OnInit {
   estado(objeto:any){
     this.formulario.controls['id'].setValue(objeto.id)
     this.formulario.controls['activo'].setValue(objeto.activo)
-    this.peticion('/activo-sucursal')
+    this.peticion('/activo-piso')
   }
 
   peticion(url:string){   
@@ -140,30 +139,30 @@ export class SucursalesComponent implements OnInit {
               this.tamanioForm.actualizar( true, ErrorComponent)
               
             }else{      
-              if(url == '/obtener-sucursales'){
-                this.sucursales = data.Data.map((s:any) => ({
+              if(url == '/obtener-pisos'){
+                this.pisos = data.Data.map((s:any) => ({
                   ...s,
                   created_at: new Date(s.created_at)
                 }));
-                this.dataSource.data = this.sucursales
+                this.dataSource.data = this.pisos
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
                 
-              }else if(url == '/activo-sucursal'){
+              }else if(url == '/activo-piso'){
                 let id = this.formulario.controls['id'].value;
                 let activo = Number(this.formulario.controls['activo'].value);
                 this.mensaje = data.Message
                 // Aseguramos que this.sucursales es un array (solo si por error fue reasignado a objeto)
-                if (!Array.isArray(this.sucursales)) {
-                  this.sucursales = Object.values(this.sucursales);
+                if (!Array.isArray(this.pisos)) {
+                  this.pisos = Object.values(this.pisos);
                 }
 
-                const index = this.sucursales.findIndex(s => s.id == id);
+                const index = this.pisos.findIndex(s => s.id == id);
                 if (index !== -1) {
-                  this.sucursales[index].activo = activo === 1 ? 0 : 1;
+                  this.pisos[index].activo = activo === 1 ? 0 : 1;
 
                   // Actualizar la tabla con nueva referencia
-                  this.dataSource.data = [...this.sucursales];
+                  this.dataSource.data = [...this.pisos];
                   this.mostrarToast()
                 }
               }
@@ -176,7 +175,7 @@ export class SucursalesComponent implements OnInit {
         }
       },
       error: (err) => {
-        this.mensaje = "Error inesperado al obtener sucursales.";
+        this.mensaje = "Error inesperado al obtener pisos.";
         this.mensajeErrorServicios.actualizarError(this.mensaje, '');
         this.tamanioForm.actualizar(false, ErrorComponent);
       },
@@ -192,5 +191,4 @@ export class SucursalesComponent implements OnInit {
     })
 
   }
-
 }

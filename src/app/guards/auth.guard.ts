@@ -11,12 +11,12 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   private autenticaServicio= inject(AutenticaService)
 
   canActivate(): boolean {
-    const token = this.autenticaServicio.tokenActual() 
+    /* const token = this.autenticaServicio.tokenActual() 
 
     if (!token || token === '') {
       this.router.navigate(['/']);
       return false;
-    }
+    } */
     return true;
   }
 

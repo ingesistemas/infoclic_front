@@ -17,14 +17,18 @@ export class InicioTurnityComponent implements AfterViewInit {
   
   
   private cdr = inject(ChangeDetectorRef)
-  private tamanioForm = inject(TamanioFormModalService)
   mostrarVerticalServicio = inject(VerticalService)
   mostrarModalForm: boolean = false
   mostrarModalCargando: boolean = false
   ngOnInit(): void {
     history.pushState(null, '', location.href);
     window.onpopstate = () => {
-   
+      let confirma = confirm('Has dado clic hacia atrás. Por temas de seguridad las aplicaciones dde Infoclic, no permiten esta acción. Si confirmas esta acción se cerrará la sesión automáticamente dirigiéndolo a la página inicial.')
+
+      if (confirma){
+        window.location.href = '';
+      }
+       
     };
   }
 

@@ -1,9 +1,4 @@
-.tabla-scroll {
-  max-height: 500px; /* Ajusta según tu diseño */
-  overflow: hidden;  /* oculta desbordes */
-  display: flex;
-  flex-direction: column;
-}
+
 
 .tabla{
   overflow-y: auto;

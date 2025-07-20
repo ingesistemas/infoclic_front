@@ -23,7 +23,8 @@
 
 /* Tabla con ancho extendido para provocar scroll */
 .contiene-tabla-scroll {
-  width: 150%;
+    margin: 0 auto;
+    width: 80%;
 }
 
 /* No aplicar scroll a búsqueda ni paginación */
@@ -35,7 +36,7 @@
 /* Responsividad */
 @media (max-width: 992px) {
   .contiene-tabla-scroll {
-    width: 180%;
+    width: 80%;
   }
 }
 

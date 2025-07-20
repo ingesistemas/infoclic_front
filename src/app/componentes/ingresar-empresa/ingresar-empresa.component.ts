@@ -44,11 +44,13 @@ export class IngresarEmpresaComponent implements OnInit {
     usuario: ['sinfhos' , [Validators.required, Validators.minLength(5)]],
     password: ['123456' , [Validators.required, Validators.minLength(5)]],
     nit: ['900800800' , [Validators.required, Validators.minLength(5)]],
-    id_sucursal: ['', [Validators.required]],
+    id_sucursal: [0, [Validators.required]],
   })
 
   ngOnInit(): void {
-    
+    if(!localStorage.getItem('ciudades')){
+      this.obtenerCiudades()
+    }
   }
 
   cerrarModal(){
@@ -58,6 +60,15 @@ export class IngresarEmpresaComponent implements OnInit {
   obternerSucursales(){
     this.peticion('/sucursalesUsuarios')
   }
+
+  async obtenerCiudades() {
+    try {
+      await this.peticion('/dptos');
+      await this.peticion('/ciudades');
+    } catch (error) {
+      console.error('Error en la cadena de peticiones:', error);
+    }
+  }
   
 
   ingresar(){
@@ -66,7 +77,7 @@ export class IngresarEmpresaComponent implements OnInit {
 
   peticion(url:string){
     let nit = this.formulario.controls['nit'].value
-    this.autenticaServicio.actualizarUsuarioActual('','','','','',nit!)
+    this.autenticaServicio.actualizarUsuarioActual('','','',0,'',nit!)
     if(url == '/sucursalesUsuarios'){
       this.mostrarCargandoSucursales = true
     }
@@ -119,18 +130,20 @@ export class IngresarEmpresaComponent implements OnInit {
 
               this.tamanioForm.actualizar( false, null)
               
-              //this.autenticaServicio.actualizarUsuarioActual()
-              
-                
               setTimeout(()=>{
                 let nit = this.formulario.controls['nit'].value
                 this.tamanioForm.actualizarCargando(false, null)
                 this.autenticaServicio.actualizarUsuarioActual(usuario.id, usuario.nombre, usuario.email, id_sucursal!, data.token!, nit! )
                 this.router.navigateByUrl('/turnity')
               },2000)
-              
             }
-
+            if(url == '/dptos'){
+              localStorage.setItem('dptos', JSON.stringify(data.Data))
+            }
+            if(url == '/ciudades'){
+              console.log(data.Data)
+              localStorage.setItem('ciudades', JSON.stringify(data.Data))
+            }
           }
         }else{
           this.mensaje = "Se presentó un error interno, posiblemente problemas de conexiones. Verifica el acceso a internet o comunícate con un asesor de Infoclic."

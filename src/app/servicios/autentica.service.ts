@@ -12,12 +12,12 @@ export class AutenticaService {
   private _nombreUsuarioActual = signal<string>('')
   private _idUsuarioActual = signal<string>('')
   private _emailUsuarioActual = signal<string>('')
-  private _idSucursalActual = signal<string>('')
+  private _idSucursalActual = signal<number>(0)
   private _rolesUsuarioActual = signal<any>([])
   private _token = signal<string>('')
   private _aplicacionSelect = signal<string>('')
 
-  actualizarUsuarioActual(id:string,  nombre:string, email:string, idSucursal:string, token:string, nit:string){
+  actualizarUsuarioActual(id:string,  nombre:string, email:string, idSucursal:number, token:string, nit:string){
     this._nombreUsuarioActual.set(nombre)
     this._idUsuarioActual.set(id)
     this._emailUsuarioActual.set(email)

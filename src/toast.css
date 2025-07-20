@@ -1,0 +1,40 @@
+/* Cambiar el fondo y el borde de todos los toasts */
+.p-toast .p-toast-message {
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  border: 1px solid;
+  width: 400px;
+}
+
+/* Toast de tipo error */
+.p-toast-message-error {
+  background-color: #f44336 !important;
+  color: white !important;
+}
+
+/* Toast de tipo success */
+.p-toast-message-success {
+  background-color: #c0eaf3 !important;
+  color: rgb(0, 126, 205) !important;
+  width: auto;
+}
+
+/* Personalizar el título y mensaje */
+.p-toast-summary {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.p-toast-detail {
+  font-size: 0.95rem;
+}
+
+.p-toast {
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-30%, -30%) !important;
+  margin: 0 !important;
+  position: fixed !important;
+  z-index: 9999;
+}

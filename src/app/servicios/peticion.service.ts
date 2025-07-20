@@ -27,7 +27,8 @@ export class PeticionService {
     return this.http.post<IRespuesta>(this.apiUrl + url, datos, { headers }).pipe(
       map(response => response), // asumimos que la API devuelve { status, data }
       catchError(error => {
-        return throwError(() => new Error('No se pudieron cargar los datos.', error));
+        const mensaje = error.error?.message || error.message || 'No se pudieron cargar los datos.';
+        return throwError(() => new Error(mensaje));
       })
     );
   }

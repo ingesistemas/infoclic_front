@@ -1,0 +1,81 @@
+<form class="formulario" autocomplete="off" [formGroup]="formulario">
+    <div class="tituloFormulario">
+        Crear sucursal
+    </div>
+
+    <div class="contieneInputRow row">
+        <div class="mb-2 floating-label-group col-md-8">
+            <input type="text" id="sucursal" class="form-control form-control-sm miInput" formControlName="sucursal" placeholder=" " />
+            <label  class="form-label" for="sucursal">Nombre sucursal</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('sucursal')}}&nbsp;</small>
+            </div>
+        </div>
+        <div class="mb-2 floating-label-group col-md-4">
+            <input type="text" class="form-control form-control-sm miInput"  id="tels" formControlName="tels"  placeholder=" ">
+            <label for="tels" class="form-label">Teléfonos</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('tels')}}&nbsp;</small>
+            </div>
+        </div>
+        <div class="mb-2 floating-label-group col-md-12">            
+            <input type="text" class="form-control form-control-sm miInput" id="direccion" formControlName="direccion" placeholder=" " >
+            <label for="direccion" class="form-label">Dirección</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('direccion')}}&nbsp;</small>
+            </div>
+        </div>
+        <div class="mb-2 floating-label-group col-md-12">            
+            <input type="text" class="form-control form-control-sm miInput" id="email" formControlName="email" placeholder=" " >
+            <label for="email" class="form-label">Correo electónico</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('email')}}&nbsp;</small>
+            </div>
+        </div>
+        <div class="mb-2 floating-label-group col-md-6">
+            <select id="id_dep" class="form-select form-select-sm miInput" formControlName="id_dep" (blur)="filtrtarCiudades()">
+                @for (dpto of dptos; track $index) {
+                    <option value="{{ dpto.cod_dep }}">{{ dpto.departamento }}</option>
+                }
+            </select>
+            <label for="id_dep" class="form-label">Departamento</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('id_dep')}}&nbsp;</small>
+            </div>
+        </div>
+
+        <div class="mb-2 floating-label-group col-md-6">
+            <select id="id_ciudad" class="form-select form-select-sm miInput" formControlName="id_ciudad" >
+               
+                @for (ciudad of ciudades; track $index) {
+                    <option value="{{ ciudad.id }}">{{ ciudad.ciudad }}</option>
+                }
+            </select>
+            <label for="id_ciudad" class="form-label">Ciudad</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('id_ciudad')}}&nbsp;</small>
+            </div>
+        </div>
+        
+        <!-- @if(mostrarCargandoSucursales){
+            <div style="text-align: center;" class="alert alert-primary" role="alert">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Cargando sucursales...
+            </div>
+        }    
+ -->
+    </div>
+
+    <div class="botonera">  
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-aceptar" (click)="aceptar()" >{{ accion }} sucurssal</button>
+            <button type="button" class="btn btn-cancelar" (click)="cerrar()">Cerrar</button>
+        </div>
+    </div>
+
+     <div class="card flex justify-center" style="border: none;">
+    <p-toast [showTransformOptions]="'translateY(100%)'" [showTransitionOptions]="'1000ms'" [hideTransitionOptions]="'1000ms'" [showTransformOptions]="'translateX(100%)'" />
+      {{ mensajeToast }} 
+    </div>
+
+</form>

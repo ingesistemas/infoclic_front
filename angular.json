@@ -35,8 +35,9 @@
               "node_modules/aos/dist/aos.css",
               "src/styles.scss",
               "src/formulario.css",
-              "src/tablas.css"
-              
+              "node_modules/primeicons/primeicons.css",
+              "src/tablas.css",
+              "src/toast.css"
             ],
             "scripts": [
                 "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",

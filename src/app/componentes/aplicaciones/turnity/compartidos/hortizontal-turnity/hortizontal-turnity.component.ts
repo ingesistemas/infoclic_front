@@ -26,11 +26,11 @@ export class HortizontalTurnityComponent {
   onWindowScroll() {
     this.isScrolled = window.scrollY > 50; // Agrega la clase 'navbar-scrolled' si el scroll es > 50px
   }
-
   
   cerrarSesion(){
-    this.autenticaServicio.actualizarUsuarioActual('','','','','','')
+    this.autenticaServicio.actualizarUsuarioActual('','','',0,'','')
     this.autenticaServicio.actualizarAplicacionActual('', '', '');
+    localStorage.clear()
     this.router.navigate(['/']);
   }
   

@@ -3,15 +3,19 @@
 }
 
 .formulario{
-    margin: 0 auto;
+    margin: 40px auto;
     border: 1px solid #efefef;
     border-radius: 10px;
     background-color: #ffffff;
-
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 .contieneInput{
     padding: 15px;
+}
+
+.contieneInputRow{
+    padding: 25px;
 }
 
 label{
@@ -199,4 +203,7 @@ select, option:hover{
     padding: 60px;
 }
 
+.form-label{
+    margin-left: 5px;
+}
 
