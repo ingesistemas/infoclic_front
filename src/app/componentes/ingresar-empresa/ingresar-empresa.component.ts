@@ -11,7 +11,6 @@ import { RetornarErroresService } from '../../servicios/retornar-errores.service
 import { AutenticaService } from '../../servicios/autentica.service';
 import { CargandoComponent } from '../compartidos/cargando/cargando.component';
 
-
 @Component({
   selector: 'app-ingresar-empresa',
   imports: [
@@ -20,6 +19,7 @@ import { CargandoComponent } from '../compartidos/cargando/cargando.component';
   templateUrl: './ingresar-empresa.component.html',
   styleUrl: './ingresar-empresa.component.css'
 })
+
 export class IngresarEmpresaComponent implements OnInit {
   private fb = inject(FormBuilder)
   private router = inject(Router)
@@ -37,14 +37,15 @@ export class IngresarEmpresaComponent implements OnInit {
   idAplicacion = this.autenticaServicio.idAplicacionActual()
   aplicacion: string = ''
   aplicacionSelect = this.autenticaServicio.aplicacionSelect()
- 
+  modulos: any = []
 
   formulario = this.fb.group({
     id : [0],
     usuario: ['sinfhos' , [Validators.required, Validators.minLength(5)]],
-    password: ['123456' , [Validators.required, Validators.minLength(5)]],
+    password: ['1234567890' , [Validators.required, Validators.minLength(5)]],
     nit: ['900800800' , [Validators.required, Validators.minLength(5)]],
     id_sucursal: [0, [Validators.required]],
+    id_modulo: [0, [Validators.required]],
   })
 
   ngOnInit(): void {
@@ -57,27 +58,39 @@ export class IngresarEmpresaComponent implements OnInit {
     this.tamanioForm.actualizar(false, null)
   }
 
-  obternerSucursales(){
-    this.peticion('/sucursalesUsuarios')
+  editarCredenciales(){
+    this.tamanioForm.actualizar(false, null)
+    this.router.navigate(['/turnity/configuracion-general/editar-credenciales'])
+  }
+
+  async obternerSucursales(){
+    await this.peticion('/sucursalesUsuarios')
+  }
+
+  async obternerModulos(){
+    await this.peticion('/obtener-modulos-sucursal')
   }
 
   async obtenerCiudades() {
     try {
       await this.peticion('/dptos');
       await this.peticion('/ciudades');
+      await this.peticion('/obtener-pisos');
+      await this.peticion('/obtener-prioritarias');
+      await this.peticion('/obtener-casos')
+      
     } catch (error) {
       console.error('Error en la cadena de peticiones:', error);
     }
   }
   
-
   ingresar(){
     this.peticion('/login')
   }
 
   peticion(url:string){
     let nit = this.formulario.controls['nit'].value
-    this.autenticaServicio.actualizarUsuarioActual('','','',0,'',nit!)
+    this.autenticaServicio.actualizarUsuarioActual('','','',0,'',nit!, '', 0)
     if(url == '/sucursalesUsuarios'){
       this.mostrarCargandoSucursales = true
     }
@@ -104,16 +117,19 @@ export class IngresarEmpresaComponent implements OnInit {
               this.mensaje = data.Message
               this.mensajeErrorServicios.actualizarError(this.mensaje, '')
               this.tamanioForm.actualizar( true, ErrorComponent)
+              
+            }else{   
               if(url == '/sucursalesUsuarios'){
                 this.mostrarSucursales = false
               }
-            }else{      
+              if(url == '/obtener-modulos-sucursal'){
+                this.modulos = data.Data
+              }   
               
               if(url == '/sucursalesUsuarios'){
                 this.mostrarSucursales = true
                 this.sucursales = data.Data
               }
-              
             }
             if(url == '/login'){
               this.autenticaServicio.actualizarAplicacionActual(this.idAplicacion, this.aplicacionSelect, '')
@@ -132,8 +148,10 @@ export class IngresarEmpresaComponent implements OnInit {
               
               setTimeout(()=>{
                 let nit = this.formulario.controls['nit'].value
+                let id_modulo = this.formulario.controls['id_modulo'].value
+                
                 this.tamanioForm.actualizarCargando(false, null)
-                this.autenticaServicio.actualizarUsuarioActual(usuario.id, usuario.nombre, usuario.email, id_sucursal!, data.token!, nit! )
+                this.autenticaServicio.actualizarUsuarioActual(usuario.id, usuario.nombre, usuario.email, id_sucursal!, data.token!, nit!, usuario.sucursales[0].sucursal, id_modulo! )
                 this.router.navigateByUrl('/turnity')
               },2000)
             }
@@ -141,8 +159,16 @@ export class IngresarEmpresaComponent implements OnInit {
               localStorage.setItem('dptos', JSON.stringify(data.Data))
             }
             if(url == '/ciudades'){
-              console.log(data.Data)
               localStorage.setItem('ciudades', JSON.stringify(data.Data))
+            }
+            if(url == '/obtener-pisos'){
+               localStorage.setItem('pisos', JSON.stringify(data.Data))
+            }
+            if(url == '/obtener-prioritarias'){
+               localStorage.setItem('prioritarias', JSON.stringify(data.Data))
+            }
+            if(url == '/obtener-casos'){
+              localStorage.setItem('casos', JSON.stringify(data.Data))
             }
           }
         }else{
@@ -154,7 +180,6 @@ export class IngresarEmpresaComponent implements OnInit {
           this.mostrarCargandoSucursales = false
         }
       },
-      
     })
   }
 

@@ -92,7 +92,7 @@ export class ObtenerPisosComponent {
 
   nuevo(){
     this.tamanioForm.actualizar(false, null, 'Crear')
-    this.router.navigateByUrl('/turnity/configuracion-general/crear-piso')
+    this.router.navigateByUrl('/infoclic/configuracion-general/crear-piso')
   }
 
   mostrarToast() {
@@ -101,7 +101,7 @@ export class ObtenerPisosComponent {
 
   editar(objeto: any){
     this.tamanioForm.actualizar(false, null, 'Editar')
-    this.router.navigate(['//turnity/configuracion-general/crear-piso'], {
+    this.router.navigate(['/infoclic/configuracion-general/crear-piso'], {
       state: { datos: objeto }
     });
   }

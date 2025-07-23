@@ -2,12 +2,12 @@ import { Component, effect, HostListener, inject, OnInit } from '@angular/core';
 import { AutenticaService } from '../../../../../servicios/autentica.service';
 import { TamanioFormModalService } from '../../../../../servicios/tamanio-form-modal.service';
 import { IngresarEmpresaComponent } from '../../../../ingresar-empresa/ingresar-empresa.component';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { VerticalService } from '../../../../../servicios/vertical.service';
 
 @Component({
   selector: 'app-hortizontal-turnity',
-  imports: [],
+  imports: [ RouterLink],
   templateUrl: './hortizontal-turnity.component.html',
   styleUrl: './hortizontal-turnity.component.css'
 })
@@ -21,6 +21,8 @@ export class HortizontalTurnityComponent {
   modalForm = inject(TamanioFormModalService)
   aplicacionActual = this.autenticaServicio.aplicacionActual
   nombreUsuarioActual = this.autenticaServicio.nombreUsuarioActual
+  sucursalActual = this.autenticaServicio.sucursalActual
+  modulo = this.autenticaServicio.id_moduloActual
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
@@ -28,7 +30,7 @@ export class HortizontalTurnityComponent {
   }
   
   cerrarSesion(){
-    this.autenticaServicio.actualizarUsuarioActual('','','',0,'','')
+    this.autenticaServicio.actualizarUsuarioActual('','','',0,'','','',0)
     this.autenticaServicio.actualizarAplicacionActual('', '', '');
     localStorage.clear()
     this.router.navigate(['/']);

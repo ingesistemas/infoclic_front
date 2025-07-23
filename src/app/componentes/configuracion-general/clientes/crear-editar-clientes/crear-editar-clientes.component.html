@@ -1,0 +1,29 @@
+<form class="formulario" autocomplete="off" [formGroup]="formulario">
+    <div class="tituloFormulario">
+        Crear centro de atención
+    </div>
+
+    <div class="contieneInputRow row">
+        <div class="mb-2 floating-label-group col-md-12">
+            <input type="text" id="centro" class="form-control form-control-sm miInput" formControlName="centro" placeholder=" " />
+            <label  class="form-label" for="centro">Nombre del centro</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('centro')}}&nbsp;</small>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="botonera">  
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-aceptar" (click)="aceptar()" >{{ accion }} centro</button>
+            <button type="button" class="btn btn-cancelar" (click)="cerrar()">Cerrar</button>
+        </div>
+    </div>
+
+     <div class="card flex justify-center" style="border: none;">
+    <p-toast [showTransformOptions]="'translateY(100%)'" [showTransitionOptions]="'1000ms'" [hideTransitionOptions]="'1000ms'" [showTransformOptions]="'translateX(100%)'" />
+      {{ mensajeToast }} 
+    </div>
+
+</form>

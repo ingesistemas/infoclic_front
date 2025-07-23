@@ -24,12 +24,12 @@
 /* Tabla con ancho extendido para provocar scroll */
 .contiene-tabla-scroll {
     margin: 0 auto;
-    width: 80%;
+    width: 90%;
 }
 
 /* No aplicar scroll a búsqueda ni paginación */
 .header-busqueda, .paginacion {
-  width: 90%;
+  width: 80%;
   margin: 0 auto;
 }
 

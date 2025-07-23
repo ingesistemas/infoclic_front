@@ -1,0 +1,57 @@
+<form class="formulario" autocomplete="off" [formGroup]="formulario">
+    <div class="tituloFormulario">
+        Crear operarios
+    </div>
+
+    <div class="contieneInputRow row">
+        <div class="mb-2 floating-label-group col-md-12">
+            <input type="text" id="nombre" class="form-control form-control-sm miInput" formControlName="nombre" placeholder=" " />
+            <label  class="form-label" for="nombre">Nombre operario/usuario</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('nombre')}}&nbsp;</small>
+            </div>
+        </div>
+        <div class="mb-2 floating-label-group col-md-8">
+            <select id="id_profesion" class="form-select form-select-sm miInput" formControlName="id_profesion" >
+                @for (profesion of profesiones; track $index) {
+                    <option value="{{ profesion.id }}">{{ profesion.profesion }}</option>
+                }
+            </select>
+            <label for="id_dep" class="form-label">Profesión</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('id_profesion')}}&nbsp;</small>
+            </div>
+        </div>
+
+        <div class="mb-2 floating-label-group col-md-4">
+            <input type="text" class="form-control form-control-sm miInput"  id="celular" formControlName="celular"  placeholder=" ">
+            <label for="celular" class="form-label">No. celular</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('celular')}}&nbsp;</small>
+            </div>
+        </div>
+        
+        <div class="mb-2 floating-label-group col-md-12">            
+            <input type="text" class="form-control form-control-sm miInput" id="email" formControlName="email" placeholder=" " >
+            <label for="email" class="form-label">Correo electónico</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('email')}}&nbsp;</small>
+            </div>
+        </div>
+       
+        
+    </div>
+
+    <div class="botonera">  
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-aceptar" (click)="aceptar()" >{{ accion }} operario</button>
+            <button type="button" class="btn btn-cancelar" (click)="cerrar()">Cerrar</button>
+        </div>
+    </div>
+
+     <div class="card flex justify-center" style="border: none;">
+    <p-toast [showTransformOptions]="'translateY(100%)'" [showTransitionOptions]="'1000ms'" [hideTransitionOptions]="'1000ms'" [showTransformOptions]="'translateX(100%)'" />
+      {{ mensajeToast }} 
+    </div>
+
+</form>

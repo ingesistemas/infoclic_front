@@ -1,0 +1,93 @@
+<form class="formulario" autocomplete="off" [formGroup]="formulario">
+    <div class="tituloFormulario">
+        Asignación de turnos
+    </div>
+
+    <div class="contieneInputRow row">
+        <div class="mb-2 floating-label-group col-md-6">
+            <input type="text" id="documento" class="form-control form-control-sm miInput" formControlName="documento" placeholder=" " (blur)="obtenerCliente()" />
+            <label  class="form-label" for="documento">Número de documento</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('documento')}}&nbsp;</small>
+            </div>
+        </div>
+
+        <div class="mb-2 floating-label-group col-md-12">
+            <input type="text" id="nombre" class="form-control form-control-sm miInput" formControlName="nombre" placeholder=" " />
+            <label  class="form-label" for="documento">Nombre del paciente</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('nombre')}}&nbsp;</small>
+            </div>
+        </div>
+
+        <div class="mb-2 floating-label-group col-md-6">
+            <select id="id_profesion" class="form-select form-select-sm miInput" formControlName="id_profesion" (blur)="obtenerOperarios()" >
+                @for (profesion of profesiones; track $index) {
+                    <option value="{{ profesion.id }}">{{ profesion.profesion }}</option>
+                }
+            </select>
+            <label for="id_profesion" class="form-label">Especialidad-profesión</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('id_profesion')}}&nbsp;</small>
+            </div>
+        </div>
+
+        <div class="mb-2 floating-label-group col-md-6">
+            <select id="id_operario" class="form-select form-select-sm miInput" formControlName="id_operario" (blur)="obtenerSalas()" >
+                @for (operario of operarios; track $index) {
+                    @if( operario.activo == 0 ){
+                        <option value="{{ operario.id }}">{{ operario.nombre }}</option>
+                    }
+                }
+            </select>
+            <label for="id_operario" class="form-label">Quién atiende</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('id_operario')}}&nbsp;</small>
+            </div>
+        </div>
+
+        <div class="mb-2 floating-label-group col-md-6">
+            <select id="id_sala" class="form-select form-select-sm miInput" formControlName="id_sala" >
+               
+                @for (sala of salas; track $index) {
+                    <option value="{{ sala.id }}">{{ sala.sala }}-{{ sala.piso!.piso }}</option>
+                }
+            </select>
+            <label for="id_sala" class="form-label">Sala donde será atendido</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('id_sala')}}&nbsp;</small>
+            </div>
+        </div>
+
+        <div class="mb-2 floating-label-group col-md-6">
+            <select id="id_prioritaria" class="form-select form-select-sm miInput" formControlName="id_prioritaria" >
+                @for (prioridad of prioritarias; track $index) {
+                    <option value="{{ prioridad.id }}">{{ prioridad.prioritaria }}</option>
+                }
+            </select>
+            <label for="id_prioritaria" class="form-label">Tipo de prioridad</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('id_prioritaria')}}&nbsp;</small>
+            </div>
+        </div>
+        
+    </div>
+
+    <div style="text-align: center;" class="alert alert-primary" role="alert">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Buscando datos...
+    </div>
+   
+    <div class="botonera">  
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-aceptar" (click)="aceptar()" >Asignar turno</button>
+            <button type="button" class="btn btn-cancelar" (click)="cerrar()">Cerrar</button>
+        </div>
+    </div>
+
+     <div class="card flex justify-center" style="border: none;">
+    <p-toast [showTransformOptions]="'translateY(100%)'" [showTransitionOptions]="'1000ms'" [hideTransitionOptions]="'1000ms'" [showTransformOptions]="'translateX(100%)'" />
+      {{ mensajeToast }} 
+    </div>
+
+</form>

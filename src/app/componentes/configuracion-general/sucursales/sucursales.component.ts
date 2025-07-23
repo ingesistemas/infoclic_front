@@ -93,7 +93,7 @@ export class SucursalesComponent implements OnInit {
 
   nuevo(){
     this.tamanioForm.actualizar(false, null, 'Crear')
-    this.router.navigateByUrl('/turnity/configuracion-general/crear-sucursal')
+    this.router.navigateByUrl('/infoclic/configuracion-general/crear-sucursal')
   }
 
   mostrarToast() {
@@ -102,7 +102,7 @@ export class SucursalesComponent implements OnInit {
 
   editar(objeto: any){
     this.tamanioForm.actualizar(false, null, 'Editar')
-    this.router.navigate(['//turnity/configuracion-general/crear-sucursal'], {
+    this.router.navigate(['/infoclic/configuracion-general/crear-sucursal'], {
       state: { datos: objeto }
     });
   }

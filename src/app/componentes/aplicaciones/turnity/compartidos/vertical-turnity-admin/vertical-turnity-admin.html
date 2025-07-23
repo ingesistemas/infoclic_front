@@ -11,8 +11,9 @@
         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
           <div class="accordion-body">
             <ul class="ul-vertical">
-              <li class="li-vertical">Asignar turno</li>
-              <li class="li-vertical">Llamado por operario</li>
+              <li class="li-vertical" [routerLink]="['/turnity/turnity-general/crear-turno']" (click)="actualizarDatos()" routerLinkActive="router-link-active" >Asignar turno</li>
+              <li class="li-vertical" [routerLink]="['/turnity/turnity-general/llamado-operario']" (click)="actualizarDatos()" routerLinkActive="router-link-active" >Llamado por operario</li>
+
               <li class="li-vertical">Llamado por pantalla</li>
               <li class="li-vertical">Recordar llamado</li>
               <li class="li-vertical">Cancelar turno</li>
@@ -30,8 +31,7 @@
         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
           <div class="accordion-body">
             <ul class="ul-vertical">
-              <li class="li-vertical">Asignar turno</li>
-              <li class="li-vertical">Llamado por operario</li>
+             
               <li class="li-vertical">Llamado por pantalla</li>
               <li class="li-vertical">Recordar llamado</li>
               <li class="li-vertical">Cancelar turno</li>
@@ -49,14 +49,16 @@
         <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThre" data-bs-parent="#accordionExample">
           <div class="accordion-body">
             <ul class="ul-vertical">
-              <li class="li-vertical">Módulos de atención</li>
-              <li class="li-vertical">Salas de espera</li>
-              <li class="li-vertical" [routerLink]="['/turnity/configuracion-general/sucursales']" (click)="actualizarDatos()" routerLinkActive="router-link-active" >Sucursales</li>
-              <li class="li-vertical" [routerLink]="['/turnity/configuracion-general/pisos']" (click)="actualizarDatos()" routerLinkActive="router-link-active" >Pisos</li>
               
-              <li class="li-vertical">Operarios</li>
-              <li class="li-vertical">Profesiones</li>
-              <li class="li-vertical">Especialidades</li>
+              <li class="li-vertical" [routerLink]="['/infoclic/configuracion-general/salas']" (click)="actualizarDatos()" routerLinkActive="router-link-active" >Salas de espera</li>
+              <li class="li-vertical" [routerLink]="['/infoclic/configuracion-general/sucursales']" (click)="actualizarDatos()" routerLinkActive="router-link-active" >Sucursales</li>
+              <li class="li-vertical" [routerLink]="['/infoclic/configuracion-general/pisos']" (click)="actualizarDatos()" routerLinkActive="router-link-active" >Pisos</li>
+              <!--<li class="li-vertical" [routerLink]="['/infoclic/configuracion-general/centros']" (click)="actualizarDatos()" routerLinkActive="router-link-active" >Centros de atención</li>-->
+              <li class="li-vertical" [routerLink]="['/infoclic/configuracion-general/modulos']" (click)="actualizarDatos()" routerLinkActive="router-link-active" >Módulos de atención</li>
+              
+              <li class="li-vertical" [routerLink]="['/infoclic/configuracion-general/operarios']" (click)="actualizarDatos()" routerLinkActive="router-link-active" >Operarios</li>
+              <li class="li-vertical" [routerLink]="['/infoclic/configuracion-general/profesiones']" (click)="actualizarDatos()" routerLinkActive="router-link-active" >Profesiones</li>
+              
             </ul>
           </div>
         </div>

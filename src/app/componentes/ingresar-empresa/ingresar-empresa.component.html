@@ -28,7 +28,7 @@
 
         @if(mostrarSucursales){
             <div class="mb-2 floating-label-group">
-                <select id="id_sucursal" class="form-select form-select-sm miInput" formControlName="id_sucursal" required>
+                <select id="id_sucursal" class="form-select form-select-sm miInput" formControlName="id_sucursal" required (blur)="obternerModulos()">
                     @for (sucursal of sucursales; track $index) {
                         <option value="{{ sucursal.id }}">{{ sucursal.sucursal }}</option>
                         {{ sucursal.sucursal }}
@@ -37,6 +37,19 @@
                 <label for="id_sucursal" class="form-label">Sucursal</label>
                 <div class="contieneLabelError">
                     <small class="labelError">{{ retotnaError('id_sucursal')}}&nbsp;</small>
+                </div>
+            </div>
+
+            <div class="mb-2 floating-label-group">
+                <select id="id_modulo" class="form-select form-select-sm miInput" formControlName="id_modulo" required>
+                    <option value="0">NO APLICA</option>
+                    @for (modulo of modulos; track $index) {
+                        <option value="{{ modulo.id }}">{{ modulo.modulo }}</option>
+                    }
+                </select>
+                <label for="id_modulo" class="form-label">Sucursal</label>
+                <div class="contieneLabelError">
+                    <small class="labelError">{{ retotnaError('id_modulo')}}&nbsp;</small>
                 </div>
             </div>
         }
@@ -53,7 +66,6 @@
             @if(mostrarSucursales && formulario.valid){
                 <button type="button" class="btn btn-aceptar" (click)="ingresar()" >Ingresar</button>
             }
-
             <button type="button" class="btn btn-cancelar" (click)="cerrarModal()">Cancelar</button>
         </div>
     </div>

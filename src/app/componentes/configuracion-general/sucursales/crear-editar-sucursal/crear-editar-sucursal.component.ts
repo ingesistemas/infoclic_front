@@ -86,7 +86,7 @@ export class CrearEditarSucursalComponent implements OnInit {
   }
 
   cerrar(){
-    this.router.navigateByUrl('/turnity/configuracion-general/sucursales')
+    this.router.navigateByUrl('/infoclic/configuracion-general/sucursales')
   }
 
   obtenerScursales(){

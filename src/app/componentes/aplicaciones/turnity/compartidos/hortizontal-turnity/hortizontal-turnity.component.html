@@ -6,13 +6,12 @@
            <i class="bi bi-justify"></i>            
         </a>
               
-        <a class="navbar-brand">{{ aplicacionActual() }}</a>
+        <a class="navbar-brand tituloAplicacion">{{ aplicacionActual() }}-CMT-{{ sucursalActual() }}</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-
                 <li class="nav-item">
                     <a class="nav-link" >Inicio</a>
                 </li>
@@ -34,13 +33,16 @@
                         {{ nombreUsuarioActual() }}
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item">Turnity</a></li>
-                        <li><a class="dropdown-item" href="#">Safary</a></li>
+                        <li><a class="dropdown-item">Datos personales</a></li>
+                        <li><a class="dropdown-item" [routerLink]="['/infoclic/configuracion-general/editar-credenciales']"  >Cambiar contraseña</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Nuestros servicios</a></li>
+                        <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
                     </ul>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+<div class="datosModulo">
+    <span>Modulo {{ modulo()}}</span>
+</div>

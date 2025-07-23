@@ -68,7 +68,7 @@ export class CrearEditarPisoComponent {
   }
 
   cerrar(){
-    this.router.navigateByUrl('/turnity/configuracion-general/pisos')
+    this.router.navigateByUrl('/infoclic/configuracion-general/pisos')
   }
     
   aceptar(){

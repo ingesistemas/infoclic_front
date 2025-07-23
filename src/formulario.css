@@ -3,7 +3,7 @@
 }
 
 .formulario{
-    margin: 40px auto;
+    margin: -70px auto;
     border: 1px solid #efefef;
     border-radius: 10px;
     background-color: #ffffff;
@@ -197,7 +197,7 @@ select, option:hover{
 }
 
 .contiene-tabla, .contiene-contenido{
-    margin: 0 auto;
+    margin: -70px auto;
     width: 100% !important;
     background-color: #ffffff;
     padding: 60px;
@@ -207,3 +207,7 @@ select, option:hover{
     margin-left: 5px;
 }
 
+.transcurre{
+    margin-left: 5px;
+    color: rgb(0, 20, 239) !important;
+}

@@ -1,0 +1,113 @@
+<form class="formulario" autocomplete="off" [formGroup]="formulario">
+    <div class="tituloFormulario">
+        Diligenciar llamado
+    </div>
+
+    <div class="contieneInputRow row">
+        <div class="mb-2 floating-label-group col-md-12">
+            <input type="text" id="nombre" class="form-control form-control-sm miInput nombre" formControlName="nombre" placeholder=" " />
+            <label  class="form-label" for="nombre">Nombre del paciente</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('nombre')}}&nbsp;</small>
+            </div>
+        </div>
+
+        <div class="mb-2 floating-label-group col-md-6">
+            <input type="text" id="hora_llegada" class="form-control form-control-sm miInput" formControlName="hora_llegada" placeholder=" " />
+            <label  class="form-label" for="hora_llegada">Hora llegada</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('hora_llegada')}}&nbsp;</small>
+            </div>
+        </div>
+
+        <div class="mb-2 floating-label-group col-md-6">
+            <input type="text" id="hora_asigna" class="form-control form-control-sm miInput" formControlName="hora_asigna" placeholder=" " />
+            <label  class="form-label" for="hora_asigna">Hora asignación</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('hora_asigna')}}&nbsp;</small>
+            </div>
+        </div>
+
+        <div class="mb-2 floating-label-group col-md-12">
+            <input type="text" id="prioritaria" class="form-control form-control-sm miInput" formControlName="prioritaria" placeholder=" " />
+            <label  class="form-label" for="prioritaria">prioritaria</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('prioritaria')}}&nbsp;</small>
+            </div>
+        </div>
+
+        <div class="mb-2 floating-label-group col-md-12">
+            <input type="text" id="creado" class="form-control form-control-sm miInput" formControlName="creado" placeholder=" " />
+            <label  class="form-label" for="creado">Asignado por:</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('creado')}}&nbsp;</small>
+            </div>
+        </div>
+        
+        <div class="mb-2 floating-label-group col-md-6">
+            <select id="id_caso" class="form-select form-select-sm miInput" formControlName="id_caso">
+                @for (caso of casos; track $index) {
+                    <option value="{{ caso.id }}">{{ caso.caso }}</option>
+                }
+            </select>
+            <label for="id_caso" class="form-label">Destino paciente</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('id_caso')}}&nbsp;</small>
+            </div>
+        </div>
+    
+        @if( formulario.get('id_caso')?.value == 3 ){
+            <div class="mb-2 floating-label-group col-md-6">
+                <select id="id_profesion" class="form-select form-select-sm miInput" formControlName="id_profesion" (blur)="obtenerOperarios()" >
+                    @for (profesion of profesiones; track $index) {
+                        <option value="{{ profesion.id }}">{{ profesion.profesion }}</option>
+                    }
+                </select>
+                <label for="id_profesion" class="form-label">Especialidad-profesión</label>
+                <div class="contieneLabelError">
+                    <small class="labelError">{{ retotnaError('id_profesion')}}&nbsp;</small>
+                </div>
+            </div>
+
+            <div class="mb-2 floating-label-group col-md-6">
+                <select id="id_operario" class="form-select form-select-sm miInput" formControlName="id_operario" (blur)="obtenerSalas()" >
+                    @for (operario of operarios; track $index) {
+                        @if( operario.activo == 0 ){
+                            <option value="{{ operario.profesion.id }}">{{ operario.nombre }}</option>
+                        }
+                    }
+                </select>
+                <label for="id_operario" class="form-label">Asignado a:</label>
+                <div class="contieneLabelError">
+                    <small class="labelError">{{ retotnaError('id_operario')}}&nbsp;</small>
+                </div>
+            </div>
+
+            <div class="mb-2 floating-label-group col-md-6">
+                <select id="id_sala" class="form-select form-select-sm miInput" formControlName="id_sala" >
+                    
+                    @for (sala of salas; track $index) {
+                        <option value="{{ sala.id }}">{{ sala.sala }}-{{ sala.piso!.piso }}</option>
+                    }
+                </select>
+                <label for="id_sala" class="form-label">Sala donde será atendido</label>
+                <div class="contieneLabelError">
+                    <small class="labelError">{{ retotnaError('id_sala')}}&nbsp;</small>
+                </div>
+            </div>
+        }
+    </div>
+        
+    <div class="botonera">  
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-aceptar" (click)="aceptar()" >Actualizar llamado</button>
+            <button type="button" class="btn btn-cancelar" (click)="cerrar()">Cerrar</button>
+        </div>
+    </div>
+
+     <div class="card flex justify-center" style="border: none;">
+    <p-toast [showTransformOptions]="'translateY(100%)'" [showTransitionOptions]="'1000ms'" [hideTransitionOptions]="'1000ms'" [showTransformOptions]="'translateX(100%)'" />
+      {{ mensajeToast }} 
+    </div>
+
+</form>

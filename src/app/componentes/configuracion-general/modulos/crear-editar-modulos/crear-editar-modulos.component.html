@@ -1,0 +1,40 @@
+<form class="formulario" autocomplete="off" [formGroup]="formulario">
+    <div class="tituloFormulario">
+        Crear Módulo
+    </div>
+
+    <div class="contieneInputRow row">
+        <div class="mb-2 floating-label-group col-md-12">
+            <input type="text" id="modulo" class="form-control form-control-sm miInput" formControlName="modulo" placeholder=" " />
+            <label  class="form-label" for="centro">Nombre del módulo</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('modulo')}}&nbsp;</small>
+            </div>
+        </div>
+        
+        <div class="mb-2 floating-label-group col-md-12">
+            <select id="id_sala" class="form-select form-select-sm miInput" formControlName="id_sala">
+                @for (sala of salas; track $index) {
+                    <option value="{{ sala.id }}">{{ sala.sala }}-[{{ sala.piso?.piso }}]</option>
+                }
+            </select>
+            <label for="id_sala" class="form-label">Sala</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('id_sala')}}&nbsp;</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="botonera">  
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-aceptar" (click)="aceptar()" >{{ accion }} módulo</button>
+            <button type="button" class="btn btn-cancelar" (click)="cerrar()">Cerrar</button>
+        </div>
+    </div>
+
+     <div class="card flex justify-center" style="border: none;">
+    <p-toast [showTransformOptions]="'translateY(100%)'" [showTransitionOptions]="'1000ms'" [hideTransitionOptions]="'1000ms'" [showTransformOptions]="'translateX(100%)'" />
+      {{ mensajeToast }} 
+    </div>
+
+</form>

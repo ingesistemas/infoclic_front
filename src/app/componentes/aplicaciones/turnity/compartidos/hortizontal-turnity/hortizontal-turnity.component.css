@@ -23,6 +23,9 @@
     color: rgb(0, 225, 255);
 }
 
+.tituloAplicacion {
+    color: #7bff00 !important;
+}
 .navbar-dark .navbar-nav .nav-link {
     color: rgb(255, 255, 255);
     font-weight: normal;
@@ -81,4 +84,17 @@
 
 .nav-item ul li a:hover{
  background-color: rgb(230, 230, 230);
+}
+
+.datosModulo{
+    margin-top: 88px;
+    background-color: rgba(0, 72, 130, 0.98) !important;
+    width: 20%;
+    margin-left: 0px;
+    border-radius: 0 0 10px 0;
+}
+
+.datosModulo span{
+    color: #FFF;
+    margin-left: 25px;
 }

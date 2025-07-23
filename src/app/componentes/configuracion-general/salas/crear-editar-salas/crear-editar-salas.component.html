@@ -1,0 +1,40 @@
+<form class="formulario" autocomplete="off" [formGroup]="formulario">
+    <div class="tituloFormulario">
+        Crear salas
+    </div>
+    <div class="contieneInputRow row">
+        <div class="mb-2 floating-label-group col-md-12">
+            <input type="text" id="sala" class="form-control form-control-sm miInput" formControlName="sala" placeholder=" " />
+            <label  class="form-label" for="sala">Nombre de la sala</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('sala')}}&nbsp;</small>
+            </div>
+        </div>
+       
+        <div class="mb-2 floating-label-group col-md-12">
+            <select id="id_piso" class="form-select form-select-sm miInput" formControlName="id_piso">
+                @for (piso of pisos; track $index) {
+                    <option value="{{ piso.id }}">{{ piso.piso }}</option>
+                }
+            </select>
+            <label for="id_piso" class="form-label">Piso</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('id_dep')}}&nbsp;</small>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="botonera">  
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-aceptar" (click)="aceptar()" >{{ accion }} sucurssal</button>
+            <button type="button" class="btn btn-cancelar" (click)="cerrar()">Cerrar</button>
+        </div>
+    </div>
+
+     <div class="card flex justify-center" style="border: none;">
+    <p-toast [showTransformOptions]="'translateY(100%)'" [showTransitionOptions]="'1000ms'" [hideTransitionOptions]="'1000ms'" [showTransformOptions]="'translateX(100%)'" />
+      {{ mensajeToast }} 
+    </div>
+
+</form>

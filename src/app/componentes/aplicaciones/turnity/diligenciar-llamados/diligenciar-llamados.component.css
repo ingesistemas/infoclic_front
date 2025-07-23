@@ -1,0 +1,34 @@
+
+input{
+    color: rgb(0, 13, 152) !important;
+}
+
+.nombre{
+    color: rgb(2, 139, 32) !important;
+    font-weight: bold;
+}
+@media (max-width: 5000px) {
+    .formulario {
+        width: 40%;
+    }
+ 
+}
+
+@media (max-width: 992px) {
+    .formulario {
+        width: 70%;
+    }
+ 
+}
+
+@media (max-width: 768px) {
+    .formulario {
+        width: 80% !important;
+    }
+}
+
+@media (max-width: 576px) {
+     .formulario {
+        width: 95% !important;
+    }
+}

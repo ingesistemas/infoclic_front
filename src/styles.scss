@@ -38,6 +38,10 @@ body {
     height: 100vh !important;
 }
 
+a{
+    cursor: pointer;
+}
+
 /* Scrollbar personalizado */
 ::-webkit-scrollbar {
     width: 10px;

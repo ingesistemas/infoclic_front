@@ -1,0 +1,55 @@
+<form class="formulario" autocomplete="off" [formGroup]="formulario">
+    <div class="tituloFormulario">
+        Configurar credenciales de acceso
+    </div>
+    mostrar {{ mostrarCampos }}
+    <div class="contieneInputRow row">
+                
+        <div class="mb-2 floating-label-group col-md-12">            
+            <input type="text" class="form-control form-control-sm miInput" id="email" formControlName="email" placeholder=" " (blur)="validarEmail()" >
+            <label for="email" class="form-label">Correo electónico</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('email')}}&nbsp;</small>
+            </div>
+        </div>
+
+        @if(mostrarCampos == true){
+            <div class="mb-2 floating-label-group col-md-8">
+                <input type="text" id="usuario" class="form-control form-control-sm miInput" formControlName="usuario" placeholder=" " />
+                <label  class="form-label" for="usuario">Usuario</label>
+                <div class="contieneLabelError">
+                    <small class="labelError">{{ retotnaError('usuario')}}&nbsp;</small>
+                </div>
+            </div>
+
+            <div class="mb-2 floating-label-group col-md-8">
+                <input type="text" id="password" class="form-control form-control-sm miInput" formControlName="password" placeholder=" " />
+                <label  class="form-label" for="password">Contraseña</label>
+                <div class="contieneLabelError">
+                    <small class="labelError">{{ retotnaError('password')}}&nbsp;</small>
+                </div>
+            </div>
+
+            <div class="mb-2 floating-label-group col-md-8">
+                <input type="text" id="password2" class="form-control form-control-sm miInput" formControlName="password2" placeholder=" " />
+                <label  class="form-label" for="password2">Confirmar contraseña</label>
+                <div class="contieneLabelError">
+                    <small class="labelError">{{ retotnaError('password2')}}&nbsp;</small>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="botonera">  
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-aceptar" (click)="aceptar()" >Cambiar contraseña</button>
+            <button type="button" class="btn btn-cancelar" (click)="cerrar()">Cerrar</button>
+        </div>
+    </div>
+
+     <div class="card flex justify-center" style="border: none;">
+    <p-toast [showTransformOptions]="'translateY(100%)'" [showTransitionOptions]="'1000ms'" [hideTransitionOptions]="'1000ms'" [showTransformOptions]="'translateX(100%)'" />
+      {{ mensajeToast }} 
+    </div>
+
+</form>
