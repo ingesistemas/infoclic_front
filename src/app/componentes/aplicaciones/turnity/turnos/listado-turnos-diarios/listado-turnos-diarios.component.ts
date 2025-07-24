@@ -22,9 +22,12 @@ import { MensajesService } from '../../../../../servicios/mensajes.service';
 import { CargandoComponent } from '../../../../compartidos/cargando/cargando.component';
 import { ErrorComponent } from '../../../../compartidos/mensajes/error/error.component';
 import { interval, Subscription } from 'rxjs';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 
+dayjs.extend(duration);
 @Component({
-  selector: 'app-llamado-operario',
+  selector: 'app-listado-turnos-diarios',
   imports: [
     NgClass,
     MatButtonModule,
@@ -39,11 +42,11 @@ import { interval, Subscription } from 'rxjs';
     MatMenuModule,
     ToastModule
   ],
-  templateUrl: './llamado-operario.component.html',
-  styleUrl: './llamado-operario.component.css',
+  templateUrl: './listado-turnos-diarios.component.html',
+  styleUrl: './listado-turnos-diarios.component.css',
   providers: [MessageService],
 })
-export class LlamadoOperarioComponent {
+export class ListadoTurnosDiariosComponent {
   private fb = inject(FormBuilder)
   private peticionsServicios = inject(PeticionService)
   private autenticaServicio = inject(AutenticaService)
@@ -57,9 +60,9 @@ export class LlamadoOperarioComponent {
     this.dataSource = new MatTableDataSource();
   }
   
-  displayedColumns: string[] = ['opciones', 'paciente', 'prioridad', 'fecha', 'hora_llegada', 'hora_asignacion', 'sala', 'asignado', 'creado'];
+  displayedColumns: string[] = ['opciones', 'paciente', 'prioridad', 'fecha', 'hora_llegada', 'hora_asignacion', 'hora_ini', 'hora_fin', 'sala', 'caso', 'asignado', 'creado'];
   dataSource: MatTableDataSource<any>;
-  llamados: any[] = []
+  turnos: any[] = []
   mensaje: string = ''
   mensajeToast: string = ''
   ahora: Date = new Date();
@@ -81,7 +84,7 @@ export class LlamadoOperarioComponent {
 
   ngOnInit(): void {
     this.tamanioForm.actualizarCargando(false, CargandoComponent)
-    this.peticion('/listar-turnos')
+    this.peticion('/listar-turnos-diarios')
     this.timerSubscription = interval(1000).subscribe(() => {
       this.ahora = new Date();
     });
@@ -91,23 +94,7 @@ export class LlamadoOperarioComponent {
     this.timerSubscription?.unsubscribe();
   }
 
-  actualizarTurno(objeto: any){
-    this.turnoActual = {
-      id: objeto.id,
-      nombre: objeto.paciente.nombre,
-      sala: objeto.asignaciones[0].sala.sala,
-      piso: objeto.asignaciones[0].sala.piso.piso,
-      modulo: this.autenticaServicio.moduloActual()
-    }
-    
-    this.peticion('/disparar')
-    this.tamanioForm.actualizar(false, null, 'Editar')
-    this.router.navigate(['/turnity/turnity-general/diligenciar-llamados'], {
-      state: { datos: objeto }
-    });
-  }
-
-  calcularTranscurrido(horaLlegada: string): string {
+  calcularTranscurrido(horaLlegada: string): string {   //Cálculo en tiempo real
     if (!horaLlegada) return '';
 
     const llegada = new Date(`1970-01-01T${horaLlegada}`);
@@ -126,7 +113,28 @@ export class LlamadoOperarioComponent {
     return `${horas}:${minutos}:${segundos}`;
   }
 
+  calcularDuracion(inicio: string, fin: string): string {
+    const hIni = dayjs(`2000-01-01T${inicio}`);
+    const hFin = dayjs(`2000-01-01T${fin}`);
 
+    if (!hIni.isValid() || !hFin.isValid()) return '';
+
+    const diffMs = hFin.diff(hIni);
+    if (diffMs <= 0) return '0 min';
+
+    const duracion = dayjs.duration(diffMs);
+    const horas = duracion.hours();
+    const minutos = duracion.minutes();
+    const segundos = duracion.seconds();
+
+    let resultado = '';
+    if (horas > 0) resultado += `${horas}h `;
+    if (minutos > 0) resultado += `${minutos}min `;
+    if (segundos > 0 || resultado === '') resultado += `${segundos}s`;
+
+    return resultado.trim();
+  }
+  
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -136,37 +144,15 @@ export class LlamadoOperarioComponent {
     }
   }
 
-  /* nuevo(){
-    this.tamanioForm.actualizar(false, null, 'Crear')
-    this.router.navigateByUrl('/turnity/configuracion-general/crear-centro')
-  } */
-
   mostrarToast() {
     this.messageService.add({ severity: 'success', summary: 'Turnity...', detail: this.mensaje });
   }
 
-  /* editar(objeto: any){
-    this.tamanioForm.actualizar(false, null, 'Editar')
-    this.router.navigate(['//turnity/configuracion-general/crear-centro'], {
-      state: { datos: objeto }
-    });
-  } */
-
-  /* estado(objeto:any){
-    this.formulario.controls['id'].setValue(objeto.id)
-    this.formulario.controls['activo'].setValue(objeto.activo)
-    this.peticion('/activo-centro')
-  } */
-
   peticion(url:string){  
-    let datos = null;
-    if(url == '/disparar'){
-      datos = this.turnoActual
-    }else{
-      datos = this.formulario.value
-    }
     
-   
+    const datos = this.formulario.value
+    
+    
     this.tamanioForm.actualizarCargando(true, CargandoComponent)
     this.peticionsServicios.peticionPOST(url, datos).subscribe({  
       next: (data) => {
@@ -192,15 +178,15 @@ export class LlamadoOperarioComponent {
               this.tamanioForm.actualizar( true, ErrorComponent)
               
             }else{      
-              if(url == '/listar-turnos'){
-                this.llamados = data.Data.map((s:any) => ({
+              if(url == '/listar-turnos-diarios'){
+                this.turnos = data.Data.map((s:any) => ({
                   ...s,
                   created_at: new Date(s.created_at)
                 }));
-                this.dataSource.data = this.llamados
+                this.dataSource.data = this.turnos
                 this.dataSource.paginator = this.paginator;
-                this.dataSource.sort = this.sort;
-                console.log(this.llamados)
+                this.dataSource.sort = this.sort; 
+                console.log(this.turnos)
               }
             }
           }
@@ -225,6 +211,5 @@ export class LlamadoOperarioComponent {
       
         
     })
-
   }
 }

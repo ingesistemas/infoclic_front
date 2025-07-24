@@ -1,0 +1,141 @@
+<!-- <div class="pantalla_tv">
+    <div class="row">
+        <div class="col-md-6">
+            {{ nombre }}
+        </div>
+        <div class="col-md-3">
+            {{ sala }}
+        </div>
+        <div class="col-md-3">
+            {{ piso }}
+        </div>
+    </div>
+</div>
+ -->
+
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Llamado de Turno</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Reset y fuentes */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      /* background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      background-size: 600% 600%; */
+      animation: fondoAnimado 20s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @keyframes fondoAnimado {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .turno-container {
+      background: rgb(0, 55, 100);
+      border-radius: 30px;
+      padding: 60px;
+
+      text-align: center;
+      backdrop-filter: blur(10px);
+      animation: aparecer 1s ease-out;
+      margin-top: -220px !important;
+      
+    }
+
+    @keyframes aparecer {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .titulo, .piso {
+      font-size: 4rem;
+      color: #00ffff;
+      margin-bottom: 20px;
+      letter-spacing: 3px;
+      text-shadow: 2px 2px 8px #000;
+    }
+
+    .piso{
+        color: #ffffff;
+        background-color: #028993;
+        border-radius: 10px;
+    }
+
+    .nombre-paciente {
+      font-size: 6rem;
+      color: #ffffff;
+      font-weight: bold;
+      letter-spacing: 2px;
+      animation: resaltar 2s ease infinite alternate;
+      text-shadow: 4px 4px 12px #000;
+    }
+
+    @keyframes resaltar {
+      from {
+        transform: scale(1);
+        color: #fffb02;
+      }
+      to {
+        transform: scale(1.05);
+        color: #00ffff;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .titulo {
+        font-size: 2.5rem;
+        color: #00ffff;
+      }
+      .nombre-paciente {
+        font-size: 3.5rem;
+      }
+      .turno-container {
+        padding: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="turno-container">
+    
+    <div class="nombre-paciente" id="nombrePaciente">{{ nombre }}</div>
+    <div class="piso">{{ sala }} - {{ piso }}</div>
+    <div class="piso">{{ modulo }}</div>
+  </div>
+
+  <script>
+    // Simulación de cambio de paciente cada cierto tiempo
+   
+    setInterval(() => {
+      i = (i + 1) % nombres.length;
+      const nombreElemento = document.getElementById('nombrePaciente');
+      /* nombreElemento.textContent = nombres[i]; */
+      nombreElemento.parentElement.style.animation = 'none'; // Reinicia animación
+      void nombreElemento.parentElement.offsetWidth;         // Trigger reflow
+      nombreElemento.parentElement.style.animation = 'aparecer 1s ease-out';
+    }, 8000);
+  </script>
+
+</body>
+</html>

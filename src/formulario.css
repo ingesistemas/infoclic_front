@@ -209,5 +209,10 @@ select, option:hover{
 
 .transcurre{
     margin-left: 5px;
-    color: rgb(0, 20, 239) !important;
+    color: rgb(0, 196, 240) !important;
+}
+
+.difHora{
+    margin-left: 5px;
+    color: rgb(0, 196, 240) !important;
 }

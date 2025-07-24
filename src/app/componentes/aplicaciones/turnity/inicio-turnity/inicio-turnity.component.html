@@ -1,4 +1,7 @@
-<app-hortizontal-turnity></app-hortizontal-turnity>
+
+@if (!isLlamadoPantalla()) {
+  <app-hortizontal-turnity></app-hortizontal-turnity>
+}
 
 @if(mostrarVerticalServicio.mostrarVerticalTurnity()){
     
@@ -8,5 +11,3 @@
 <div class="contenedor">
     <router-outlet />
 </div>
-
-

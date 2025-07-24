@@ -4,7 +4,7 @@ import { HortizontalTurnityComponent } from "../compartidos/hortizontal-turnity/
 import { VerticalTurnityAdmin } from "../compartidos/vertical-turnity-admin/vertical-turnity-admin";
 import { TamanioFormModalService } from '../../../../servicios/tamanio-form-modal.service';
 import { VerticalService } from '../../../../servicios/vertical.service';
-
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,7 +14,11 @@ import { VerticalService } from '../../../../servicios/vertical.service';
   styleUrl: './inicio-turnity.component.css'
 })
 export class InicioTurnityComponent implements AfterViewInit {
-  
+   router = inject(Router);
+
+  isLlamadoPantalla(): boolean {
+    return this.router.url.includes('/llamado-pantalla');
+  }
   
   private cdr = inject(ChangeDetectorRef)
   mostrarVerticalServicio = inject(VerticalService)

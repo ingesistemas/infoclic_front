@@ -30,7 +30,7 @@ export class HortizontalTurnityComponent {
   }
   
   cerrarSesion(){
-    this.autenticaServicio.actualizarUsuarioActual('','','',0,'','','',0)
+    this.autenticaServicio.actualizarUsuarioActual('','','',0,'','','',0,'')
     this.autenticaServicio.actualizarAplicacionActual('', '', '');
     localStorage.clear()
     this.router.navigate(['/']);

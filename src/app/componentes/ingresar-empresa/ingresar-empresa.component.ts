@@ -54,6 +54,12 @@ export class IngresarEmpresaComponent implements OnInit {
     }
   }
 
+  get moduloSeleccionadoTexto(): string | undefined {
+    const idSeleccionado = this.formulario.get('id_modulo')?.value;
+    const modulo = this.modulos.find((m: any) => m.id.toString() === idSeleccionado);
+    return modulo?.modulo;
+  }
+
   cerrarModal(){
     this.tamanioForm.actualizar(false, null)
   }
@@ -90,7 +96,8 @@ export class IngresarEmpresaComponent implements OnInit {
 
   peticion(url:string){
     let nit = this.formulario.controls['nit'].value
-    this.autenticaServicio.actualizarUsuarioActual('','','',0,'',nit!, '', 0)
+    
+    this.autenticaServicio.actualizarUsuarioActual('','','',0,'',nit!, '', 0, '')
     if(url == '/sucursalesUsuarios'){
       this.mostrarCargandoSucursales = true
     }
@@ -149,9 +156,10 @@ export class IngresarEmpresaComponent implements OnInit {
               setTimeout(()=>{
                 let nit = this.formulario.controls['nit'].value
                 let id_modulo = this.formulario.controls['id_modulo'].value
+                let modulo = this.moduloSeleccionadoTexto
                 
                 this.tamanioForm.actualizarCargando(false, null)
-                this.autenticaServicio.actualizarUsuarioActual(usuario.id, usuario.nombre, usuario.email, id_sucursal!, data.token!, nit!, usuario.sucursales[0].sucursal, id_modulo! )
+                this.autenticaServicio.actualizarUsuarioActual(usuario.id, usuario.nombre, usuario.email, id_sucursal!, data.token!, nit!, usuario.sucursales[0].sucursal, id_modulo!, modulo! )
                 this.router.navigateByUrl('/turnity')
               },2000)
             }

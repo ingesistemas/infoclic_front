@@ -15,6 +15,8 @@ import { ICiudades } from '../../../../interfaces/ICiudades';
 import { IDptos } from '../../../../interfaces/IDptos';
 import { Isalas } from '../../../../interfaces/ISalas';
 import { IOperarios } from '../../../../interfaces/IOperarios';
+import { EchoService } from '../../../../servicios/echo.service';
+
 
 @Component({
   selector: 'app-diligenciar-llamados',
@@ -32,6 +34,9 @@ export class DiligenciarLlamadosComponent {
   private tamanioForm = inject(TamanioFormModalService)
   private mensajeErrorServicios = inject(MensajesService)
   private zone = inject(NgZone);
+  private echoServicio = inject(EchoService);
+  mensajes: string[] = [];
+  private cdRef = inject(ChangeDetectorRef)
   
   mensaje: string = ""
   sonidoErrorServicio = inject(SonidoErrorService)
@@ -65,6 +70,8 @@ export class DiligenciarLlamadosComponent {
 
   constructor(private messageService: MessageService){}
   async ngOnInit() {
+  
+
     await this.peticion('/obtener-salas')
     await this.peticion('/obtener-profesiones')
   
@@ -88,6 +95,17 @@ export class DiligenciarLlamadosComponent {
 
     await this.peticion('/llamado-operario')
     await this.peticion('/hora-inicial-turno')
+    //await this.peticion('/disparar')
+
+    /* setTimeout(() => {
+      this.echoServicio.listenToLlamado((turno) => {
+        this.zone.run(() => {
+          this.mensajes.push(turno);
+          this.cdRef.detectChanges(); // asegura que la vista se actualice
+        });
+      });
+    },5000) */
+    
   }
 
   mostrarToast() {
@@ -148,7 +166,10 @@ export class DiligenciarLlamadosComponent {
               
             }else if(url == '/hora-inicial-turno'){
 
-            }else{
+            }else if(url == '/disparar'){
+
+            }
+            else{
 
               this.mensaje = data.Message
               this.mostrarToast()

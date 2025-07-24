@@ -42,12 +42,11 @@
 
             <div class="mb-2 floating-label-group">
                 <select id="id_modulo" class="form-select form-select-sm miInput" formControlName="id_modulo" required>
-                    <option value="0">NO APLICA</option>
                     @for (modulo of modulos; track $index) {
                         <option value="{{ modulo.id }}">{{ modulo.modulo }}</option>
                     }
                 </select>
-                <label for="id_modulo" class="form-label">Sucursal</label>
+                <label for="id_modulo" class="form-label">Módulo</label>
                 <div class="contieneLabelError">
                     <small class="labelError">{{ retotnaError('id_modulo')}}&nbsp;</small>
                 </div>

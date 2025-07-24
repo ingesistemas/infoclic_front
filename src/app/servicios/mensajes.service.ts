@@ -14,10 +14,24 @@ export class MensajesService {
       this.sonidoMensajeErrorServicios.playSound(sonido)
     } */
     const msg = new SpeechSynthesisUtterance(`${mensaje}`);
-    msg.lang = 'es-ES'; // Español
+    msg.lang = 'es-CO'; // Español
     msg.rate = 1;       // Velocidad de lectura (1 es normal)
     msg.volume = 1;
     speechSynthesis.speak(msg);
+  }
+
+  mensajellamado(mensaje:string){
+    const msg = new SpeechSynthesisUtterance(`${mensaje}`);
+    msg.lang = 'es-CO';
+    msg.rate = 1;
+    msg.volume = 1;
+
+    const voces = speechSynthesis.getVoices();
+    const voz = voces.find(v => v.lang.startsWith('es') && v.name.toLowerCase().includes('google'));
+    if (voz) msg.voice = voz;
+
+    speechSynthesis.speak(msg);
+
   }
 
   obtenerMensajeError(){

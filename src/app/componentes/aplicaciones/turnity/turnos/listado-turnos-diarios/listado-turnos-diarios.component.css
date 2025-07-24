@@ -1,0 +1,58 @@
+/* Contenedor de la tabla con scroll horizontal */
+.tabla-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 5px 0;
+  margin: 0 auto;
+  width: 100%;
+  scrollbar-color: #bbb transparent; /* Firefox */
+  scrollbar-width: thin;
+}
+
+.infoTranscurre{
+  padding: 5px !important;
+  background-color: #002649 !important;
+  color: #ffffff;
+}
+
+/* Estilo para Webkit (Chrome, Edge, Safari) */
+.tabla-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+.tabla-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.tabla-scroll::-webkit-scrollbar-thumb {
+  background-color: #bbb;
+  border-radius: 4px;
+}
+
+/* Tabla con ancho extendido para provocar scroll */
+.contiene-tabla-scroll {
+  width: 200%;
+}
+
+/* No aplicar scroll a búsqueda ni paginación */
+.header-busqueda, .paginacion {
+  width: 90%;
+  margin: 0 auto;
+}
+
+/* Responsividad */
+@media (max-width: 992px) {
+  .contiene-tabla-scroll {
+    width: 180%;
+  }
+}
+
+@media (max-width: 768px) {
+  .contiene-tabla-scroll {
+    width: 200%;
+  }
+}
+
+@media (max-width: 576px) {
+  .contiene-tabla-scroll {
+    width: 220%;
+  }
+}

@@ -13,8 +13,9 @@
             <ul class="ul-vertical">
               <li class="li-vertical" [routerLink]="['/turnity/turnity-general/crear-turno']" (click)="actualizarDatos()" routerLinkActive="router-link-active" >Asignar turno</li>
               <li class="li-vertical" [routerLink]="['/turnity/turnity-general/llamado-operario']" (click)="actualizarDatos()" routerLinkActive="router-link-active" >Llamado por operario</li>
+              <li class="li-vertical" [routerLink]="['/turnity/turnity-general/llamado-pantalla']" (click)="actualizarDatos()" routerLinkActive="router-link-active" >Llamado por pantalla</li>
 
-              <li class="li-vertical">Llamado por pantalla</li>
+
               <li class="li-vertical">Recordar llamado</li>
               <li class="li-vertical">Cancelar turno</li>
               <li class="li-vertical">Monitoreo diario</li>
@@ -32,7 +33,8 @@
           <div class="accordion-body">
             <ul class="ul-vertical">
              
-              <li class="li-vertical">Llamado por pantalla</li>
+              <li class="li-vertical" [routerLink]="['/turnity/turnity-general/listado-turnos-diarios']" (click)="actualizarDatos()" routerLinkActive="router-link-active" >Segumiento de durnos diario</li>
+
               <li class="li-vertical">Recordar llamado</li>
               <li class="li-vertical">Cancelar turno</li>
               <li class="li-vertical">Monitoreo diario</li>
