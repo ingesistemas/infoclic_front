@@ -57,3 +57,90 @@
 .inactivo{
   color: rgb(187, 93, 93);
 }
+
+.finalizado{
+  color: green !important;
+}
+
+.cancelado{
+  color: #9f0000;
+}
+
+.no_contesto{
+  color: #e78700;
+}
+
+.reasignado{
+  color: #0400d7;
+}
+
+
+.en_atencion{
+  color: #009ad7;
+}
+
+.en_espera_asig{
+  color: #cfc800;
+}
+
+.en_espera_atencion{
+  color: #6501b8;
+}
+
+.leyenda {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-family: sans-serif;
+    font-size: 14px;
+  }
+
+  .color-circulo {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+
+  .circle-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    margin-right: 8px;
+    color: white;
+    margin-left: 30px;
+  }
+
+
+.circle-finalizado { background-color: green; }
+
+.circle-cancelado{
+  background-color: #9f0000;
+}
+
+.circle-no_contesto{
+  background-color: #e78700;
+}
+
+.circle-reasignado{
+  background-color: #0400d7;
+}
+
+
+.circle-en_atencion{
+  background-color: #009ad7;
+}
+
+.circle-en_espera_asig{
+  background-color: #cfc800;
+}
+
+.circle-en_espera_atencion{
+  background-color: #6501b8;
+}
+

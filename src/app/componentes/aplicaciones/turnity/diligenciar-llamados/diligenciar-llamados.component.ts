@@ -55,11 +55,11 @@ export class DiligenciarLlamadosComponent {
     nombre: [{value:'', disabled: true} , [Validators.required, Validators.minLength(3)]],
     hora_llegada: [{value:'',disabled: true} , [Validators.required]],
     hora_asigna: [{value:'', disabled: true} , [Validators.required]],
-    prioritaria: [{value:'', disabled: true} , [Validators.required]],
-    id_caso: [0 , [Validators.required]],
+    id_prioritaria: [{value:'', disabled: true} , [Validators.required]],
+    id_caso: [0, [Validators.min(1)]],
     id_sala: [0],
     id_profesion: [0],
-    id_operario_asig: [0],
+    //id_operario_asig: [0],
     id_operario: [0],
     id_asigna: [0],
     creado: [{value:'', disabled: true} , [Validators.required]],
@@ -70,8 +70,16 @@ export class DiligenciarLlamadosComponent {
 
   constructor(private messageService: MessageService){}
   async ngOnInit() {
-  
 
+    await setTimeout(() => {
+      this.echoServicio.listenToLlamado((turno) => {
+        this.zone.run(() => {
+          this.mensajes.push(turno);
+          this.cdRef.detectChanges(); // asegura que la vista se actualice
+        });
+      });
+    },5000) 
+  
     await this.peticion('/obtener-salas')
     await this.peticion('/obtener-profesiones')
   
@@ -82,12 +90,12 @@ export class DiligenciarLlamadosComponent {
       this.formulario.controls['nombre'].setValue(datos.datos.paciente.nombre)
       this.formulario.controls['hora_llegada'].setValue(datos.datos.hora_llegada)
       this.formulario.controls['hora_asigna'].setValue(datos.datos.asignaciones[0].hora_asigna)
-      this.formulario.controls['prioritaria'].setValue(datos.datos.prioritaria.prioritaria)
-      this.formulario.controls['id_operario_asig'].setValue(datos.datos.asignaciones[0].operario.id)
-      this.formulario.controls['id_caso'].setValue(datos.datos.prioritaria.id_caso)
+      this.formulario.controls['id_prioritaria'].setValue(datos.datos.prioritaria.prioritaria)
+      //this.formulario.controls['id_operario_asig'].setValue(datos.datos.asignaciones[0].operario.id)
+      this.formulario.controls['id_caso'].setValue(0)
       this.formulario.controls['creado'].setValue(datos.datos.asignaciones[0].usuarios.nombre)
       this.formulario.controls['id_asigna'].setValue(datos.datos.asignaciones[0].id)
-      this.formulario.controls['id_operario'].setValue(datos.datos.asignaciones[0].operario.id)
+      this.formulario.controls['id_operario'].setValue(0)
     }
 
     const casosString = localStorage.getItem('casos')
@@ -97,14 +105,7 @@ export class DiligenciarLlamadosComponent {
     await this.peticion('/hora-inicial-turno')
     //await this.peticion('/disparar')
 
-    /* setTimeout(() => {
-      this.echoServicio.listenToLlamado((turno) => {
-        this.zone.run(() => {
-          this.mensajes.push(turno);
-          this.cdRef.detectChanges(); // asegura que la vista se actualice
-        });
-      });
-    },5000) */
+    
     
   }
 
@@ -121,8 +122,11 @@ export class DiligenciarLlamadosComponent {
   }
 
 
-  cerrar(){
-    this.router.navigateByUrl('/turnity/turnity-general/llamado-operario')
+  async cerrar(restablece: boolean){
+    if(restablece){
+      await this.peticion('/res-hora-inicial-turno')
+    }
+    await this.router.navigateByUrl('/turnity/turnity-general/llamado-operario')
   }
 
   aceptar(){
@@ -134,10 +138,9 @@ export class DiligenciarLlamadosComponent {
     this.mensaje = ''
     this.tamanioForm.actualizarCargando(true, CargandoComponent)
     const datos = this.formulario.value;
-
     this.peticionsServicios.peticionPOST(url, datos).subscribe({
       next: (data) => {
-        
+        console.log(data.Data)
         if(data.Status == 200){
           if(data.Error == true){
               if ((typeof data.Message === 'string')) {
@@ -162,19 +165,14 @@ export class DiligenciarLlamadosComponent {
               this.salas = data.Data
             }else if(url == '/obtener-usuario-profesion'){
                 this.operarios = data.Data
-            }else if(url == '/llamado-operario'){
+            }else if(url == '/llamado-operario' || url == '/hora-inicial-turno' || url == '/disparar' || url == '/res-hora-inicial-turno'){
               
-            }else if(url == '/hora-inicial-turno'){
-
-            }else if(url == '/disparar'){
-
-            }
-            else{
+            }else{
 
               this.mensaje = data.Message
               this.mostrarToast()
               setTimeout(()=>{
-                this.cerrar()
+                this.cerrar(false)
               },2000)
             }
           }

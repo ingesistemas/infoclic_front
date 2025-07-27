@@ -29,10 +29,10 @@
         </div>
 
         <div class="mb-2 floating-label-group col-md-12">
-            <input type="text" id="prioritaria" class="form-control form-control-sm miInput" formControlName="prioritaria" placeholder=" " />
+            <input type="text" id="id_prioritaria" class="form-control form-control-sm miInput" formControlName="id_prioritaria" placeholder=" " />
             <label  class="form-label" for="prioritaria">prioritaria</label>
             <div class="contieneLabelError">
-                <small class="labelError">{{ retotnaError('prioritaria')}}&nbsp;</small>
+                <small class="labelError">{{ retotnaError('id_prioritaria')}}&nbsp;</small>
             </div>
         </div>
 
@@ -73,7 +73,7 @@
                 <select id="id_operario" class="form-select form-select-sm miInput" formControlName="id_operario" (blur)="obtenerSalas()" >
                     @for (operario of operarios; track $index) {
                         @if( operario.activo == 0 ){
-                            <option value="{{ operario.profesion.id }}">{{ operario.nombre }}</option>
+                            <option value="{{ operario.id }}">{{ operario.nombre }}</option>
                         }
                     }
                 </select>
@@ -101,7 +101,7 @@
     <div class="botonera">  
         <div class="btn-group" role="group" aria-label="Basic example">
             <button type="button" class="btn btn-aceptar" (click)="aceptar()" >Actualizar llamado</button>
-            <button type="button" class="btn btn-cancelar" (click)="cerrar()">Cerrar</button>
+            <button type="button" class="btn btn-cancelar" (click)="cerrar(true)">Cerrar</button>
         </div>
     </div>
 
