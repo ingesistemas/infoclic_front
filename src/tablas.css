@@ -63,7 +63,7 @@
 }
 
 .cancelado{
-  color: #9f0000;
+  color: #a93636;
 }
 
 .no_contesto{
@@ -120,7 +120,7 @@
 .circle-finalizado { background-color: green; }
 
 .circle-cancelado{
-  background-color: #9f0000;
+  background-color: #a93636;
 }
 
 .circle-no_contesto{
@@ -144,3 +144,12 @@
   background-color: #6501b8;
 }
 
+.llamados{
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.infoTranscurreLlamados{
+  padding: 20px;
+  color: #00367c;
+}

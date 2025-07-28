@@ -33,7 +33,7 @@ dayjs.extend(duration);
 // --- Interfaz para la estructura de tus datos de Turno ---
 
 @Component({
-    selector: 'app-listado-turnos-diarios',
+    selector: 'app-turnos-fechas',
     imports: [
         NgClass,
         MatButtonModule,
@@ -48,8 +48,8 @@ dayjs.extend(duration);
         MatMenuModule,
         ToastModule
     ],
-    templateUrl: './listado-turnos-diarios.component.html',
-    styleUrl: './listado-turnos-diarios.component.css',
+    templateUrl: './turnos-fechas.component.html',
+    styleUrl: './turnos-fechas.component.css',
     providers: [MessageService],
     animations: [
         trigger('detailExpand', [
@@ -59,7 +59,7 @@ dayjs.extend(duration);
         ]),
     ],
 })
-export class ListadoTurnosDiariosComponent implements OnInit, AfterViewInit, OnDestroy { // Implementamos OnDestroy
+export class TurnosFechasComponent implements OnInit, AfterViewInit, OnDestroy { // Implementamos OnDestroy
 
     private fb = inject(FormBuilder);
     private peticionsServicios = inject(PeticionService);
@@ -84,6 +84,7 @@ export class ListadoTurnosDiariosComponent implements OnInit, AfterViewInit, OnD
     ahora: Date = new Date();
     timerSubscription!: Subscription;
     turnoActual: any;
+    mostrarReporte: boolean = false
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
@@ -91,19 +92,18 @@ export class ListadoTurnosDiariosComponent implements OnInit, AfterViewInit, OnD
     formulario = this.fb.group({
         id : [0],
         activo: [0],
-        nombre: [''],
-        sala: [''],
-        piso: [''],
+        fecha_ini: [''],
+        fecha_fin: [''],
         id_sucursal: [this.autenticaServicio.idSucursalActual()],
         id_usuario: [this.autenticaServicio.idUsuarioActual()]
     });
 
     ngOnInit(): void {
-        this.tamanioForm.actualizarCargando(false, CargandoComponent);
+        /* this.tamanioForm.actualizarCargando(false, CargandoComponent);
         this.peticion('/listar-turnos-diarios');
         this.timerSubscription = interval(1000).subscribe(() => {
             this.ahora = new Date();
-        });
+        }); */
     }
 
     ngAfterViewInit(): void {
@@ -144,6 +144,19 @@ export class ListadoTurnosDiariosComponent implements OnInit, AfterViewInit, OnD
         const segundos = (totalSeconds % 60).toString().padStart(2, '0');
 
         return `${horas}:${minutos}:${segundos}`;
+    }
+
+    aceptar(){
+        this.mostrarReporte = true
+        this.tamanioForm.actualizarCargando(false, CargandoComponent);
+        this.peticion('/listar-turnos-fechas');
+       /*  this.timerSubscription = interval(1000).subscribe(() => {
+            this.ahora = new Date();
+        }); */
+    }
+
+    cerrar(){
+        this.router.navigate(['/turnity'])
     }
 
     calcularDuracion(inicio: string, fin: string): string {
@@ -216,8 +229,14 @@ export class ListadoTurnosDiariosComponent implements OnInit, AfterViewInit, OnD
         this.messageService.add({ severity: 'success', summary: 'Turnity...', detail: this.mensaje });
     }
 
+    atras(){
+        this.turnos = []
+        this.dataSource.data = []
+        this.mostrarReporte = false
+    }
+
     peticion(url:string){
-        const datos = { // Construye el objeto de datos que tu API espera
+        /* const datos = { // Construye el objeto de datos que tu API espera
             id_usuario: this.autenticaServicio.idUsuarioActual(),
             id_sucursal: this.autenticaServicio.idSucursalActual(),
             // Añade cualquier otro campo necesario que tu API espere, si no es solo con los IDs de usuario/sucursal.
@@ -225,8 +244,8 @@ export class ListadoTurnosDiariosComponent implements OnInit, AfterViewInit, OnD
             // Por ejemplo, si tu API esperaba solo id_usuario e id_sucursal:
             // id_usuario: this.formulario.value.id_usuario,
             // id_sucursal: this.formulario.value.id_sucursal
-        };
-
+        }; */
+        const datos = this.formulario.value
         this.tamanioForm.actualizarCargando(true, CargandoComponent);
         this.peticionsServicios.peticionPOST(url, datos).subscribe({
             next: (data) => {
@@ -251,7 +270,7 @@ export class ListadoTurnosDiariosComponent implements OnInit, AfterViewInit, OnD
                             this.mensajeErrorServicios.actualizarError(this.mensaje, '');
                             this.tamanioForm.actualizar( true, ErrorComponent);
                         } else {
-                            if(url === '/listar-turnos-diarios'){
+                            if(url === '/listar-turnos-fechas'){
                                 this.turnos = data.Data.map((s:any) => ({
                                     ...s,
                                     created_at: s.created_at ? new Date(s.created_at) : undefined
@@ -296,6 +315,14 @@ export class ListadoTurnosDiariosComponent implements OnInit, AfterViewInit, OnD
 
     toggleExpand(row: IConsultaTurnos) {
         this.expandedElement = this.expandedElement === row ? null : row;
+    }
+
+    retotnaError(campo:string){
+        const control = this.formulario.get(campo)
+        if (control && (control.touched || control.dirty) && control.invalid) {
+            return this.retornaErroresService.getErrores(this.formulario, campo)
+        }
+        return null
     }
 
     

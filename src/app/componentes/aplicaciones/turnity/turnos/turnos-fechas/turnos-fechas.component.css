@@ -1,0 +1,115 @@
+/* Contenedor de la tabla con scroll horizontal */
+.tabla-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 5px 0;
+  margin: 0 auto;
+  width: 100%;
+  scrollbar-color: #bbb transparent; /* Firefox */
+  scrollbar-width: thin;
+}
+
+.infoTranscurre{
+  padding: 5px !important;
+  background-color: #f0f0f0 !important;
+  color: #002649 !important;
+}
+
+/* Estilo para Webkit (Chrome, Edge, Safari) */
+.tabla-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+.tabla-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.tabla-scroll::-webkit-scrollbar-thumb {
+  background-color: #bbb;
+  border-radius: 4px;
+}
+
+/* Tabla con ancho extendido para provocar scroll */
+.contiene-tabla-scroll {
+  width: 200%;
+}
+
+/* No aplicar scroll a búsqueda ni paginación */
+.header-busqueda, .paginacion {
+  width: 90%;
+  margin: 0 auto;
+}
+
+/* Responsividad */
+@media (max-width: 992px) {
+  .contiene-tabla-scroll {
+    width: 180%;
+  }
+}
+
+@media (max-width: 768px) {
+  .contiene-tabla-scroll {
+    width: 200%;
+  }
+}
+
+@media (max-width: 576px) {
+  .contiene-tabla-scroll {
+    width: 220%;
+  }
+}
+.detail-row {
+  
+  margin: 0 !important;
+  border-top: none !important;
+  background-color: #ededed !important;
+  height: auto !important;
+}
+
+.inner-detail-content{
+  padding: 20px !important;
+}
+
+.tabla-asignaciones-interna {
+  width: 100%;
+  border-collapse: collapse; /* Esto es crucial para que los bordes de las celdas se fusionen y se vean como un solo borde */
+  margin-top: 10px;
+  font-size: 0.85em;
+
+  /* Borde alrededor de toda la tabla */
+  border: 1px solid #ccc; /* Un borde de 1px sólido en gris claro para la tabla completa */
+}
+
+.tabla-asignaciones-interna th,
+.tabla-asignaciones-interna td {
+  /* Bordes para las celdas individuales (encabezados y datos) */
+  border: 1px solid #ddd; /* Un borde de 1px sólido en un gris ligeramente más claro para las celdas */
+  padding: 8px 10px; /* Ajusta el relleno si lo necesitas */
+  text-align: left;
+}
+
+.tabla-asignaciones-interna th {
+  background-color: #f8f8f8;
+  font-weight: 600;
+  color: #555;
+}
+
+.tabla-asignaciones-interna tbody tr:nth-child(even) {
+  background-color: #fcfcfc;
+}
+
+/* Opcional: Si quieres bordes redondeados para la tabla interna */
+.example-element-detail .inner-detail-content {
+    /* Asegúrate de que este contenedor no corte los bordes */
+    overflow: hidden; /* Importante para que los bordes redondeados se vean bien */
+}
+.tabla-asignaciones-interna {
+    border-radius: 8px; /* Redondea las esquinas de la tabla */
+    overflow: hidden; /* Necesario para que el border-radius se aplique correctamente al contenido */
+}
+
+
+
+.formulario{
+   width: 30%;
+  margin: 0px auto;
+  margin-bottom: 130px;
+}

@@ -24,8 +24,10 @@
                 </ng-container>
 
                 <ng-container matColumnDef="paciente">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 20%;"> Paciente </th>
-                    <td mat-cell *matCellDef="let row" class="fila"> 
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 20%;">
+                        Paciente
+                    </th>
+                    <td mat-cell *matCellDef="let row" class="fila">
                         <span [ngClass]="row.destino?.clase">{{ row.paciente.nombre }}</span>
                     </td>
                 </ng-container>
@@ -183,7 +185,15 @@
                                         <tbody>
                                             @for (asignacion of row.asignaciones; track asignacion.hora_asigna + asignacion.hora_ini + asignacion.hora_fin; let i = $index) {
                                                 <tr>
-                                                    <td>{{ asignacion.fecha || row.fecha }}</td> <td>{{ asignacion.hora_asigna }}</td>
+                                                    <td>{{ asignacion.fecha || row.fecha }}</td>
+                                                    <td>
+                                                    {{ asignacion.hora_asigna }}
+
+                                                    <!-- botón que abre su propio menú -->
+                                                    <span mat-icon-button [matMenuTriggerFor]="menu" [matMenuTriggerData]="{ asignacion: asignacion }" class="llamados">
+                                                        Llamados: {{ asignacion.llamados?.length || 0 }}
+                                                    </span>
+                                                    </td>
                                                     <td>{{ asignacion.hora_ini }}</td>
                                                     <td>{{ asignacion.hora_fin }}</td>
                                                     <td>{{ asignacion.sala?.sala }} - {{ asignacion.sala?.piso?.piso }} - {{ asignacion.modulo?.modulo }}</td>
@@ -191,11 +201,25 @@
                                                     <td>{{ asignacion.usuarios?.nombre || 'N/A' }}</td>
                                                     <td>{{ asignacion.operario?.nombre || 'N/A' }}</td>
                                                 </tr>
-                                            } @empty {
-                                                <tr>
-                                                    <td [attr.colspan]="8">No hay asignaciones registradas para este turno.</td>
-                                                </tr>
                                             }
+
+                                            <!-- Menú compartido con datos dinámicos -->
+                                            <mat-menu #menu="matMenu">
+                                                <ng-template matMenuContent let-asignacion="asignacion">
+                                                    <div class="infoTranscurreLlamados">
+                                                    @if (asignacion.llamados?.length > 0) {
+                                                        @for (llamado of asignacion.llamados; track $index) {
+                                                        <span class="llamados d-block ps-2">{{ llamado.hora_llamado }}</span>
+                                                        }
+                                                    } @else {
+                                                        <span class="text-muted small d-block ps-2">Sin llamados</span>
+                                                    }
+                                                    </div>
+                                                </ng-template>
+                                            </mat-menu>
+                                            
+
+                                                    
                                         </tbody>
                                     </table>
                                 } @else {
@@ -229,17 +253,28 @@
         {{ mensajeToast }} 
     </div>
 
-    <div class="leyenda">
-        <div class="circle-icon circle-finalizado">i</div> Turno finalizado
-        <div class="circle-icon circle-cancelado">i</div> Turno cancelado
-        <div class="circle-icon circle-no_contesto">i</div> Paciente no contestó
-        <div class="circle-icon circle-reasignado">i</div> Turno reasignado
-        <div class="circle-icon circle-en_atencion">i</div> Paciente en atención
-        <div class="circle-icon circle-en_espera_asig">i</div> En espera por asignación
-        <div class="circle-icon circle-en_espera_atencion">i</div> En espera por atención
-        
-        
-        
-        
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="convencion">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
+                Convenciones de turnos
+            </button>
+            </h2>
+            <div id="collapse1" class="accordion-collapse collapse collapse" aria-labelledby="convencion" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div class="leyenda">
+                    <div class="circle-icon circle-finalizado">i</div> Turno finalizado
+                    <div class="circle-icon circle-cancelado">i</div> Turno cancelado
+                    <div class="circle-icon circle-no_contesto">i</div> Paciente no contestó
+                    <div class="circle-icon circle-reasignado">i</div> Turno reasignado
+                    <div class="circle-icon circle-en_atencion">i</div> Paciente en atención
+                    <div class="circle-icon circle-en_espera_asig">i</div> En espera por asignación
+                    <div class="circle-icon circle-en_espera_atencion">i</div> En espera por atención
+                </div>
+            </div>
+            </div>
+        </div>
     </div>
+
+    
 </div>

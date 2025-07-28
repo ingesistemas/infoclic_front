@@ -12,8 +12,8 @@ export interface IConsultaTurnos {
     hora_llegada: string;
     observaciones?: string;
     asignaciones: Array<{
-        id_modulo?: number; // Asegúrate de que id_modulo esté aquí si lo necesitas en Angular
-        modulo?: { // Agrega la propiedad 'modulo' a la interfaz de asignaciones
+        id_modulo?: number;
+        modulo?: {
             modulo: string;
             id?: number;
         };
@@ -35,6 +35,11 @@ export interface IConsultaTurnos {
         usuarios: {
             nombre: string;
         };
+        llamados?: Array<{
+            hora_llamado: string;
+            id_usuario?: number;
+            // agrega más campos si los necesitas
+        }>;
     }>;
     created_at?: Date;
 }

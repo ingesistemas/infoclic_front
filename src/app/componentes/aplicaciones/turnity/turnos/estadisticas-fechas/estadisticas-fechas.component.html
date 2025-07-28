@@ -1,0 +1,174 @@
+@if(mostrarReporte == false){
+    <form class="formulario" autocomplete="off" [formGroup]="formulario">
+        <div class="tituloFormulario">
+            Reporte general de turnos
+        </div>
+
+        <div class="contieneInputRow row">
+            <div class="mb-2 floating-label-group col-md-12">
+                <input type="date" id="fecha_ini" class="form-control form-control-sm miInput" formControlName="fecha_ini" placeholder=" " />
+                <label  class="form-label" for="fecha_ini">Fecha inicial</label>
+                <div class="contieneLabelError">
+                    <small class="labelError">{{ retotnaError('fecha_ini')}}&nbsp;</small>
+                </div>
+            </div>
+
+            <div class="mb-2 floating-label-group col-md-12">
+                <input type="date" id="fecha_fin" class="form-control form-control-sm miInput" formControlName="fecha_fin" placeholder=" " />
+                <label  class="form-label" for="fecha_fin">Fecha final</label>
+                <div class="contieneLabelError">
+                    <small class="labelError">{{ retotnaError('fecha_fin')}}&nbsp;</small>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="botonera">  
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-aceptar" (click)="aceptar()" >Aceptar</button>
+                <button type="button" class="btn btn-cancelar" (click)="cerrar()">Cerrar</button>
+            </div>
+        </div>
+
+        <div class="card flex justify-center" style="border: none;">
+            <p-toast [showTransformOptions]="'translateY(100%)'" [showTransitionOptions]="'1000ms'" [hideTransitionOptions]="'1000ms'" [showTransformOptions]="'translateX(100%)'" />
+            {{ mensajeToast }} 
+        </div>
+
+    </form>
+}@else {
+  
+<div class="estadisticas-container" *ngIf="mostrarReporte">
+  <h2 class="titulo">📊 Estadísticas generrales</h2>
+  <ng-container *ngIf="resumenGeneral?.Data?.resumen_general">
+    <div class="resumen">
+      <div class="card resumen-item asignados">
+        <h3>Asignados</h3>
+        <p>{{ resumenGeneral.Data.resumen_general.asignados }}</p>
+      </div>
+
+      <div class="card resumen-item cancelados">
+        <h3>Cancelados</h3>
+        <p>{{ resumenGeneral.Data.resumen_general.cancelados }}</p>
+      </div>
+
+      <div class="card resumen-item atendidos">
+        <h3>Atendidos</h3>
+        <p>{{ resumenGeneral.Data.resumen_general.atendidos }}</p>
+      </div>
+    </div>
+  </ng-container>
+
+<ng-container *ngFor="let seccion of secciones">
+  <ng-container *ngIf="estadisticas?.Data?.[seccion.key]?.length > 0">
+    <div class="bloque-seccion">
+      <h3>{{ seccion.label }}</h3>
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Porcentaje</th>
+            <th>Promedio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of estadisticas.Data[seccion.key]">
+            <td>{{ item.nombre }}</td>
+            <td>{{ item.cantidad }}</td>
+            <td>{{ item.porcentaje }}%</td>
+            <td>{{ item.promedio }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+</ng-container>
+
+<!-- Promedios de tiempos -->
+
+<ng-container *ngIf="estadisticas?.Data?.promedios_tiempos_operarios">
+  <div class="bloque-seccion">
+    <h3>Promedios de Tiempos en atenciones</h3>
+    <table class="tabla">
+      <thead>
+        <tr>
+          <th>Operario</th>
+          <th>
+            <span>P. Tiempo atención</span><br>
+            <small class="subtitulo">H.inicio - H.final</small>
+          </th>
+          <th>
+            <span>P. Tiempo espera</span><br>
+            <small class="subtitulo">H.asignación - H.inicio</small>
+          </th>
+          <th>Atendidos</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (item of estadisticas?.Data?.promedios_tiempos_operarios; track $index) {
+          <tr>
+            <td>
+              {{ item.operario_nombre }}
+            </td>
+            <td>
+              {{ item.promedio_atencion_hms }}
+            </td>
+            <td>
+              {{ item.promedio_espera_hms }}
+            </td>
+            <td>
+              {{ item.total_turnos_atendidos }}
+            </td>
+          </tr>
+        }
+
+      </tbody>
+    </table>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="estadisticas?.Data?.promedios_tiempo_recepcion_asignacion_por_usuario">
+  <div class="bloque-seccion">
+    <h3>Promedios inicio de atención</h3>
+    <table class="tabla">
+      <thead>
+        <tr>
+          <th>Operario</th>
+          <th>
+            <span>P. Tiempo esperado</span><br>
+            <small class="subtitulo">H.llegada - H.asignación</small>
+          </th>
+          <th>Atendidos</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (item of estadisticas?.Data?.promedios_tiempo_recepcion_asignacion_por_usuario; track $index) {
+          <tr>
+            <td>
+              {{ item.usuario_nombre }}
+            </td>
+            <td>
+              {{ item.promedio_hms }}
+            </td>
+            <td>
+              {{ item.total_turnos_procesados }}
+            </td>
+          </tr>
+        }
+
+      </tbody>
+    </table>
+  </div>
+</ng-container>
+
+<div class="acciones">
+  <button mat-button color="primary" (click)="atras()">🖙 Volver</button>
+</div>
+
+</div>
+ 
+
+}

@@ -1,0 +1,323 @@
+@if(mostrarReporte == false){
+    <form class="formulario" autocomplete="off" [formGroup]="formulario">
+        <div class="tituloFormulario">
+            Reporte general de turnos
+        </div>
+
+        <div class="contieneInputRow row">
+            <div class="mb-2 floating-label-group col-md-12">
+                <input type="date" id="fecha_ini" class="form-control form-control-sm miInput" formControlName="fecha_ini" placeholder=" " />
+                <label  class="form-label" for="fecha_ini">Fecha inicial</label>
+                <div class="contieneLabelError">
+                    <small class="labelError">{{ retotnaError('fecha_ini')}}&nbsp;</small>
+                </div>
+            </div>
+
+            <div class="mb-2 floating-label-group col-md-12">
+                <input type="date" id="fecha_fin" class="form-control form-control-sm miInput" formControlName="fecha_fin" placeholder=" " />
+                <label  class="form-label" for="fecha_fin">Fecha final</label>
+                <div class="contieneLabelError">
+                    <small class="labelError">{{ retotnaError('fecha_fin')}}&nbsp;</small>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="botonera">  
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-aceptar" (click)="aceptar()" >Aceptar</button>
+                <button type="button" class="btn btn-cancelar" (click)="cerrar()">Cerrar</button>
+            </div>
+        </div>
+
+        <div class="card flex justify-center" style="border: none;">
+            <p-toast [showTransformOptions]="'translateY(100%)'" [showTransitionOptions]="'1000ms'" [hideTransitionOptions]="'1000ms'" [showTransformOptions]="'translateX(100%)'" />
+            {{ mensajeToast }} 
+        </div>
+
+    </form>
+}@else{
+
+    <div class="contiene-tabla">
+        <div class="header-busqueda row">
+            <div class="col-md-4">
+                <h2 class="tituloTabla">Reporte general de turnos</h2>
+            </div>
+            
+            <div class="col-md-4" >
+                <mat-form-field appearance="fill" style="max-width: 100% !important;">
+                    <mat-label>Buscar...</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" #input>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4" style="text-align: right;">
+                <button type="button" class="btn btn-nuevo" (click)="atras()" >Nueva consulta</button>
+            </div>
+        </div>
+
+        <div class="mat-elevation-z8 tabla-scroll" >
+            <div class="contiene-tabla-scroll">
+                <table mat-table [dataSource]="dataSource" matSort class="tabla-material-con-bordes tabla"
+                    multiTemplateDataRows>
+                    
+                    <ng-container matColumnDef="opciones">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 3%;"> Rutas </th>
+                        <td mat-cell *matCellDef="let row" class="fila" style="text-align: center;"> 
+                        <button class="btn btn-sm btn-aceptar" (click)="expandedElement = expandedElement === row ? null : row"><i class="bi bi-chevron-bar-down"></i></button>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="paciente">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 20%;">
+                            Paciente
+                        </th>
+                        <td mat-cell *matCellDef="let row" class="fila">
+                            <span [ngClass]="row.destino?.clase">{{ row.paciente.nombre }}</span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="prioridad">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 10%;"> Prioridad </th>
+                        <td mat-cell *matCellDef="let row" class="fila"> 
+                            <span [ngClass]="row.destino?.clase">{{ row.prioritaria.prioritaria }}</span>       
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="fecha">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 7%;"> Fecha </th>
+                        <td mat-cell *matCellDef="let row; let i = index" class="fila"> 
+                            <span [ngClass]="row.destino?.clase">{{ row.fecha }}</span>   
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="hora_llegada">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 7%;"> Hora llegada </th>
+                        <td mat-cell *matCellDef="let row" class="fila"> 
+                            <span [ngClass]="row.destino?.clase">{{ row.hora_llegada }}</span>    
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="hora_asignacion">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 7%;"> Hora asignación </th>
+                        <td mat-cell *matCellDef="let row" class="fila"> 
+                            <span [ngClass]="row.destino?.clase">{{ row.asignaciones[0].hora_asigna }}</span>   
+                            <button mat-icon-button [matMenuTriggerFor]="menu" style="font-size: 0.7em !important;">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <div class="infoTranscurre">
+                                    <small>Hora de llegada - hora de asignación </small>
+                                    <small class="text-muted transcurre">({{ calcularDuracion(row.hora_llegada, row.asignaciones[0].hora_asigna) }} )</small> 
+                                </div>
+                            </mat-menu>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="hora_ini">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 7%;"> Hora inicio </th>
+                        <td mat-cell *matCellDef="let row" class="fila"> 
+                            <span [ngClass]="row.destino?.clase">{{ row.asignaciones[0].hora_ini }}</span>
+                        
+                            <button mat-icon-button [matMenuTriggerFor]="menu" style="font-size: 0.7em !important;">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <div class="infoTranscurre">
+                                    <small>Hora llegada - hora de inicio </small>
+                                    @if(row.hora_ini != '00:00:00'){
+                                        <small class="text-muted transcurre">({{ calcularDuracion(row.hora_llegada, row.hora_ini) }} )</small>
+                                    }@else {
+                                        <small class="text-muted transcurre">0 min</small>
+                                        <hr>
+                                        <small class="text-muted infoTranscurre">Desde la llegada han transcurrido</small>
+                                        <small class="transcurre">{{ calcularTranscurrido(row.hora_llegada) }}</small>
+                                        <hr>
+                                        <small class="text-muted infoTranscurre">Desde la asignación han transcurrido</small>
+                                        <small class="transcurre">{{ calcularTranscurrido(row.asignaciones[0].hora_asigna) }}</small>
+                                    }
+                                    <hr>
+                                    <small>Hora asignación - hora de inicio </small>
+                                    @if(row.hora_ini != '00:00:00'){
+                                        <small class="text-muted transcurre">({{ calcularDuracion(row.asignaciones[0].hora_asigna, row.hora_ini) }} )</small>
+                                    }@else{
+                                        <small class="text-muted transcurre">0 min</small>
+                                    }
+
+                                </div>
+                            </mat-menu>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="hora_fin">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 7%;"> Hora final </th>
+                        <td mat-cell *matCellDef="let row" class="fila"> 
+                            <span [ngClass]="row.destino?.clase">{{ row.asignaciones[0].hora_fin }}</span>  
+
+                            <button mat-icon-button [matMenuTriggerFor]="menu" style="font-size: 0.7em !important;">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <div class="infoTranscurre">
+                                    
+                                    <small>Hora llegada - hora final </small>
+                                    <small class="text-muted transcurre">({{ calcularDuracion(row.hora_llegada, row.hora_fin) }} )</small>
+                                    <hr>
+                                    <small>Hora asignación - hora final</small>
+                                    @if(row.hora_fin != '00:00:00'){
+                                        <small class="text-muted transcurre">({{ calcularDuracion(row.asignaciones[0].hora_asigna, row.hora_fin) }} )</small>
+                                    }@else {
+                                        <small class="text-muted transcurre">0 min</small>
+                                    }
+                                    <hr>
+                                    <small>Hora de inicio - hora final </small>
+                                    <small class="text-muted transcurre">({{ calcularDuracion(row.hora_ini, row.hora_fin) }} )</small>
+
+                                </div>
+                            </mat-menu>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="sala">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 7%;"> Sala </th>
+                        <td mat-cell *matCellDef="let row" class="fila"> 
+                            <span [ngClass]="row.destino?.clase">{{ row.asignaciones[0].sala.sala }} - {{ row.asignaciones[0].sala.piso.piso }}</span>      
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="caso">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 7%;"> Destino </th>
+                        <td mat-cell *matCellDef="let row" class="fila"> 
+                            <span   [ngClass]="row.destino?.clase">{{ row.destino?.caso }}</span>      
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="asignado">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 20%;"> Asignado a: </th>
+                        <td mat-cell *matCellDef="let row" class="fila"> 
+                            <span [ngClass]="row.destino?.clase">{{ row.asignaciones[0].operario.nombre }}</span>      
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="creado">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 20%;"> Asignado por: </th>
+                        <td mat-cell *matCellDef="let row" class="fila"> 
+                            <span [ngClass]="row.destino?.clase">{{ row.asignaciones[0].usuarios.nombre }}</span>      
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="expandedDetail">
+                        <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length">
+                            <div class="example-element-detail"
+                                [@detailExpand]="row === expandedElement ? 'expanded' : 'collapsed'">
+                                <div class="inner-detail-content">
+                                    <h5>Historial de Asignaciones para {{ row.paciente.nombre }}</h5>
+
+                                    @if (row.asignaciones && row.asignaciones.length > 0) {
+                                        <table class="tabla-asignaciones-interna" border="1px">
+                                            <thead>
+                                                <tr>
+                                                    <th>Fecha</th>
+                                                    <th>H. Asigna</th>
+                                                    <th>H. Inicio</th>
+                                                    <th>H. Final</th>
+                                                    <th>Sala</th>
+                                                    <th>Destino</th>
+                                                    <th>Asignado Por:</th>
+                                                    <th>Asignado a:</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @for (asignacion of row.asignaciones; track asignacion.hora_asigna + asignacion.hora_ini + asignacion.hora_fin; let i = $index) {
+                                                    <tr>
+                                                        <td>{{ asignacion.fecha || row.fecha }}</td>
+                                                        <td>
+                                                        {{ asignacion.hora_asigna }}
+
+                                                        <!-- botón que abre su propio menú -->
+                                                        <span mat-icon-button [matMenuTriggerFor]="menu" [matMenuTriggerData]="{ asignacion: asignacion }" class="llamados">
+                                                            Llamados: {{ asignacion.llamados?.length || 0 }}
+                                                        </span>
+                                                        </td>
+                                                        <td>{{ asignacion.hora_ini }}</td>
+                                                        <td>{{ asignacion.hora_fin }}</td>
+                                                        <td>{{ asignacion.sala?.sala }} - {{ asignacion.sala?.piso?.piso }} - {{ asignacion.modulo?.modulo }}</td>
+                                                        <td>{{ asignacion.caso?.caso || 'N/A' }}</td>
+                                                        <td>{{ asignacion.usuarios?.nombre || 'N/A' }}</td>
+                                                        <td>{{ asignacion.operario?.nombre || 'N/A' }}</td>
+                                                    </tr>
+                                                }
+
+                                                <!-- Menú compartido con datos dinámicos -->
+                                                <mat-menu #menu="matMenu">
+                                                    <ng-template matMenuContent let-asignacion="asignacion">
+                                                        <div class="infoTranscurreLlamados">
+                                                        @if (asignacion.llamados?.length > 0) {
+                                                            @for (llamado of asignacion.llamados; track $index) {
+                                                            <span class="llamados d-block ps-2">{{ llamado.hora_llamado }}</span>
+                                                            }
+                                                        } @else {
+                                                            <span class="text-muted small d-block ps-2">Sin llamados</span>
+                                                        }
+                                                        </div>
+                                                    </ng-template>
+                                                </mat-menu>
+                                                
+
+                                                        
+                                            </tbody>
+                                        </table>
+                                    } @else {
+                                        <p class="text-muted">No hay asignaciones registradas para este turno.</p>
+                                    }
+
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns" class="fila"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index"
+                        [ngClass]="i % 2 === 0 ? 'fila-par' : 'fila-impar'" class="fila">
+                    </tr>
+                    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+
+                    <tr class="mat-row" *matNoDataRow class="fila">
+                        <td class="mat-cell" colspan="4">No se encontraron registros...</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="paginacion">
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" aria-label="Select page of users"></mat-paginator>
+        </div>
+    
+        <div class="card flex justify-center" style="border: none;">
+            <p-toast [showTransformOptions]="'translateY(100%)'" [showTransitionOptions]="'1000ms'" [hideTransitionOptions]="'1000ms'" [showTransformOptions]="'translateX(100%)'" />
+            {{ mensajeToast }} 
+        </div>
+
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="convencion">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
+                    Convenciones de turnos
+                </button>
+                </h2>
+                <div id="collapse1" class="accordion-collapse collapse collapse" aria-labelledby="convencion" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <div class="leyenda">
+                        <div class="circle-icon circle-finalizado">i</div> Turno finalizado
+                        <div class="circle-icon circle-cancelado">i</div> Turno cancelado
+                        <div class="circle-icon circle-no_contesto">i</div> Paciente no contestó
+                        <div class="circle-icon circle-reasignado">i</div> Turno reasignado
+                        <div class="circle-icon circle-en_atencion">i</div> Paciente en atención
+                        <div class="circle-icon circle-en_espera_asig">i</div> En espera por asignación
+                        <div class="circle-icon circle-en_espera_atencion">i</div> En espera por atención
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>       
+    </div>
+}
