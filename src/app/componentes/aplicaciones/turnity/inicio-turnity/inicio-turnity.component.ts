@@ -27,7 +27,7 @@ export class InicioTurnityComponent implements AfterViewInit {
   ngOnInit(): void {
     history.pushState(null, '', location.href);
     window.onpopstate = () => {
-      let confirma = confirm('Has dado clic hacia atrás. Por temas de seguridad las aplicaciones dde Infoclic, no permiten esta acción. Si confirmas esta acción se cerrará la sesión automáticamente dirigiéndolo a la página inicial.')
+      let confirma = confirm('Has dado clic para volver hacia atrás. Por temas de seguridad las aplicaciones de Infoclic, no permiten esta acción. Si la confirmas, se cerrará la sesión automáticamente, dirigiéndolo a la página inicial.')
 
       if (confirma){
         window.location.href = '';

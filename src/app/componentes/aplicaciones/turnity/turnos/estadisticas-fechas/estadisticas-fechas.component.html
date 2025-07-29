@@ -59,116 +59,174 @@
     </div>
   </ng-container>
 
-<ng-container *ngFor="let seccion of secciones">
-  <ng-container *ngIf="estadisticas?.Data?.[seccion.key]?.length > 0">
+  <ng-container *ngFor="let seccion of secciones">
+    <ng-container *ngIf="estadisticas?.Data?.[seccion.key]?.length > 0">
+      <div class="bloque-seccion">
+        <h3>{{ seccion.label }}</h3>
+        <table class="tabla">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Cantidad</th>
+              <th>Porcentaje</th>
+              <th>Promedio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of estadisticas.Data[seccion.key]">
+              <td>{{ item.nombre }}</td>
+              <td>{{ item.cantidad }}</td>
+              <td>{{ item.porcentaje }}%</td>
+              <td>{{ item.promedio }} </td>
+            </tr>
+            <button class="btn btn-outline-primary mt-1" (click)="grafico( seccion.grafico, seccion.key, '' )"><i class="bi bi-bar-chart-line"></i></button>
+            <!-- *************************************************** -->
+             <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                
+                <button mat-menu-item >
+                  <ng-container>
+                      <span (click)="grafico( seccion.grafico, seccion.key, 'bar' )" class="textTipoGrafico">Barra vertical</span>
+                  </ng-container>
+                </button>
+
+                <button mat-menu-item >
+                  <ng-container>
+                      <span (click)="grafico( seccion.grafico, seccion.key, 'line' )" class="textTipoGrafico">Línea</span>
+                  </ng-container>
+                </button>
+
+                <button mat-menu-item >
+                  <ng-container>
+                      <span (click)="grafico( seccion.grafico, seccion.key, 'pie' )" class="textTipoGrafico">Pastel</span>
+                  </ng-container>
+                </button>
+
+                <button mat-menu-item >
+                  <ng-container>
+                      <span (click)="grafico( seccion.grafico, seccion.key, 'doughnut' )" class="textTipoGrafico">Dona</span>
+                  </ng-container>
+                </button>
+
+                <button mat-menu-item >
+                  <ng-container>
+                      <span (click)="grafico( seccion.grafico, seccion.key, 'radar' )" class="textTipoGrafico">Radar</span>
+                  </ng-container>
+                </button>
+
+                <button mat-menu-item >
+                  <ng-container>
+                      <span (click)="grafico( seccion.grafico, seccion.key, 'polarArea' )" class="textTipoGrafico">Polar area</span>
+                  </ng-container>
+                </button>
+
+                <button mat-menu-item >
+                  <ng-container>
+                      <span (click)="grafico( seccion.grafico, seccion.key, 'bubble' )" class="textTipoGrafico">Burbuja</span>
+                  </ng-container>
+                </button>
+
+                <button mat-menu-item >
+                  <ng-container>
+                      <span (click)="grafico( seccion.grafico, seccion.key, 'scatter' )" class="textTipoGrafico">Dispersión (scatter)</span>
+                  </ng-container>
+                </button>
+
+            </mat-menu> 
+            <!-- *************************************************** -->
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+  </ng-container>
+
+<!-- Promedios de tiempos -->
+
+  <ng-container *ngIf="estadisticas?.Data?.promedios_tiempos_operarios">
     <div class="bloque-seccion">
-      <h3>{{ seccion.label }}</h3>
+      <h3>Promedios de Tiempos en atenciones</h3>
       <table class="tabla">
         <thead>
           <tr>
-            <th>Nombre</th>
-            <th>Cantidad</th>
-            <th>Porcentaje</th>
-            <th>Promedio</th>
+            <th>Operario</th>
+            <th>
+              <span>P. Tiempo atención</span><br>
+              <small class="subtitulo">H.inicio - H.final</small>
+            </th>
+            <th>
+              <span>P. Tiempo espera</span><br>
+              <small class="subtitulo">H.asignación - H.inicio</small>
+            </th>
+            <th>Atendidos</th>
           </tr>
         </thead>
+
         <tbody>
-          <tr *ngFor="let item of estadisticas.Data[seccion.key]">
-            <td>{{ item.nombre }}</td>
-            <td>{{ item.cantidad }}</td>
-            <td>{{ item.porcentaje }}%</td>
-            <td>{{ item.promedio }}</td>
-          </tr>
+          @for (item of estadisticas?.Data?.promedios_tiempos_operarios; track $index) {
+            <tr>
+              <td>
+                {{ item.operario_nombre }}
+              </td>
+              <td>
+                {{ item.promedio_atencion_hms }}
+              </td>
+              <td>
+                {{ item.promedio_espera_hms }}
+              </td>
+              <td>
+                {{ item.total_turnos_atendidos }}
+              </td>
+            </tr>
+          }
+
         </tbody>
       </table>
     </div>
   </ng-container>
-</ng-container>
 
-<!-- Promedios de tiempos -->
-
-<ng-container *ngIf="estadisticas?.Data?.promedios_tiempos_operarios">
-  <div class="bloque-seccion">
-    <h3>Promedios de Tiempos en atenciones</h3>
-    <table class="tabla">
-      <thead>
-        <tr>
-          <th>Operario</th>
-          <th>
-            <span>P. Tiempo atención</span><br>
-            <small class="subtitulo">H.inicio - H.final</small>
-          </th>
-          <th>
-            <span>P. Tiempo espera</span><br>
-            <small class="subtitulo">H.asignación - H.inicio</small>
-          </th>
-          <th>Atendidos</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        @for (item of estadisticas?.Data?.promedios_tiempos_operarios; track $index) {
+  <ng-container *ngIf="estadisticas?.Data?.promedios_tiempo_recepcion_asignacion_por_usuario">
+    <div class="bloque-seccion">
+      <h3>Promedios inicio de atención</h3>
+      <table class="tabla">
+        <thead>
           <tr>
-            <td>
-              {{ item.operario_nombre }}
-            </td>
-            <td>
-              {{ item.promedio_atencion_hms }}
-            </td>
-            <td>
-              {{ item.promedio_espera_hms }}
-            </td>
-            <td>
-              {{ item.total_turnos_atendidos }}
-            </td>
+            <th>Operario</th>
+            <th>
+              <span>P. Tiempo esperado</span><br>
+              <small class="subtitulo">H.llegada - H.asignación</small>
+            </th>
+            <th>Atendidos</th>
           </tr>
-        }
+        </thead>
 
-      </tbody>
-    </table>
+        <tbody>
+          @for (item of estadisticas?.Data?.promedios_tiempo_recepcion_asignacion_por_usuario; track $index) {
+            <tr>
+              <td>
+                {{ item.usuario_nombre }}
+              </td>
+              <td>
+                {{ item.promedio_hms }}
+              </td>
+              <td>
+                {{ item.total_turnos_procesados }}
+              </td>
+            </tr>
+          }
+
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+
+  <div class="acciones">
+    <button mat-button color="primary" (click)="atras()">🖙 Volver</button>
   </div>
-</ng-container>
-
-<ng-container *ngIf="estadisticas?.Data?.promedios_tiempo_recepcion_asignacion_por_usuario">
-  <div class="bloque-seccion">
-    <h3>Promedios inicio de atención</h3>
-    <table class="tabla">
-      <thead>
-        <tr>
-          <th>Operario</th>
-          <th>
-            <span>P. Tiempo esperado</span><br>
-            <small class="subtitulo">H.llegada - H.asignación</small>
-          </th>
-          <th>Atendidos</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        @for (item of estadisticas?.Data?.promedios_tiempo_recepcion_asignacion_por_usuario; track $index) {
-          <tr>
-            <td>
-              {{ item.usuario_nombre }}
-            </td>
-            <td>
-              {{ item.promedio_hms }}
-            </td>
-            <td>
-              {{ item.total_turnos_procesados }}
-            </td>
-          </tr>
-        }
-
-      </tbody>
-    </table>
-  </div>
-</ng-container>
-
-<div class="acciones">
-  <button mat-button color="primary" (click)="atras()">🖙 Volver</button>
-</div>
 
 </div>
  
+
 
 }

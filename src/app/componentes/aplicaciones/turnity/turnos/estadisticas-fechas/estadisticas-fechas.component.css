@@ -6,6 +6,11 @@
   margin-bottom: 130px;
 }
 
+.textTipoGrafico{
+  color: #020f9a !important;
+  font-size: .9em !important;
+}
+
 /* Estilos visuales llamativos y profesionales para el componente de estadísticas */
 
 .estadisticas-container {

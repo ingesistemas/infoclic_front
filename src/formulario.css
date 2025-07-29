@@ -72,25 +72,30 @@ select, option:hover{
 }
 
 .btn-aceptar{
-    background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(0, 99, 152), rgb(5, 115, 174), rgb(5, 98, 174), rgb(1, 83, 142));
+    /*background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(0, 99, 152), rgb(5, 115, 174), rgb(5, 98, 174), rgb(1, 83, 142));*/
+     background-color: rgb(46, 175, 239); 
+    background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(46, 175, 239), rgb(35, 171, 239), rgb(0, 73, 129));
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     color: #FFF;
 }
 
-.btn-aceptar:hover{
+.btn-aceptar:hover, .btn-aceptar:focus{
     color: #ffffff;
-    background: rgb(0, 104, 174) !important;
+    background: rgb(15, 142, 206) !important;
 }
 
 .btn-nuevo{
-     background: rgb(14, 139, 201) !important;
+     background-color: rgb(56, 180, 243); 
+    border: none;
+
     color: #FFF;
 }
 
 .btn-nuevo:hover{
     color: #ffffff;
-     background: rgb(1, 83, 124) !important;
-}
+     background-color: rgb(6, 158, 234); 
 
+}
 
 /* Label fotantes*/
 .floating-label-group {

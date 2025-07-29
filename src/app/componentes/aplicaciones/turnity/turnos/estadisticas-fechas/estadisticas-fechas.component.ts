@@ -26,6 +26,9 @@ import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { IConsultaTurnos } from '../../../../../interfaces/IConsultaTurnos';
+import { GraficosComponent } from '../graficos/graficos.component';
+import { DatosGraficoService } from '../../../../../servicios/datos-grafico.service';
+import { IDatoGrafico } from '../../../../../interfaces/IDatoGrafico';
 
 @Component({
   selector: 'app-estadisticas-fechas',
@@ -57,8 +60,16 @@ export class EstadisticasFechasComponent {
   private mensajeErrorServicios = inject(MensajesService);
   private router = inject(Router);
   private zone = inject(NgZone);
+  private datosGraficoServicio = inject(DatosGraficoService)
 
   expandedElement: IConsultaTurnos | null = null;
+
+ /*  datosGrafico = [
+    { nombre: 'Nelson Fernando Silva Saavedra', cantidad: 1, porcentaje: 66.67, promedio: 0.67 },
+    { nombre: 'Dylan Sneider Silva', cantidad: 1, porcentaje: 33.33, promedio: 0.33 }
+  ]; */
+
+  datosGrafico: IDatoGrafico[] = []
 
   constructor(private messageService: MessageService) {
      
@@ -80,13 +91,13 @@ export class EstadisticasFechasComponent {
    estadisticas: any = {};
 
   secciones = [
-    { key: 'por_prioritarias', label: 'Por Prioritarias' },
-    { key: 'por_operarios_atendieron', label: 'Por Operarios que Atendieron' },
-    { key: 'por_usuarios_asignadores', label: 'Por Usuarios que Asignaron' },
-    { key: 'por_salasenatencion', label: 'Por Salas en Atención' },
-    { key: 'por_modulosenatencion', label: 'Por Módulos en Atención' },
-    { key: 'por_estado_caso', label: 'Por Estado del Caso' },
-    { key: 'por_profesiones', label: 'Estadísticas por Profesiones' }
+    { key: 'por_prioritarias', label: 'Por Prioritarias', grafico:'Prioridades' },
+    { key: 'por_operarios_atendieron', label: 'Por Operarios que Atendieron', grafico: 'Atendieron' },
+    { key: 'por_usuarios_asignadores', label: 'Por Usuarios que Asignaron', grafico: 'Asignaron' },
+    { key: 'por_salasenatencion', label: 'Por Salas en Atención', grafico: 'Salas' },
+    { key: 'por_modulosenatencion', label: 'Por Módulos en Atención', grafico: 'Módulos' },
+    { key: 'por_estado_caso', label: 'Por Estado del Caso', grafico: 'Casos' },
+    { key: 'por_profesiones', label: 'Estadísticas por Profesiones', grafico: 'Profesiones' }
   ];
 
  
@@ -214,4 +225,12 @@ export class EstadisticasFechasComponent {
       }
       return null
   }
+
+   grafico(titulo: string, datos: string, tipo: string){
+    console.log(datos)
+    console.log(this.resumenGeneral)
+    this.datosGrafico = this.resumenGeneral.Data[datos]
+    this.datosGraficoServicio.actualizarDatosGrafico(this.datosGrafico, titulo, tipo)
+    this.tamanioForm.actualizar(true, GraficosComponent, '')
+  } 
 }

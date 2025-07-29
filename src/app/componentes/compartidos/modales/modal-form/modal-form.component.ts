@@ -20,12 +20,21 @@ export class ModalFormComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    
+     window.addEventListener('keydown', this.escFunction);
   }
 
+  ngOnDestroy(): void {
+  window.removeEventListener('keydown', this.escFunction);
+}
 
   cerrarModal() { 
     this.tamanioForm.actualizar(false, null)
   }
+
+  escFunction = (event: KeyboardEvent) => {
+  if (event.key === 'Escape') {
+    this.cerrarModal();
+  }
+}
 
 }

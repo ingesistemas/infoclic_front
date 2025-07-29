@@ -42,7 +42,7 @@ export class InicioInfoclicComponent {
     });
 
      history.pushState(null, '', location.href);
-  window.onpopstate = () => {
+    window.onpopstate = () => {
    
   };
   }
