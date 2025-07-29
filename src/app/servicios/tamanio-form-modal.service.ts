@@ -11,7 +11,7 @@ export class TamanioFormModalService {
   mostrarModalCargando= signal(false)
   componenteCargando = signal<Type<any> | null>(null);
 
-  actualizar(mostrar: boolean, componente: Type<any> | null, accion?: string) {
+  async actualizar(mostrar: boolean, componente: Type<any> | null, accion?: string) {
     this.mostrarModalForm.set(mostrar);
     this.componente.set(componente);
     if (accion !== undefined) {

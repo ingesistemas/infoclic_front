@@ -1,0 +1,80 @@
+<form class="formulario" autocomplete="off" [formGroup]="formulario">
+    <div class="tituloFormulario">
+        Asignación de turnos
+    </div>
+
+    <div class="contieneInputRow row">
+        <div class="mb-2 floating-label-group col-md-12">
+            <input type="text" id="documento" class="form-control form-control-sm miInput documento" formControlName="documento" placeholder=" " (blur)="obtenerCliente()" />
+            <label  class="form-label" for="documento">Número de documento</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('documento')}}&nbsp;</small>
+            </div>
+        </div>
+
+        <div class="mb-2 floating-label-group col-md-12">
+            <input type="text" id="nombre" class="form-control form-control-sm miInput nombre" formControlName="nombre" placeholder=" " />
+            <label  class="form-label" for="documento">Nombre del paciente</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('nombre')}}&nbsp;</small>
+            </div>
+        </div>
+
+        
+
+        <div class="pantalaNumerica col-md-6">
+            <div class="teclado">
+                <button class="btn-aceptar" (click)="presionar('1')">1</button>
+                <button class="btn-aceptar" (click)="presionar('2')">2</button>
+                <button class="btn-aceptar" (click)="presionar('3')">3</button>
+                <button class="btn-aceptar" (click)="presionar('4')">4</button>
+                <button class="btn-aceptar" (click)="presionar('5')">5</button>
+                <button class="btn-aceptar" (click)="presionar('6')">6</button>
+                <button class="btn-aceptar" (click)="presionar('7')">7</button>
+                <button class="btn-aceptar" (click)="presionar('8')">8</button>
+                <button class="btn-aceptar" (click)="presionar('9')">9</button>
+                <button class="btn-aceptar" (click)="presionar('0')">0</button>
+                <button class="btn-cancelar" (click)="borrar()">⌫ Borrar</button>
+                <button class="btn btn-aceptar-pantalla" (click)="obtenerCliente()">✔ Aceptar</button>
+                <button type="button" class="btn btn-mic" (click)="reconocerVoz()">🎤 Dictar documento</button>
+            </div>
+        </div>
+
+        
+
+        
+
+        <div class="mb-2 floating-label-group col-md-6">
+            <select id="id_sala" class="form-select form-select-sm miInput" formControlName="id_sala" >
+               
+                @for (sala of salas; track $index) {
+                    <option value="{{ sala.id }}">{{ sala.sala }}-{{ sala.piso!.piso }}</option>
+                }
+            </select>
+            <label for="id_sala" class="form-label">Sala donde será atendido</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('id_sala')}}&nbsp;</small>
+            </div>
+        </div>
+
+        
+    </div>
+
+    <div style="text-align: center;" class="alert alert-primary" role="alert">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Buscando datos...
+    </div>
+   
+    <div class="botonera">  
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-aceptar" (click)="aceptar()" >Asignar turno</button>
+            <button type="button" class="btn btn-cancelar" (click)="cerrar()">Cerrar</button>
+        </div>
+    </div>
+
+     <div class="card flex justify-center" style="border: none;">
+    <p-toast [showTransformOptions]="'translateY(100%)'" [showTransitionOptions]="'1000ms'" [hideTransitionOptions]="'1000ms'" [showTransformOptions]="'translateX(100%)'" />
+      {{ mensajeToast }} 
+    </div>
+
+</form>

@@ -1,0 +1,92 @@
+
+@media (max-width: 5000px) {
+    .formulario {
+        width: 80%;
+    }
+ 
+}
+
+@media (max-width: 992px) {
+    .formulario {
+        width: 85%;
+    }
+ 
+}
+
+@media (max-width: 768px) {
+    .formulario {
+        width: 90% !important;
+    }
+}
+
+@media (max-width: 576px) {
+     .formulario {
+        width: 95% !important;
+    }
+}
+
+.calculadora {
+      width: 220px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 10px;
+      background-color: #f9f9f9;
+    }
+
+    .pantalla {
+      width: 100%;
+      height: 40px;
+      font-size: 1.5rem;
+      text-align: right;
+      padding: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: white;
+    }
+
+    .teclado {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .teclado button {
+      padding: 15px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 5px;
+      background-color: #e0e0e0;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .teclado button:hover {
+      background-color: #d0d0d0;
+    }
+
+    .borrar {
+      grid-column: span 1;
+      background-color: #f66;
+      color: white;
+    }
+
+    .borrar:hover {
+      background-color: #d44;
+    }
+
+.documento, .nombre{
+  font-size: 28px;
+  color: #000c94 !important;
+  font-weight: bold;
+}
+
+.btn-aceptar-pantalla{
+  background-color: #007eb5 !important;
+  color: #FFF !important;
+}
+
+.btn-aceptar-pantalla:hover{
+  background-color: #00587e  !important;
+  color: #FFF !important;
+}

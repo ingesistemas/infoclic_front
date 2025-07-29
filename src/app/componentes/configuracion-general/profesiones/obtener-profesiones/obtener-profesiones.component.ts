@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, inject, NgZone, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, inject, NgZone, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
@@ -22,6 +22,7 @@ import { TamanioFormModalService } from '../../../../servicios/tamanio-form-moda
 import { MensajesService } from '../../../../servicios/mensajes.service';
 import { CargandoComponent } from '../../../compartidos/cargando/cargando.component';
 import { ErrorComponent } from '../../../compartidos/mensajes/error/error.component';
+
 
 @Component({
   selector: 'app-obtener-profesiones',
@@ -74,6 +75,7 @@ export class ObtenerProfesionesComponent {
     id_usuario: [this.autenticaServicio.idUsuarioActual()]
   })
 
+    
   ngOnInit(): void {
     this.tamanioForm.actualizarCargando(false, CargandoComponent)
     this.peticion('/obtener-profesiones')

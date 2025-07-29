@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, inject, NgZone, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, inject, NgZone, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
@@ -21,6 +21,7 @@ import { TamanioFormModalService } from '../../../../servicios/tamanio-form-moda
 import { MensajesService } from '../../../../servicios/mensajes.service';
 import { CargandoComponent } from '../../../compartidos/cargando/cargando.component';
 import { ErrorComponent } from '../../../compartidos/mensajes/error/error.component';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-obtener-salas',
@@ -52,12 +53,13 @@ export class ObtenerSalasComponent {
     private mensajeErrorServicios = inject(MensajesService)
     private router = inject(Router)
     private zone = inject(NgZone);
+    private el = inject(ElementRef) 
       
     constructor(private messageService: MessageService) {
       this.dataSource = new MatTableDataSource();
     }
    
-    displayedColumns: string[] = ['opciones', 'id', 'sala', 'piso', 'creado'];
+    displayedColumns: string[] = ['opciones', 'id', 'sala', 'piso', 'atencion_inicial', 'creado'];
     dataSource: MatTableDataSource<any>;
     salas: any[] = []
     mensaje: string = ''
@@ -78,6 +80,14 @@ export class ObtenerSalasComponent {
       this.peticion('/obtener-salas')
       //console.log(localStorage.getItem('ciudades'))
     }
+
+    ngAfterViewInit() {
+      const popoverTriggerList = this.el.nativeElement.querySelectorAll('[data-bs-toggle="popover"]');
+      popoverTriggerList.forEach((popoverTriggerEl: HTMLElement) => {
+        new bootstrap.Popover(popoverTriggerEl);
+      });
+    }
+
   
     applyFilter(event: Event) {
       const filterValue = (event.target as HTMLInputElement).value;

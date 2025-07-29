@@ -17,18 +17,21 @@ export class VerticalTurnityAdmin {
   mostrarVertical = inject(VerticalService)
   private actualizaDatos = inject(TamanioFormModalService)
   
-  actualizarDatos(){
-     this.actualizaDatos.actualizar(false, null)
-     this.cerrarVertical()
+  async actualizarDatos(){
+    this.cerrarVertical()
+    this.actualizaDatos.actualizar(false, null)
+     
   }
 
 
   cerrarVertical(){
+    
     const offcanvasElement = document.getElementById('offcanvasExample');
     if (offcanvasElement) {
       const offcanvasInstance = bootstrap.Offcanvas.getInstance(offcanvasElement)
         || new bootstrap.Offcanvas(offcanvasElement);
       offcanvasInstance.hide();
     }
+
   }
 }

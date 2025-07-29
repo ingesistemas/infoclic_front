@@ -85,7 +85,7 @@ select, option:hover{
 }
 
 .btn-nuevo{
-     background-color: rgb(56, 180, 243); 
+     background-color: rgb(56, 180, 243) !important; 
     border: none;
 
     color: #FFF;
@@ -93,7 +93,7 @@ select, option:hover{
 
 .btn-nuevo:hover{
     color: #ffffff;
-     background-color: rgb(6, 158, 234); 
+     background-color: rgb(6, 158, 234) !important; 
 
 }
 
@@ -146,7 +146,18 @@ select, option:hover{
 .contieneMensaje{
     margin: 0px auto !important;
     border-radius: 10px;
+}
 
+.ayuda {
+  color: #f26b04;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  font-size: 1.2em;
+  margin-right: 5px;
+}
+
+.ayuda:hover {
+  color: #0a58ca;
 }
 
 .mensaje{
@@ -170,7 +181,7 @@ select, option:hover{
 }
 
 .contieneLabelError{
-    margin-top: -8px !important;
+    margin-top: 0 !important;
     text-align: right;
 }
 

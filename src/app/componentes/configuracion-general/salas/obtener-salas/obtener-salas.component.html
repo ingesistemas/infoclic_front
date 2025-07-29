@@ -74,6 +74,18 @@
                     </td>
                 </ng-container>
 
+                <ng-container matColumnDef="atencion_inicial">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 10%;"> Atención inicial 
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let row" class="fila"> 
+                        <span [ngClass]="row.activo == 0 ? 'activo' : 'inactivo'">
+                            {{row.atencion_inicial}} 
+                        </span>                        
+                    </td>
+                </ng-container>
+
+
                 <ng-container matColumnDef="creado">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 20%;"> Creado por: </th>
                     <td mat-cell *matCellDef="let row" class="fila"> 

@@ -15,16 +15,17 @@ import { ErrorComponent } from '../../../../compartidos/mensajes/error/error.com
 import { IOperarios } from '../../../../../interfaces/IOperarios';
 import { IModulo } from '../../../../../interfaces/IModulo';
 import { Isalas } from '../../../../../interfaces/ISalas';
-
+import wordsToNumbers from 'words-to-numbers-es';
+declare var webkitSpeechRecognition: any;
 
 @Component({
-  selector: 'app-asignar-turno',
+  selector: 'app-asignar-turno-pantalla',
   imports: [ReactiveFormsModule, ToastModule],
-  templateUrl: './asignar-turno.component.html',
-  styleUrl: './asignar-turno.component.css',
+  templateUrl: './asignar-turno-pantalla.component.html',
+  styleUrl: './asignar-turno-pantalla.component.css',
   providers: [MessageService],
 })
-export class AsignarTurnoComponent {
+export class AsignarTurnoPantallaComponent {
   private fb = inject(FormBuilder)
   private router = inject(Router)
   private peticionsServicios = inject(PeticionService)
@@ -87,6 +88,17 @@ export class AsignarTurnoComponent {
     this.formulario.controls['nombre'].setValue('')
     this.formulario.controls['nombre'].enable();
     this.peticion('/obtener-cliente')
+  }
+
+
+
+  presionar(valor: string) {
+    let nuevo = this.formulario.controls['documento'].value + valor
+    this.formulario.controls['documento'].setValue(nuevo);
+  }
+
+  borrar() {
+    this.formulario.controls['documento'].setValue(this.formulario.controls['documento'].value?.slice(0, -1) || '');
   }
 
   obtenerOperarios(){
@@ -176,6 +188,46 @@ export class AsignarTurnoComponent {
     })
   }
 
+  
+
+  reconocerVoz() {
+  const recognition = new webkitSpeechRecognition();
+  recognition.lang = 'es-ES';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  recognition.start();
+
+  recognition.onresult = (event: any) => {
+    const transcript = event.results[0][0].transcript.toLowerCase().trim();
+    console.log('Texto dictado:', transcript);
+
+    let numeroDetectado = transcript.replace(/\D/g, '');
+
+    if (!numeroDetectado || numeroDetectado.length < 3) {
+      try {
+        const convertido = wordsToNumbers(transcript);
+        numeroDetectado = String(convertido).replace(/\D/g, '');
+      } catch (error) {
+        console.warn('Error al convertir texto a número:', error);
+        numeroDetectado = '';
+      }
+    }
+
+    if (numeroDetectado.length >= 3) {
+      this.formulario.controls['documento'].setValue(numeroDetectado);
+      this.obtenerCliente();
+    } else {
+      alert('No se pudo reconocer un número válido. Intenta dictarlo nuevamente.');
+    }
+  };
+
+  recognition.onerror = (event: any) => {
+    console.error('Error en reconocimiento de voz:', event.error);
+    alert('Hubo un problema al reconocer la voz. Intenta de nuevo.');
+  };
+}
+
   retotnaError(campo:string){
     const control = this.formulario.get(campo)
       if (control && (control.touched || control.dirty) && control.invalid) {
@@ -183,4 +235,6 @@ export class AsignarTurnoComponent {
       }
     return null
   }
+
+  
 }

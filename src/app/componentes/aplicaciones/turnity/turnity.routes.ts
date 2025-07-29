@@ -7,12 +7,18 @@ import { LlamadoPantallaComponent } from './turnos/llamado-pantalla/llamado-pant
 import { ListadoTurnosDiariosComponent } from './turnos/listado-turnos-diarios/listado-turnos-diarios.component';
 import { TurnosFechasComponent } from './turnos/turnos-fechas/turnos-fechas.component';
 import { EstadisticasFechasComponent } from './turnos/estadisticas-fechas/estadisticas-fechas.component';
+import { AsignarTurnoPantallaComponent } from './turnos/asignar-turno-pantalla/asignar-turno-pantalla.component';
 
 
 export const turnityGeneral: Routes = [
     {
         path: 'crear-turno',
         component: AsignarTurnoComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'crear-turno-pantalla',
+        component: AsignarTurnoPantallaComponent,
         canActivate: [AuthGuard]
     },
     {

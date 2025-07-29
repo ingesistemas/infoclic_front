@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, effect, inject, NgZone, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, effect, ElementRef, inject, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, MaxValidator, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { PeticionService } from '../../../../servicios/peticion.service';
@@ -14,6 +14,8 @@ import { ToastModule } from 'primeng/toast';
 import { ICiudades } from '../../../../interfaces/ICiudades';
 import { IDptos } from '../../../../interfaces/IDptos';
 import { IPisos } from '../../../../interfaces/IPisos';
+import * as bootstrap from 'bootstrap';
+
 
 @Component({
   selector: 'app-crear-editar-salas',
@@ -22,7 +24,7 @@ import { IPisos } from '../../../../interfaces/IPisos';
   styleUrl: './crear-editar-salas.component.css',
    providers: [MessageService],
 })
-export class CrearEditarSalasComponent {
+export class CrearEditarSalasComponent implements AfterViewInit  {
   private fb = inject(FormBuilder)
   private router = inject(Router)
   private peticionsServicios = inject(PeticionService)
@@ -31,6 +33,7 @@ export class CrearEditarSalasComponent {
   private tamanioForm = inject(TamanioFormModalService)
   private mensajeErrorServicios = inject(MensajesService)
   private zone = inject(NgZone);
+  private el = inject(ElementRef) 
   
   mensaje: string = ""
   //mostrarSucursales: boolean = false
@@ -46,6 +49,7 @@ export class CrearEditarSalasComponent {
   formulario = this.fb.group({
     id: [0],
     sala: ['' , [Validators.required, Validators.minLength(3)]],
+    atencion_inicial: ['' , [Validators.required]],
     id_piso: [0 , [Validators.required]],
     id_sucursal: [this.autenticaServicio.idSucursalActual()],
     id_usuario: [this.autenticaServicio.idUsuarioActual()]
@@ -59,9 +63,18 @@ export class CrearEditarSalasComponent {
       const datos = history.state;
       this.formulario.controls['id'].setValue(datos.datos.id)
       this.formulario.controls['sala'].setValue(datos.datos.sala)
+      this.formulario.controls['atencion_inicial'].setValue(datos.datos.atencion_inicial)
       this.formulario.controls['id_piso'].setValue(datos.datos.id_piso)
     }
   }
+
+  ngAfterViewInit() {
+    const popoverTriggerList = this.el.nativeElement.querySelectorAll('[data-bs-toggle="popover"]');
+    popoverTriggerList.forEach((popoverTriggerEl: HTMLElement) => {
+      new bootstrap.Popover(popoverTriggerEl);
+    });
+  }
+
 
   mostrarToast() {
     this.messageService.add({ severity: 'success', summary: 'Turnity...', detail: this.mensaje });

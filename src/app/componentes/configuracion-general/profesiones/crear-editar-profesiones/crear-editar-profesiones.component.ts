@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, effect, inject, NgZone, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, effect, ElementRef, inject, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, MaxValidator, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { PeticionService } from '../../../../servicios/peticion.service';
@@ -13,6 +13,7 @@ import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ICiudades } from '../../../../interfaces/ICiudades';
 import { IDptos } from '../../../../interfaces/IDptos';
+
 
 @Component({
   selector: 'app-crear-editar-profesiones',
@@ -31,6 +32,7 @@ export class CrearEditarProfesionesComponent {
   private mensajeErrorServicios = inject(MensajesService)
   private zone = inject(NgZone);
   
+  
   profesiones!: any
   mensaje: string = ""
   //mostrarSucursales: boolean = false
@@ -45,6 +47,7 @@ export class CrearEditarProfesionesComponent {
   formulario = this.fb.group({
     id: [0],
     profesion: ['' , [Validators.required, Validators.minLength(5)]],
+     atencion_inicial: ['' , [Validators.required]],
     id_sucursal: [this.autenticaServicio.idSucursalActual()],
     id_usuario: [this.autenticaServicio.idUsuarioActual()]
   })

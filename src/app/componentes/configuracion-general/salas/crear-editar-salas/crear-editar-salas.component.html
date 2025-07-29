@@ -23,6 +23,27 @@
             </div>
         </div>
 
+        <div class="mb-2 floating-label-group col-md-12">
+            <select id="atencion_inicial" class="form-select form-select-sm miInput" formControlName="atencion_inicial">
+               <option value="SI">SI</option>
+               <option value="NO">NO</option>     
+            </select>
+            <label class="form-label">Atención inicial? &nbsp;&nbsp;&nbsp; </label>
+            
+            <div class="contieneLabelError">
+                
+                <small class="labelError"><i 
+                    class="bi bi-question-circle ayuda"
+                    tabindex="0"
+                    data-bs-toggle="popover" 
+                    data-bs-trigger="hover"
+                    title="Atención inicial" 
+                    data-bs-content="Se refiere a que si esta profesión o cargo, se encarga de dirigir al paciente al momento de su ingreso; tal como lo hace un facturador, atención al usuario, etc.">
+                    </i>{{ retotnaError('atencion_inicial')}}&nbsp;
+                </small>
+            </div>
+        </div>
+
     </div>
 
     <div class="botonera">  
