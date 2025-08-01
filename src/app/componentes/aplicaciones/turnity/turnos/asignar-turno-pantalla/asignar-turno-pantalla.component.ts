@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, effect, inject, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, effect, ElementRef, inject, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, MaxValidator, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -16,11 +16,12 @@ import { IOperarios } from '../../../../../interfaces/IOperarios';
 import { IModulo } from '../../../../../interfaces/IModulo';
 import { Isalas } from '../../../../../interfaces/ISalas';
 import wordsToNumbers from 'words-to-numbers-es';
+import { CommonModule } from '@angular/common';
 declare var webkitSpeechRecognition: any;
 
 @Component({
   selector: 'app-asignar-turno-pantalla',
-  imports: [ReactiveFormsModule, ToastModule],
+  imports: [ReactiveFormsModule, ToastModule, CommonModule],
   templateUrl: './asignar-turno-pantalla.component.html',
   styleUrl: './asignar-turno-pantalla.component.css',
   providers: [MessageService],
@@ -34,6 +35,7 @@ export class AsignarTurnoPantallaComponent {
   private tamanioForm = inject(TamanioFormModalService)
   private mensajeErrorServicios = inject(MensajesService)
   private zone = inject(NgZone);
+  @ViewChild('nombreInput') nombreInput!: ElementRef;
   
   clientes!: any
   mensaje: string = ""
@@ -47,14 +49,15 @@ export class AsignarTurnoPantallaComponent {
   accion = this.tamanioForm.accionActual()
   salas!: Isalas[]
   prioritarias!: any[]
+  botonActivo: number | null = null;
 
   formulario = this.fb.group({
     id: [0],
     id_paciente:[0],
     nombre: ['' , [Validators.required, Validators.minLength(3)]],
     documento: ['' , [Validators.required, Validators.minLength(3)]],
-    id_profesion: [0 , [Validators.required]],
-    id_operario: [0 , [Validators.required]],
+    id_profesion: [0],
+    id_operario: [0],
     id_prioritaria: [0 ],
     id_sala: [0 , [Validators.required]],
     id_sucursal: [this.autenticaServicio.idSucursalActual()],
@@ -78,6 +81,12 @@ export class AsignarTurnoPantallaComponent {
       const prioritariasString = localStorage.getItem('prioritarias')
       this.prioritarias = prioritariasString ? JSON.parse(prioritariasString) : [];
     }
+    this.obtenerSalas()
+  }
+
+  datoSala(id: number){
+    this.formulario.controls['id_sala'].setValue(id)
+    this.botonActivo = id;
   }
 
   mostrarToast() {
@@ -85,12 +94,11 @@ export class AsignarTurnoPantallaComponent {
   }
 
   obtenerCliente(){
+    this.nombreInput.nativeElement.focus();
     this.formulario.controls['nombre'].setValue('')
     this.formulario.controls['nombre'].enable();
     this.peticion('/obtener-cliente')
   }
-
-
 
   presionar(valor: string) {
     let nuevo = this.formulario.controls['documento'].value + valor
@@ -113,17 +121,43 @@ export class AsignarTurnoPantallaComponent {
     this.router.navigateByUrl('/turnity')
   }
 
+  capitalizarCadaPalabra() {
+    let nombreCap = this.formulario.controls['nombre'].value;
+
+    if (nombreCap) {
+      nombreCap = nombreCap
+        .toLowerCase()
+        .split(' ')
+        .map(palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1))
+        .join(' ');
+
+      // Actualizas el valor del control
+      this.formulario.controls['nombre'].setValue(nombreCap, { emitEvent: false });
+    }
+  }
+
   aceptar(){
-      this.peticion('/crear-turno')
-      const datos = this.formulario.value
-      console.log(datos)
+    if(this.formulario.valid){
+      this.peticion('/crear-turno-pantalla')
+      this.botonActivo = 0
+    }else{
+      this.mensaje = "No se ha podido asignar el turno. Por favor verifique que los datos solicitado esten totalmente diligenciados."
+      this.mensajeErrorServicios.actualizarError(this.mensaje, '')
+      this.tamanioForm.actualizar( true, ErrorComponent)
+    }
+      
+  }
+
+  limpiar(){
+      this.botonActivo = 0
+      this.formulario.reset()
   }
 
   peticion(url:string){
     this.mensaje = ''
-    if(url == '/crear-turno'){
-      this.tamanioForm.actualizarCargando(true, CargandoComponent)
-    }
+  
+    this.tamanioForm.actualizarCargando(true, CargandoComponent)
+    
     const datos = this.formulario.value;
     this.peticionsServicios.peticionPOST(url, datos).subscribe({
       next: (data) => {
@@ -156,8 +190,9 @@ export class AsignarTurnoPantallaComponent {
                 this.formulario.controls['id_paciente'].setValue(data.Data[0].id)
                 this.formulario.controls['nombre'].setValue(data.Data[0].nombre)
                 this.formulario.controls['nombre'].disable();
+               
               }else{
-                this.formulario.controls['nombre'].enable();
+                this.formulario.controls['nombre'].enable();  
               }
             }else{
               this.mensaje = data.Message
@@ -174,7 +209,7 @@ export class AsignarTurnoPantallaComponent {
         }
       },
       error: (err) => {
-        this.mensaje = "Se presento un error inesperado. Comunícate con un asesor infoclic.";
+        this.mensaje = "Se presentó un error inesperado. Comunícate con un asesor infoclic.";
         this.mensajeErrorServicios.actualizarError(this.mensaje, '');
         this.tamanioForm.actualizar(false, ErrorComponent);
       },
@@ -188,45 +223,43 @@ export class AsignarTurnoPantallaComponent {
     })
   }
 
-  
-
   reconocerVoz() {
-  const recognition = new webkitSpeechRecognition();
-  recognition.lang = 'es-ES';
-  recognition.interimResults = false;
-  recognition.maxAlternatives = 1;
+    const recognition = new webkitSpeechRecognition();
+    recognition.lang = 'es-ES';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
 
-  recognition.start();
+    recognition.start();
 
-  recognition.onresult = (event: any) => {
-    const transcript = event.results[0][0].transcript.toLowerCase().trim();
-    console.log('Texto dictado:', transcript);
+    recognition.onresult = (event: any) => {
+      const transcript = event.results[0][0].transcript.toLowerCase().trim();
+      console.log('Texto dictado:', transcript);
 
-    let numeroDetectado = transcript.replace(/\D/g, '');
+      let numeroDetectado = transcript.replace(/\D/g, '');
 
-    if (!numeroDetectado || numeroDetectado.length < 3) {
-      try {
-        const convertido = wordsToNumbers(transcript);
-        numeroDetectado = String(convertido).replace(/\D/g, '');
-      } catch (error) {
-        console.warn('Error al convertir texto a número:', error);
-        numeroDetectado = '';
+      if (!numeroDetectado || numeroDetectado.length < 3) {
+        try {
+          const convertido = wordsToNumbers(transcript);
+          numeroDetectado = String(convertido).replace(/\D/g, '');
+        } catch (error) {
+          console.warn('Error al convertir texto a número:', error);
+          numeroDetectado = '';
+        }
       }
-    }
 
-    if (numeroDetectado.length >= 3) {
-      this.formulario.controls['documento'].setValue(numeroDetectado);
-      this.obtenerCliente();
-    } else {
-      alert('No se pudo reconocer un número válido. Intenta dictarlo nuevamente.');
-    }
-  };
+      if (numeroDetectado.length >= 3) {
+        this.formulario.controls['documento'].setValue(numeroDetectado);
+        this.obtenerCliente();
+      } else {
+        alert('No se pudo reconocer un número válido. Intenta dictarlo nuevamente.');
+      }
+    };
 
-  recognition.onerror = (event: any) => {
-    console.error('Error en reconocimiento de voz:', event.error);
-    alert('Hubo un problema al reconocer la voz. Intenta de nuevo.');
-  };
-}
+    recognition.onerror = (event: any) => {
+      console.error('Error en reconocimiento de voz:', event.error);
+      alert('Hubo un problema al reconocer la voz. Intenta de nuevo.');
+    };
+  }
 
   retotnaError(campo:string){
     const control = this.formulario.get(campo)

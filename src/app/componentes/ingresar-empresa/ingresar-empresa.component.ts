@@ -91,6 +91,9 @@ export class IngresarEmpresaComponent implements OnInit {
   }
   
   ingresar(){
+    if(this.formulario.controls['usuario'].value != 'no aplica' && this.formulario.controls['password'].value == 'admin' ){
+      alert('Por seguridad, recuerda cambiar las credenciales de acceso, tales como usuario y contraseña. Para lo anterior, al momento de ingresar a la aplicación, haga clic en su nombre y después en cambiar credenciales.')
+    }
     this.peticion('/login')
   }
 

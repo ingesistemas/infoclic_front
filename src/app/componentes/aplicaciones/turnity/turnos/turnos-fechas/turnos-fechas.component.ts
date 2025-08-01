@@ -28,6 +28,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { IConsultaTurnos } from '../../../../../interfaces/IConsultaTurnos';
 
 
+
 dayjs.extend(duration);
 
 // --- Interfaz para la estructura de tus datos de Turno ---
@@ -69,7 +70,7 @@ export class TurnosFechasComponent implements OnInit, AfterViewInit, OnDestroy {
     private mensajeErrorServicios = inject(MensajesService);
     private router = inject(Router);
     private zone = inject(NgZone);
-
+    
     expandedElement: IConsultaTurnos | null = null;
 
     constructor(private messageService: MessageService) {
@@ -85,6 +86,7 @@ export class TurnosFechasComponent implements OnInit, AfterViewInit, OnDestroy {
     timerSubscription!: Subscription;
     turnoActual: any;
     mostrarReporte: boolean = false
+
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
@@ -104,7 +106,11 @@ export class TurnosFechasComponent implements OnInit, AfterViewInit, OnDestroy {
         this.timerSubscription = interval(1000).subscribe(() => {
             this.ahora = new Date();
         }); */
+        this.timerSubscription = interval(1000).subscribe(() => {
+            this.ahora = new Date(); // Se actualiza cada segundo
+        });
     }
+
 
     ngAfterViewInit(): void {
         // Es importante que estas asignaciones se hagan después de que los ViewChilds estén disponibles.
@@ -126,6 +132,8 @@ export class TurnosFechasComponent implements OnInit, AfterViewInit, OnDestroy {
         if (!asignaciones) return 0;
         return asignaciones.reduce((acc, asignacion) => acc + (asignacion.llamados?.length || 0), 0);
     }
+
+    horaActual: string = new Date().toISOString();
 
     calcularTranscurrido(horaLlegada: string): string {
         if (!horaLlegada) return '';

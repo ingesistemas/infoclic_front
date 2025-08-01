@@ -21,9 +21,7 @@ export class LlamadoPantallaComponent {
   piso: string = ''
   modulo: string = ''
 
-
   async ngOnInit() {
-
     await this.echoServicio.listenToLlamado((turno) => {
       this.zone.run(() => {
         console.log('🎯 Turno recibido en Angular:', turno);

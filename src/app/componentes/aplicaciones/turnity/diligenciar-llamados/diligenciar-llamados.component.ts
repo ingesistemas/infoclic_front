@@ -71,18 +71,18 @@ export class DiligenciarLlamadosComponent {
   constructor(private messageService: MessageService){}
   async ngOnInit() {
 
-    await setTimeout(() => {
+    /* await setTimeout(() => {
       this.echoServicio.listenToLlamado((turno) => {
         this.zone.run(() => {
           this.mensajes.push(turno);
           this.cdRef.detectChanges(); // asegura que la vista se actualice
         });
       });
-    },5000) 
-  
+    },5000)  */
+
     await this.peticion('/obtener-salas')
     await this.peticion('/obtener-profesiones')
-  
+
     if(this.tamanioForm.accionActual() == 'Editar'){
       
       const datos = history.state;
@@ -102,10 +102,7 @@ export class DiligenciarLlamadosComponent {
     this.casos = casosString ? JSON.parse(casosString) : [];
 
     await this.peticion('/llamado-operario')
-    await this.peticion('/hora-inicial-turno')
-    //await this.peticion('/disparar')
-
-    
+    await this.peticion('/hora-inicial-turno')    
     
   }
 
@@ -133,6 +130,8 @@ export class DiligenciarLlamadosComponent {
     //this.peticion('/editar-asignaciones')
     this.peticion('/actualizar-llamado')
   }
+
+
 
   peticion(url:string){
     this.mensaje = ''
@@ -165,7 +164,7 @@ export class DiligenciarLlamadosComponent {
               this.salas = data.Data
             }else if(url == '/obtener-usuario-profesion'){
                 this.operarios = data.Data
-            }else if(url == '/llamado-operario' || url == '/hora-inicial-turno' || url == '/disparar' || url == '/res-hora-inicial-turno'){
+            }else if(url == '/llamado-operario' || url == '/hora-inicial-turno' || url == '/disparar' || url == '/disparar-seguimiento' || url == '/res-hora-inicial-turno'){
               
             }else{
 

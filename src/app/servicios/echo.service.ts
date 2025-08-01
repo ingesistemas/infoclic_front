@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
+import { SonidoErrorService } from './sonido-error.service';
 
 (window as any).Pusher = Pusher;
 Pusher.logToConsole = true; // ✅ Logs para depurar
@@ -10,6 +11,7 @@ Pusher.logToConsole = true; // ✅ Logs para depurar
 })
 export class EchoService {
   private echo: Echo<any>;
+  private sonidoServicio = inject(SonidoErrorService)
 
   constructor() {
     this.echo = new Echo({
@@ -26,10 +28,18 @@ export class EchoService {
    * @param callback Función que recibe los datos emitidos por el evento
    */
   public listenToLlamado(callback: (turno: any) => void): void {
+    
     this.echo.channel('turnity')
-      .listen('.llamadoPantalla', (data: any) => {
-        console.log('📡 Evento recibido en EchoService:', data);
-        callback(data); // Ejecuta el callback con los datos
-      });
+    .listen('.llamadoPantalla', (data: any) => {
+      this.sonidoServicio.playSound('alert')
+      callback(data); // Ejecuta el callback con los datos
+    });
+  }
+
+  public listenToSegumiento(callback: (turno: any) => void): void {
+    this.echo.channel('seguimiento')
+    .listen('.seguimientoDiario', (data: any) => {
+      callback(data); // Ejecuta el callback con los datos
+    });
   }
 }

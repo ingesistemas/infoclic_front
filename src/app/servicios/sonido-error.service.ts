@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class SonidoErrorService {
 
-  playSound(nombre: string = 'notificacion'): void {
+  playSound(nombre: string = 'alert'): void {
     const audio = new Audio();
     audio.src = `../sonidos/${nombre}.mp3`;
     audio.load();

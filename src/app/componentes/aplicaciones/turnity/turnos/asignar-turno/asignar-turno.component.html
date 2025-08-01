@@ -1,6 +1,6 @@
 <form class="formulario" autocomplete="off" [formGroup]="formulario">
     <div class="tituloFormulario">
-        Asignación de turnos
+        Asignación de turnos....
     </div>
 
     <div class="contieneInputRow row">
@@ -13,8 +13,8 @@
         </div>
 
         <div class="mb-2 floating-label-group col-md-12">
-            <input type="text" id="nombre" class="form-control form-control-sm miInput" formControlName="nombre" placeholder=" " />
-            <label  class="form-label" for="documento">Nombre del paciente</label>
+            <input type="text" id="nombre" class="form-control form-control-sm miInput" formControlName="nombre" placeholder=" " (input)="capitalizarCadaPalabra()"/>
+            <label  class="form-label" for="documento" >Nombre del paciente</label>
             <div class="contieneLabelError">
                 <small class="labelError">{{ retotnaError('nombre')}}&nbsp;</small>
             </div>

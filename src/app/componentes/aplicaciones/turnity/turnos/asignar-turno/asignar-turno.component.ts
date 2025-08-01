@@ -46,6 +46,7 @@ export class AsignarTurnoComponent {
   accion = this.tamanioForm.accionActual()
   salas!: Isalas[]
   prioritarias!: any[]
+  turnoActual: any
 
   formulario = this.fb.group({
     id: [0],
@@ -63,14 +64,29 @@ export class AsignarTurnoComponent {
   constructor(private messageService: MessageService){}
   ngOnInit(): void {
     this.peticion('/obtener-profesiones')
-    if(this.tamanioForm.accionActual() == 'Editar'){
+   
+    const datos = history.state;
+    this.turnoActual = datos
+   
+    if (datos &&
+    typeof datos === 'object' &&
+    datos.datos &&
+    typeof datos.datos === 'object' &&
+    'id' in datos.datos) {
+
+        this.formulario.controls['id'].setValue(datos.datos.id)
+        this.formulario.controls['id_paciente'].setValue(datos.datos.id_paciente)
+        this.formulario.controls['nombre'].setValue(datos.datos.nombre)
+        this.formulario.controls['documento'].setValue(datos.datos.documento)
       
-      const datos = history.state;
-      this.formulario.controls['id'].setValue(datos.datos.id)
-      this.formulario.controls['id_paciente'].setValue(datos.datos.id_paciente)
-      this.formulario.controls['nombre'].setValue(datos.datos.nombre)
-      this.formulario.controls['documento'].setValue(datos.datos.documento)
     }
+    
+
+    if(this.formulario.controls['nombre'].value != ''){
+      this.formulario.controls['nombre'].disable()
+      this.formulario.controls['documento'].disable()
+    }
+    
     if(!localStorage.getItem('prioritarias')){
         this.peticion('/obtener-prioritarias')
     }else{
@@ -102,14 +118,35 @@ export class AsignarTurnoComponent {
   }
 
   aceptar(){
+    let datosTemp = this.turnoActual 
+   
+    if (datosTemp && typeof datosTemp === 'object' && datosTemp.datos && typeof datosTemp.datos === 'object' &&
+    'id' in datosTemp.datos){
+      this.peticion('/editar-turno')
+    }else{
       this.peticion('/crear-turno')
-      const datos = this.formulario.value
-      console.log(datos)
+    }
+    const datos = this.formulario.value
+  }
+
+  capitalizarCadaPalabra() {
+    let nombreCap = this.formulario.controls['nombre'].value;
+
+    if (nombreCap) {
+      nombreCap = nombreCap
+        .toLowerCase()
+        .split(' ')
+        .map(palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1))
+        .join(' ');
+
+      // Actualizas el valor del control
+      this.formulario.controls['nombre'].setValue(nombreCap, { emitEvent: false });
+    }
   }
 
   peticion(url:string){
     this.mensaje = ''
-    if(url == '/crear-turno'){
+    if(url == '/crear-turno' || url == '/editar-turno'){
       this.tamanioForm.actualizarCargando(true, CargandoComponent)
     }
     const datos = this.formulario.value;
@@ -140,10 +177,10 @@ export class AsignarTurnoComponent {
             }else if(url == '/obtener-prioritarias'){
               this.prioritarias = data.Data
             }else if(url == '/obtener-cliente'){
-              if(data.Data[0].nombre != ''){
-                this.formulario.controls['id_paciente'].setValue(data.Data[0].id)
-                this.formulario.controls['nombre'].setValue(data.Data[0].nombre)
-                this.formulario.controls['nombre'].disable();
+              if(data.Data[0]?.nombre != ''){
+                this.formulario.controls['id_paciente'].setValue(data.Data[0]?.id )
+                this.formulario.controls['nombre'].setValue(data.Data[0]?.nombre )
+                
               }else{
                 this.formulario.controls['nombre'].enable();
               }
@@ -162,7 +199,7 @@ export class AsignarTurnoComponent {
         }
       },
       error: (err) => {
-        this.mensaje = "Se presento un error inesperado. Comunícate con un asesor infoclic.";
+        this.mensaje = "Se presentó un error inesperado. Comunícate con un asesor infoclic.";
         this.mensajeErrorServicios.actualizarError(this.mensaje, '');
         this.tamanioForm.actualizar(false, ErrorComponent);
       },

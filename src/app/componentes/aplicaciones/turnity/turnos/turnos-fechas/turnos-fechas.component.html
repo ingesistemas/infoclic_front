@@ -100,14 +100,14 @@
                     <ng-container matColumnDef="hora_asignacion">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 7%;"> Hora asignación </th>
                         <td mat-cell *matCellDef="let row" class="fila"> 
-                            <span [ngClass]="row.destino?.clase">{{ row.asignaciones[0].hora_asigna }}</span>   
+                            <span [ngClass]="row.destino?.clase">{{ row.hora_asignacion }}</span>   
                             <button mat-icon-button [matMenuTriggerFor]="menu1" style="font-size: 0.7em !important;">
                                 <mat-icon>more_vert</mat-icon>
                             </button>
                             <mat-menu #menu1="matMenu">
                                 <div class="infoTranscurre">
                                     <small>Hora de llegada - hora de asignación </small>
-                                    <small class="text-muted transcurre">({{ calcularDuracion(row.hora_llegada, row.asignaciones[0].hora_asigna) }} )</small> 
+                                    <small class="text-muted transcurre">({{ calcularDuracion(row.hora_llegada, row.hora_asignacion) }} )</small> 
                                 </div>
                             </mat-menu>
                         </td>
@@ -116,32 +116,27 @@
                     <ng-container matColumnDef="hora_ini">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 7%;"> Hora inicio </th>
                         <td mat-cell *matCellDef="let row" class="fila"> 
-                            <span [ngClass]="row.destino?.clase">{{ row.asignaciones[0].hora_ini }}</span>
+                            <span [ngClass]="row.destino?.clase">{{ row.hora_ini }}</span>
                         
                             <button mat-icon-button [matMenuTriggerFor]="menu2" style="font-size: 0.7em !important;">
                                 <mat-icon>more_vert</mat-icon>
                             </button>
                             <mat-menu #menu2="matMenu">
                                 <div class="infoTranscurre">
-                                    <small>Hora llegada - hora de inicio </small>
+                                   
                                     @if(row.hora_ini != '00:00:00'){
+                                        <small>Hora asignación - hora de inicio </small>
                                         <small class="text-muted transcurre">({{ calcularDuracion(row.hora_llegada, row.hora_ini) }} )</small>
                                     }@else {
-                                        <small class="text-muted transcurre">0 min</small>
-                                        <hr>
+                                       
                                         <small class="text-muted infoTranscurre">Desde la llegada han transcurrido</small>
                                         <small class="transcurre">{{ calcularTranscurrido(row.hora_llegada) }}</small>
                                         <hr>
                                         <small class="text-muted infoTranscurre">Desde la asignación han transcurrido</small>
-                                        <small class="transcurre">{{ calcularTranscurrido(row.asignaciones[0].hora_asigna) }}</small>
+                                        <small class="transcurre">{{ calcularTranscurrido(row.hora_asignacion) }}</small>
                                     }
-                                    <hr>
-                                    <small>Hora asignación - hora de inicio </small>
-                                    @if(row.hora_ini != '00:00:00'){
-                                        <small class="text-muted transcurre">({{ calcularDuracion(row.asignaciones[0].hora_asigna, row.hora_ini) }} )</small>
-                                    }@else{
-                                        <small class="text-muted transcurre">0 min</small>
-                                    }
+                                    
+                                    
 
                                 </div>
                             </mat-menu>
@@ -151,27 +146,27 @@
                     <ng-container matColumnDef="hora_fin">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 7%;"> Hora final </th>
                         <td mat-cell *matCellDef="let row" class="fila"> 
-                            <span [ngClass]="row.destino?.clase">{{ row.asignaciones[0].hora_fin }}</span>  
+                            <span [ngClass]="row.destino?.clase">{{ row.hora_fin }}</span>  
 
                             <button mat-icon-button [matMenuTriggerFor]="menu3" style="font-size: 0.7em !important;">
                                 <mat-icon>more_vert</mat-icon>
                             </button>
                             <mat-menu #menu3="matMenu">
                                 <div class="infoTranscurre">
-                                    
-                                    <small>Hora llegada - hora final </small>
-                                    <small class="text-muted transcurre">({{ calcularDuracion(row.hora_llegada, row.hora_fin) }} )</small>
-                                    <hr>
-                                    <small>Hora asignación - hora final</small>
                                     @if(row.hora_fin != '00:00:00'){
-                                        <small class="text-muted transcurre">({{ calcularDuracion(row.asignaciones[0].hora_asigna, row.hora_fin) }} )</small>
-                                    }@else {
-                                        <small class="text-muted transcurre">0 min</small>
+                                        <small>Hora llegada - hora final </small>
+                                        <small class="text-muted transcurre">({{ calcularDuracion(row.hora_llegada, row.hora_fin) }} )</small>
+                                        <hr>
+                                        <small>Hora asignación - hora final</small>
+                                        @if(row.hora_fin != '00:00:00'){
+                                            <small class="text-muted transcurre">({{ calcularDuracion(row.hora_asignacion, row.hora_fin) }} )</small>
+                                        }@else {
+                                            <small class="text-muted transcurre">0 min</small>
+                                        }
+                                        <hr>
+                                        <small>Hora de inicio - hora final </small>
+                                        <small class="text-muted transcurre">({{ calcularDuracion(row.hora_ini, row.hora_fin) }} )</small>
                                     }
-                                    <hr>
-                                    <small>Hora de inicio - hora final </small>
-                                    <small class="text-muted transcurre">({{ calcularDuracion(row.hora_ini, row.hora_fin) }} )</small>
-
                                 </div>
                             </mat-menu>
                         </td>

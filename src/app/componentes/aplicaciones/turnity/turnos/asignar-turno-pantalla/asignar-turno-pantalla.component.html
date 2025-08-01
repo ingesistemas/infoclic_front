@@ -13,14 +13,12 @@
         </div>
 
         <div class="mb-2 floating-label-group col-md-12">
-            <input type="text" id="nombre" class="form-control form-control-sm miInput nombre" formControlName="nombre" placeholder=" " />
-            <label  class="form-label" for="documento">Nombre del paciente</label>
+            <input type="text" id="nombre" class="form-control form-control-sm miInput nombre" formControlName="nombre" placeholder=" " #nombreInput (input)="capitalizarCadaPalabra()" />
+            <label  class="form-label" for="documento" >Nombre del paciente</label>
             <div class="contieneLabelError">
                 <small class="labelError">{{ retotnaError('nombre')}}&nbsp;</small>
             </div>
         </div>
-
-        
 
         <div class="pantalaNumerica col-md-6">
             <div class="teclado">
@@ -34,41 +32,21 @@
                 <button class="btn-aceptar" (click)="presionar('8')">8</button>
                 <button class="btn-aceptar" (click)="presionar('9')">9</button>
                 <button class="btn-aceptar" (click)="presionar('0')">0</button>
-                <button class="btn-cancelar" (click)="borrar()">⌫ Borrar</button>
-                <button class="btn btn-aceptar-pantalla" (click)="obtenerCliente()">✔ Aceptar</button>
-                <button type="button" class="btn btn-mic" (click)="reconocerVoz()">🎤 Dictar documento</button>
+                <button class="btn-cancelar btn-pantalla" (click)="borrar()">⌫ Borrar documento</button>
+                <button class="btn btn-aceptar-pantalla btn-pantalla" (click)="obtenerCliente()">✔ Aceptar documento</button>
+                <button type="button" class="btn btn-mic btn-pantalla" (click)="reconocerVoz()">🎤 Dictar documento</button>
+                <button class="btn btn-aceptar-pantalla btn-pantalla" (click)="aceptar()">✔ Asigna turno</button>
+                <button class="btn-cancelar btn-pantalla" (click)="limpiar()">Limpiar datos</button>
             </div>
         </div>
 
-        
-
-        
-
-        <div class="mb-2 floating-label-group col-md-6">
-            <select id="id_sala" class="form-select form-select-sm miInput" formControlName="id_sala" >
-               
-                @for (sala of salas; track $index) {
-                    <option value="{{ sala.id }}">{{ sala.sala }}-{{ sala.piso!.piso }}</option>
+        <div class="listarSalar col-md-6">
+            @for (sala of salas; track $index) {
+                @if( sala.atencion_inicial == 'SI'){
+                    <div (click)="datoSala( sala.id )" class="sala" [ngClass]="{ 'activo': botonActivo === sala.id }">{{ sala.sala }}</div>
                 }
-            </select>
-            <label for="id_sala" class="form-label">Sala donde será atendido</label>
-            <div class="contieneLabelError">
-                <small class="labelError">{{ retotnaError('id_sala')}}&nbsp;</small>
-            </div>
-        </div>
+            }
 
-        
-    </div>
-
-    <div style="text-align: center;" class="alert alert-primary" role="alert">
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        Buscando datos...
-    </div>
-   
-    <div class="botonera">  
-        <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-aceptar" (click)="aceptar()" >Asignar turno</button>
-            <button type="button" class="btn btn-cancelar" (click)="cerrar()">Cerrar</button>
         </div>
     </div>
 

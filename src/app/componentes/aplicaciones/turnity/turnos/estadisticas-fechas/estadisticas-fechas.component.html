@@ -39,7 +39,7 @@
 }@else {
   
 <div class="estadisticas-container" *ngIf="mostrarReporte">
-  <h2 class="titulo">📊 Estadísticas generrales</h2>
+  <h2 class="titulo">📊 Estadísticas generales</h2>
   <ng-container *ngIf="resumenGeneral?.Data?.resumen_general">
     <div class="resumen">
       <div class="card resumen-item asignados">
@@ -160,6 +160,7 @@
               <small class="subtitulo">H.asignación - H.inicio</small>
             </th>
             <th>Atendidos</th>
+             <th>Total horas laboradas</th>
           </tr>
         </thead>
 
@@ -178,8 +179,68 @@
               <td>
                 {{ item.total_turnos_atendidos }}
               </td>
+              <td>
+                  {{ estadisticas?.Data?.totales_tiempos_operarios[$index]?.total_atencion_hms }}
+              </td>
             </tr>
           }
+
+          <!-- *************************************************** -->
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+              
+              <button mat-menu-item >
+                <ng-container>
+                    <span (click)="grafico( 'Horas laboradas', 'totales_tiempos_operarios', 'bar' )" class="textTipoGrafico">Barra vertical</span>
+                </ng-container>
+              </button>
+
+              <button mat-menu-item >
+                <ng-container>
+                    <span (click)="grafico( 'Horas laboradas', 'totales_tiempos_operarios', 'line' )" class="textTipoGrafico">Línea</span>
+                </ng-container>
+              </button>
+
+              <button mat-menu-item >
+                <ng-container>
+                    <span (click)="grafico( 'Horas laboradas', 'totales_tiempos_operarios', 'pie' )" class="textTipoGrafico">Pastel</span>
+                </ng-container>
+              </button>
+
+              <button mat-menu-item >
+                <ng-container>
+                    <span (click)="grafico( 'Horas laboradas', 'totales_tiempos_operarios', 'doughnut' )" class="textTipoGrafico">Dona</span>
+                </ng-container>
+              </button>
+
+              <button mat-menu-item >
+                <ng-container>
+                    <span (click)="grafico( 'Horas laboradas', 'totales_tiempos_operarios', 'radar' )" class="textTipoGrafico">Radar</span>
+                </ng-container>
+              </button>
+
+              <button mat-menu-item >
+                <ng-container>
+                    <span (click)="grafico( 'Horas laboradas', 'totales_tiempos_operarios', 'polarArea' )" class="textTipoGrafico">Polar area</span>
+                </ng-container>
+              </button>
+
+              <button mat-menu-item >
+                <ng-container>
+                    <span (click)="grafico( 'Horas laboradas', 'totales_tiempos_operarios', 'bubble' )" class="textTipoGrafico">Burbuja</span>
+                </ng-container>
+              </button>
+
+              <button mat-menu-item >
+                <ng-container>
+                    <span (click)="grafico( 'Horas laboradas', 'totales_tiempos_operarios', 'scatter' )" class="textTipoGrafico">Dispersión (scatter)</span>
+                </ng-container>
+              </button>
+
+          </mat-menu> 
+          <!-- *************************************************** -->
 
         </tbody>
       </table>

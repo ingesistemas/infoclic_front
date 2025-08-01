@@ -8,6 +8,7 @@ import { ListadoTurnosDiariosComponent } from './turnos/listado-turnos-diarios/l
 import { TurnosFechasComponent } from './turnos/turnos-fechas/turnos-fechas.component';
 import { EstadisticasFechasComponent } from './turnos/estadisticas-fechas/estadisticas-fechas.component';
 import { AsignarTurnoPantallaComponent } from './turnos/asignar-turno-pantalla/asignar-turno-pantalla.component';
+import { LlamadoSalasComponent } from './turnos/llamado-salas/llamado-salas.component';
 
 
 export const turnityGeneral: Routes = [
@@ -24,6 +25,11 @@ export const turnityGeneral: Routes = [
     {
         path: 'llamado-operario',
         component: LlamadoOperarioComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'llamado-salas',
+        component: LlamadoSalasComponent,
         canActivate: [AuthGuard]
     },
     {

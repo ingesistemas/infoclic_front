@@ -43,7 +43,7 @@
             <div class="mb-2 floating-label-group">
                 <select id="id_modulo" class="form-select form-select-sm miInput" formControlName="id_modulo" required>
                     @for (modulo of modulos; track $index) {
-                        <option value="{{ modulo.id }}">{{ modulo.modulo }}</option>
+                        <option value="{{ modulo.id }}">{{ modulo.modulo }}-{{ modulo.sala.sala }}-{{ modulo.sala.piso.piso }}</option>
                     }
                 </select>
                 <label for="id_modulo" class="form-label">Módulo</label>

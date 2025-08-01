@@ -67,7 +67,7 @@
 }
 
 .no_contesto{
-  color: #e78700;
+  color: #fc6500;
 }
 
 .reasignado{
@@ -80,7 +80,7 @@
 }
 
 .en_espera_asig{
-  color: #cfc800;
+  color: #736f00;
 }
 
 .en_espera_atencion{
@@ -120,11 +120,11 @@
 .circle-finalizado { background-color: green; }
 
 .circle-cancelado{
-  background-color: #a93636;
+  background-color: #a62323;
 }
 
 .circle-no_contesto{
-  background-color: #e78700;
+  background-color: #fc6500;
 }
 
 .circle-reasignado{
@@ -137,7 +137,7 @@
 }
 
 .circle-en_espera_asig{
-  background-color: #cfc800;
+  background-color: #736f00;
 }
 
 .circle-en_espera_atencion{

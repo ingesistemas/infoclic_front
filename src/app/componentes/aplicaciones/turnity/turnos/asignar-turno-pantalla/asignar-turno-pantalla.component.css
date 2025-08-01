@@ -90,3 +90,37 @@
   background-color: #00587e  !important;
   color: #FFF !important;
 }
+
+.sala{
+  background-color: #099ef5;
+  color: #FFF;
+  width: 100%;
+  border-radius: 5px;
+  height: 45px;
+  margin-top: 20px;
+  padding-left: 10px;
+   display: flex;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  cursor: pointer;
+}
+
+.sala:hover{
+  background-color: #0271b1;
+}
+
+.btn-pantalla{
+  font-size: .8em !important;
+}
+
+.activo {
+  background-color: #3BB9D8;
+  color: white;
+  border: 2px solid #087D8A;
+}
+
+.sala.activo {
+  background-color: #0ecfff;
+  color: white;
+  border: none;
+}

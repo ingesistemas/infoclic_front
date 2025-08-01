@@ -97,7 +97,7 @@ export class EstadisticasFechasComponent {
     { key: 'por_salasenatencion', label: 'Por Salas en Atención', grafico: 'Salas' },
     { key: 'por_modulosenatencion', label: 'Por Módulos en Atención', grafico: 'Módulos' },
     { key: 'por_estado_caso', label: 'Por Estado del Caso', grafico: 'Casos' },
-    { key: 'por_profesiones', label: 'Estadísticas por Profesiones', grafico: 'Profesiones' }
+    { key: 'por_profesiones', label: 'Estadísticas por Profesiones', grafico: 'Profesiones' },
   ];
 
  

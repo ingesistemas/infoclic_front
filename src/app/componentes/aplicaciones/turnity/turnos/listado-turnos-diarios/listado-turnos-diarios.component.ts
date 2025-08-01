@@ -26,6 +26,7 @@ import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { IConsultaTurnos } from '../../../../../interfaces/IConsultaTurnos';
+import { EchoService } from '../../../../../servicios/echo.service';
 
 
 dayjs.extend(duration);
@@ -69,6 +70,8 @@ export class ListadoTurnosDiariosComponent implements OnInit, AfterViewInit, OnD
     private mensajeErrorServicios = inject(MensajesService);
     private router = inject(Router);
     private zone = inject(NgZone);
+    private echoServicio = inject(EchoService);
+    private cdRef = inject(ChangeDetectorRef)
 
     expandedElement: IConsultaTurnos | null = null;
 
@@ -98,23 +101,25 @@ export class ListadoTurnosDiariosComponent implements OnInit, AfterViewInit, OnD
         id_usuario: [this.autenticaServicio.idUsuarioActual()]
     });
 
-    ngOnInit(): void {
+    async ngOnInit(){
+        
         this.tamanioForm.actualizarCargando(false, CargandoComponent);
         this.peticion('/listar-turnos-diarios');
         this.timerSubscription = interval(1000).subscribe(() => {
             this.ahora = new Date();
         });
+        await this.echoServicio.listenToSegumiento((turno) => {
+            this.zone.run(() => {
+                this.turnos = turno
+                this.dataSource.data = turno;
+                this.cdRef.detectChanges(); // asegura que la vista se actualice
+            });
+        });
     }
 
     ngAfterViewInit(): void {
-        // Es importante que estas asignaciones se hagan después de que los ViewChilds estén disponibles.
-        // Y MatTableDataSource debe estar inicializado con los datos si la petición es síncrona,
-        // o si es asíncrona, asignar el paginador/sort DESPUÉS de recibir los datos.
-        // Sin embargo, esta posición aquí es común y se debe a que el dataSource es una referencia.
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        
-        // Configura el filterPredicate solo una vez, después de que dataSource esté listo.
         this.setupFilterPredicate(); // Llama aquí para que esté listo antes de cualquier filtro.
     }
 
@@ -177,7 +182,7 @@ export class ListadoTurnosDiariosComponent implements OnInit, AfterViewInit, OnD
     setupFilterPredicate() {
         this.dataSource.filterPredicate = (data: IConsultaTurnos, filter: string): boolean => {
             const searchStr = (
-                data.paciente.nombre +
+                data.paciente?.nombre || '' +
                 data.prioritaria.prioritaria +
                 data.fecha +
                 data.hora_llegada +
@@ -220,16 +225,12 @@ export class ListadoTurnosDiariosComponent implements OnInit, AfterViewInit, OnD
         const datos = { // Construye el objeto de datos que tu API espera
             id_usuario: this.autenticaServicio.idUsuarioActual(),
             id_sucursal: this.autenticaServicio.idSucursalActual(),
-            // Añade cualquier otro campo necesario que tu API espere, si no es solo con los IDs de usuario/sucursal.
-            // Los campos del formulario.value no siempre son adecuados si la API espera solo los IDs.
-            // Por ejemplo, si tu API esperaba solo id_usuario e id_sucursal:
-            // id_usuario: this.formulario.value.id_usuario,
-            // id_sucursal: this.formulario.value.id_sucursal
         };
 
         this.tamanioForm.actualizarCargando(true, CargandoComponent);
         this.peticionsServicios.peticionPOST(url, datos).subscribe({
             next: (data) => {
+               
                 if(data.Status == 200){
                     if(data.Error == true){
                         if ((typeof data.Message === 'string')) {
@@ -246,7 +247,10 @@ export class ListadoTurnosDiariosComponent implements OnInit, AfterViewInit, OnD
                         this.mensajeErrorServicios.actualizarError(this.mensaje, '');
                         this.tamanioForm.actualizar( true, ErrorComponent);
                     } else {
-                        if(data.Data.length === 0 && url !== '/disparar'){
+                        if(url == '/dispararSeguimiento'){
+                            this.turnos = data.Data
+                        }
+                        if(data.Data.length === 0 && url !== '/disparar' && url !== '/dispararSeguimiento'){
                             this.mensaje = data.Message;
                             this.mensajeErrorServicios.actualizarError(this.mensaje, '');
                             this.tamanioForm.actualizar( true, ErrorComponent);
@@ -257,13 +261,8 @@ export class ListadoTurnosDiariosComponent implements OnInit, AfterViewInit, OnD
                                     created_at: s.created_at ? new Date(s.created_at) : undefined
                                 }));
                                 this.dataSource.data = this.turnos;
-                                // Asegúrate de que el paginador y el sort se aplican, aunque ya están en ngAfterViewInit
-                                // Este seteo adicional no hace daño y asegura que si los datos llegan tarde, se actualicen.
                                 this.dataSource.paginator = this.paginator;
                                 this.dataSource.sort = this.sort;
-                                console.log(this.turnos)
-                                
-                                // ¡Llama al setupFilterPredicate AQUÍ después de asignar los datos!
                                 this.setupFilterPredicate(); 
                                 
                                 if (this.dataSource.paginator) {
@@ -298,5 +297,35 @@ export class ListadoTurnosDiariosComponent implements OnInit, AfterViewInit, OnD
         this.expandedElement = this.expandedElement === row ? null : row;
     }
 
+    disparar(url:string){
+        const datos = { // Construye el objeto de datos que tu API espera
+            id_usuario: this.autenticaServicio.idUsuarioActual(),
+            id_sucursal: this.autenticaServicio.idSucursalActual(),
+        };
+
+        this.tamanioForm.actualizarCargando(true, CargandoComponent);
+        this.peticionsServicios.peticionPOST(url, datos).subscribe({
+            next: (data) => {
+                this.turnos = data.Data
+                 console.log(data)
+            },
+            error: (err) => {
+                this.mensaje = "Error inesperado al obtener llamados. " ;
+                this.mensajeErrorServicios.actualizarError(this.mensaje, '');
+                this.tamanioForm.actualizar(true, ErrorComponent);
+            },
+            complete: () => {
+                setTimeout(() => {
+                    this.zone.run(() => {
+                        this.tamanioForm.actualizarCargando(false, null);
+                    });
+                }, 500);
+            }
+        });
+    }
+
+    actualizar(){
+        this.disparar('/disparar-seguimiento')
+    }
     
 }
