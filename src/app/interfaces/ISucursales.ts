@@ -1,5 +1,5 @@
 export interface ISucursales {
-    id?: string,
+    id?: number,
     sucursal: boolean,
     direccion: string,
     tels?: string,
@@ -7,6 +7,6 @@ export interface ISucursales {
     id_ciudad: number,
     activo: number,
     id_usuario: number,
-
+    asignada?: boolean
 
 }

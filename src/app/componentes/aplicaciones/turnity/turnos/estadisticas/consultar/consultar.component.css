@@ -1,0 +1,26 @@
+
+
+.formulario{
+  width: 30%;
+  margin: 0px auto;
+  margin-bottom: 130px;
+}
+
+/* Responsividad */
+@media (max-width: 992px) {
+  .formulario {
+    width: 30% !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .formulario {
+    width: 45% !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .formulario {
+    width: 90% !important;
+  }
+}

@@ -29,6 +29,8 @@ import { IConsultaTurnos } from '../../../../../interfaces/IConsultaTurnos';
 import { GraficosComponent } from '../graficos/graficos.component';
 import { DatosGraficoService } from '../../../../../servicios/datos-grafico.service';
 import { IDatoGrafico } from '../../../../../interfaces/IDatoGrafico';
+import { GraficoTotalesComponentComponent } from '../grafico-totales-component/grafico-totales-component.component';
+import { ISucursales } from '../../../../../interfaces/ISucursales';
 
 @Component({
   selector: 'app-estadisticas-fechas',
@@ -51,186 +53,202 @@ import { IDatoGrafico } from '../../../../../interfaces/IDatoGrafico';
   styleUrl: './estadisticas-fechas.component.css',
    providers: [MessageService],
 })
-export class EstadisticasFechasComponent {
-  private fb = inject(FormBuilder);
-  private peticionsServicios = inject(PeticionService);
-  private autenticaServicio = inject(AutenticaService);
-  private retornaErroresService = inject(RetornarErroresService);
-  private tamanioForm = inject(TamanioFormModalService);
-  private mensajeErrorServicios = inject(MensajesService);
-  private router = inject(Router);
-  private zone = inject(NgZone);
-  private datosGraficoServicio = inject(DatosGraficoService)
+export class EstadisticasFechasComponent implements OnInit {
+    private fb = inject(FormBuilder);
+    private peticionsServicios = inject(PeticionService);
+    private autenticaServicio = inject(AutenticaService);
+    private retornaErroresService = inject(RetornarErroresService);
+    private tamanioForm = inject(TamanioFormModalService);
+    private mensajeErrorServicios = inject(MensajesService);
+    private router = inject(Router);
+    private zone = inject(NgZone);
+    private datosGraficoServicio = inject(DatosGraficoService)
 
-  expandedElement: IConsultaTurnos | null = null;
+    expandedElement: IConsultaTurnos | null = null;
 
- /*  datosGrafico = [
-    { nombre: 'Nelson Fernando Silva Saavedra', cantidad: 1, porcentaje: 66.67, promedio: 0.67 },
-    { nombre: 'Dylan Sneider Silva', cantidad: 1, porcentaje: 33.33, promedio: 0.33 }
-  ]; */
+    /*  datosGrafico = [
+        { nombre: 'Nelson Fernando Silva Saavedra', cantidad: 1, porcentaje: 66.67, promedio: 0.67 },
+        { nombre: 'Dylan Sneider Silva', cantidad: 1, porcentaje: 33.33, promedio: 0.33 }
+    ]; */
 
-  datosGrafico: IDatoGrafico[] = []
+    datosGrafico: IDatoGrafico[] = []
+    mensaje: string = ''
+    mensajeToast: string = ''
+    mostrarReporte: boolean = false
+    sucursales: ISucursales[] = []
 
-  constructor(private messageService: MessageService) {
-     
-  }
-
-  mensaje: string = '';
-  mensajeToast: string = '';
-  mostrarReporte: boolean = false
-
-  formulario = this.fb.group({
-      fecha_ini: [''],
-      fecha_fin: [''],
-      id_sucursal: [this.autenticaServicio.idSucursalActual()],
-      id_usuario: [this.autenticaServicio.idUsuarioActual()]
-  });
+    formulario = this.fb.group({
+        fecha_ini: [''],
+        fecha_fin: [''],
+        id_sucursal: [''],
+        id_usuario: [this.autenticaServicio.idUsuarioActual()],
+        todas: [0],
+    });
 
    
-  resumenGeneral: any = {};
-   estadisticas: any = {};
+    resumenGeneral: any = {};
+    estadisticas: any = {};
 
-  secciones = [
-    { key: 'por_prioritarias', label: 'Por Prioritarias', grafico:'Prioridades' },
-    { key: 'por_operarios_atendieron', label: 'Por Operarios que Atendieron', grafico: 'Atendieron' },
-    { key: 'por_usuarios_asignadores', label: 'Por Usuarios que Asignaron', grafico: 'Asignaron' },
-    { key: 'por_salasenatencion', label: 'Por Salas en Atención', grafico: 'Salas' },
-    { key: 'por_modulosenatencion', label: 'Por Módulos en Atención', grafico: 'Módulos' },
-    { key: 'por_estado_caso', label: 'Por Estado del Caso', grafico: 'Casos' },
-    { key: 'por_profesiones', label: 'Estadísticas por Profesiones', grafico: 'Profesiones' },
-  ];
+    secciones = [
+        { key: 'por_prioritarias', label: 'Por Prioritarias', grafico:'Prioridades' },
+        { key: 'por_operarios_atendieron', label: 'Por Operarios que Atendieron', grafico: 'Atendieron' },
+        { key: 'por_usuarios_asignadores', label: 'Por Usuarios que Asignaron', grafico: 'Asignaron' },
+        { key: 'por_salasenatencion', label: 'Por Salas en Atención', grafico: 'Salas' },
+        { key: 'por_modulosenatencion', label: 'Por Módulos en Atención', grafico: 'Módulos' },
+        { key: 'por_estado_caso', label: 'Por Estado del Caso', grafico: 'Casos' },
+        { key: 'por_profesiones', label: 'Estadísticas por Profesiones', grafico: 'Profesiones' },
+    ];
+
+    constructor(private messageService: MessageService) {}
+
+    ngOnInit(): void {
+        this.peticion('/obtener-sucursales')
+    }
 
  
-  aceptar(){
-      this.mostrarReporte = true
-      this.tamanioForm.actualizarCargando(false, CargandoComponent);
-      this.peticion('/estadisticas-fechas');
-  }
+    aceptar(){
+        console.log(this.formulario)
+        this.mostrarReporte = true
+        this.tamanioForm.actualizarCargando(false, CargandoComponent);
+        this.peticion('/estadisticas-fechas');
+    }
 
-  cerrar(){
-      this.router.navigate(['/turnity'])
-  }
+    cerrar(){
+        this.router.navigate(['/turnity'])
+    }
 
-  calcularDuracion(inicio: string, fin: string): string {
-      const hIni = dayjs(`2000-01-01T${inicio}`);
-      const hFin = dayjs(`2000-01-01T${fin}`);
+    calcularDuracion(inicio: string, fin: string): string {
+        const hIni = dayjs(`2000-01-01T${inicio}`);
+        const hFin = dayjs(`2000-01-01T${fin}`);
 
-      if (!hIni.isValid() || !hFin.isValid()) return '';
+        if (!hIni.isValid() || !hFin.isValid()) return '';
 
-      let diffMs = hFin.diff(hIni);
+        let diffMs = hFin.diff(hIni);
 
-      if (diffMs < 0) {
-          diffMs = dayjs(`2000-01-02T${fin}`).diff(hIni);
-      }
+        if (diffMs < 0) {
+            diffMs = dayjs(`2000-01-02T${fin}`).diff(hIni);
+        }
 
-      if (diffMs <= 0) return '0 min';
+        if (diffMs <= 0) return '0 min';
 
-      const duracion = dayjs.duration(diffMs);
-      const horas = duracion.hours();
-      const minutos = duracion.minutes();
-      const segundos = duracion.seconds();
+        const duracion = dayjs.duration(diffMs);
+        const horas = duracion.hours();
+        const minutos = duracion.minutes();
+        const segundos = duracion.seconds();
 
-      let resultado = '';
-      if (horas > 0) resultado += `${horas}h `;
-      if (minutos > 0 || (horas === 0 && segundos === 0)) resultado += `${minutos}min `;
-      if (segundos > 0 || resultado === '') resultado += `${segundos}s`;
+        let resultado = '';
+        if (horas > 0) resultado += `${horas}h `;
+        if (minutos > 0 || (horas === 0 && segundos === 0)) resultado += `${minutos}min `;
+        if (segundos > 0 || resultado === '') resultado += `${segundos}s`;
 
-      return resultado.trim();
-  }
+        return resultado.trim();
+    }
 
   // --- ¡Esta es la función clave para el filtro de datos anidados! ---
   
 
-  mostrarToast() {
-      this.messageService.add({ severity: 'success', summary: 'Turnity...', detail: this.mensaje });
-  }
+    mostrarToast() {
+        this.messageService.add({ severity: 'success', summary: 'Turnity...', detail: this.mensaje });
+    }
 
-  atras(){
-      this.mostrarReporte = false
-  }
+    atras(){
+        this.mostrarReporte = false
+    }
 
-  peticion(url:string){
-      /* const datos = { // Construye el objeto de datos que tu API espera
-          id_usuario: this.autenticaServicio.idUsuarioActual(),
-          id_sucursal: this.autenticaServicio.idSucursalActual(),
-          // Añade cualquier otro campo necesario que tu API espere, si no es solo con los IDs de usuario/sucursal.
-          // Los campos del formulario.value no siempre son adecuados si la API espera solo los IDs.
-          // Por ejemplo, si tu API esperaba solo id_usuario e id_sucursal:
-          // id_usuario: this.formulario.value.id_usuario,
-          // id_sucursal: this.formulario.value.id_sucursal
-      }; */
-      const datos = this.formulario.value
-      this.tamanioForm.actualizarCargando(true, CargandoComponent);
-      this.peticionsServicios.peticionPOST(url, datos).subscribe({
-          next: (data) => {
-            console.log(data)
-              if(data.Status == 200){
-                  if(data.Error == true){
-                      if ((typeof data.Message === 'string')) {
-                          this.mensaje = data.Message;
-                      } else {
-                          this.mensaje = '';
-                          Object.entries(data.Message).forEach(([campo, mensajes]) => {
-                              const lista = Array.isArray(mensajes) ? mensajes : [mensajes];
-                              lista.forEach(msg => {
-                                  this.mensaje += `- ${msg}\n`;
-                              });
-                          });
-                      }
-                      this.mensajeErrorServicios.actualizarError(this.mensaje, '');
-                      this.tamanioForm.actualizar( true, ErrorComponent);
-                  } else {
-                      if(data.Data.length === 0 && url !== '/disparar'){
-                          this.mensaje = data.Message;
-                          this.mensajeErrorServicios.actualizarError(this.mensaje, '');
-                          this.tamanioForm.actualizar( true, ErrorComponent);
-                      } else {
-                          if(url === '/estadisticas-fechas'){
-                              
-                              this.estadisticas = data;
-                              this.resumenGeneral = data;
-                              
-                          }
-                      }
-                  }
-              } else {
-                  this.mensaje = "Se presentó un error interno, posiblemente problemas de conexiones. Verifica el acceso a internet o comunícate con un asesor de Infoclic.";
-                  this.mensajeErrorServicios.actualizarError(this.mensaje, '');
-                  this.tamanioForm.actualizar( true, ErrorComponent);
-              }
-          },
-          error: (err) => {
-              this.mensaje = "Error inesperado al obtener llamados. " ;
-              this.mensajeErrorServicios.actualizarError(this.mensaje, '');
-              this.tamanioForm.actualizar(true, ErrorComponent);
-          },
-          complete: () => {
-              setTimeout(() => {
-                  this.zone.run(() => {
-                      this.tamanioForm.actualizarCargando(false, null);
-                  });
-              }, 500);
-          }
-      });
-  }
+    peticion(url:string){
+        /* const datos = { // Construye el objeto de datos que tu API espera
+            id_usuario: this.autenticaServicio.idUsuarioActual(),
+            id_sucursal: this.autenticaServicio.idSucursalActual(),
+            // Añade cualquier otro campo necesario que tu API espere, si no es solo con los IDs de usuario/sucursal.
+            // Los campos del formulario.value no siempre son adecuados si la API espera solo los IDs.
+            // Por ejemplo, si tu API esperaba solo id_usuario e id_sucursal:
+            // id_usuario: this.formulario.value.id_usuario,
+            // id_sucursal: this.formulario.value.id_sucursal
+        }; */
+        const datos = this.formulario.value
+        this.tamanioForm.actualizarCargando(true, CargandoComponent);
+        this.peticionsServicios.peticionPOST(url, datos).subscribe({
+            next: (data) => {
+                console.log(data)
+                if(data.Status == 200){
+                    if(data.Error == true){
+                        if ((typeof data.Message === 'string')) {
+                            this.mensaje = data.Message;
+                        } else {
+                            this.mensaje = '';
+                            Object.entries(data.Message).forEach(([campo, mensajes]) => {
+                                const lista = Array.isArray(mensajes) ? mensajes : [mensajes];
+                                lista.forEach(msg => {
+                                    this.mensaje += `- ${msg}\n`;
+                                });
+                            });
+                        }
+                        this.mensajeErrorServicios.actualizarError(this.mensaje, '');
+                        this.tamanioForm.actualizar( true, ErrorComponent);
+                    } else {
+                        if(data.Data.length === 0 && url !== '/disparar'){
+                            this.mensaje = data.Message;
+                            this.mensajeErrorServicios.actualizarError(this.mensaje, '');
+                            this.tamanioForm.actualizar( true, ErrorComponent);
+                        } else {
+                            if(url === '/estadisticas-fechas'){
+                                this.estadisticas = data;
+                                this.resumenGeneral = data;
+                            }else if(url == '/obtener-sucursales'){
+                                this.sucursales = data.Data
+                            }
+                        }
+                    }
+                } else {
+                    this.mensaje = "Se presentó un error interno, posiblemente problemas de conexiones. Verifica el acceso a internet o comunícate con un asesor de Infoclic.";
+                    this.mensajeErrorServicios.actualizarError(this.mensaje, '');
+                    this.tamanioForm.actualizar( true, ErrorComponent);
+                }
+            },
+            error: (err) => {
+                this.mensaje = "Error inesperado al obtener llamados. " ;
+                this.mensajeErrorServicios.actualizarError(this.mensaje, '');
+                this.tamanioForm.actualizar(true, ErrorComponent);
+            },
+            complete: () => {
+                setTimeout(() => {
+                    this.zone.run(() => {
+                        this.tamanioForm.actualizarCargando(false, null);
+                    });
+                }, 500);
+            }
+        });
+    } 
 
-  toggleExpand(row: IConsultaTurnos) {
+    toggleExpand(row: IConsultaTurnos) {
       this.expandedElement = this.expandedElement === row ? null : row;
-  }
+    }
 
-  retotnaError(campo:string){
-      const control = this.formulario.get(campo)
-      if (control && (control.touched || control.dirty) && control.invalid) {
-          return this.retornaErroresService.getErrores(this.formulario, campo)
-      }
-      return null
-  }
+    todas(){
+        this.formulario.controls['id_sucursal'].setValue('')
+    }
 
-   grafico(titulo: string, datos: string, tipo: string){
-    console.log(datos)
-    console.log(this.resumenGeneral)
-    this.datosGrafico = this.resumenGeneral.Data[datos]
-    this.datosGraficoServicio.actualizarDatosGrafico(this.datosGrafico, titulo, tipo)
-    this.tamanioForm.actualizar(true, GraficosComponent, '')
-  } 
+    sucursal(){
+        this.formulario.controls['todas'].setValue(0)
+    }
+
+    retotnaError(campo:string){
+        const control = this.formulario.get(campo)
+        if (control && (control.touched || control.dirty) && control.invalid) {
+            return this.retornaErroresService.getErrores(this.formulario, campo)
+        }
+        return null
+    }
+
+    grafico(titulo: string, datos: string, tipo: string){
+        this.datosGrafico = this.resumenGeneral.Data[datos]
+        this.datosGraficoServicio.actualizarDatosGrafico(this.datosGrafico, titulo, tipo)
+        this.tamanioForm.actualizar(true, GraficosComponent, '')
+    } 
+
+    graficoTotal(titulo: string, datos: string, tipo: string){
+        this.datosGrafico = this.resumenGeneral.Data[datos]
+        this.datosGraficoServicio.actualizarDatosGrafico(this.datosGrafico, titulo, tipo)
+        this.tamanioForm.actualizar(true, GraficoTotalesComponentComponent, '')
+    } 
 }

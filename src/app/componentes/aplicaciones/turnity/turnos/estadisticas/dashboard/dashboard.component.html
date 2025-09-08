@@ -1,0 +1,105 @@
+<div class="dashboard-container">
+    <header class="dashboard-header">
+        <div class="header-actions">
+            <button id="download-pdf-btn" (click)="downloadPDF()">
+                <i class="fas fa-file-pdf"></i> Descargar PDF
+            </button>
+        </div>
+        <h1>Panel de Control de Turnos</h1>
+        <p>Análisis detallado de la gestión de turnos del <span>{{ fechaInicio }}</span> al <span>{{ fechaFin }}</span>.</p>
+    </header>
+
+    <div class="kpi-section">
+        <app-kpi-card 
+            [iconClass]="'fas fa-calendar-check'" 
+            [value]="resumenGeneral?.asignados" 
+            [label]="'Turnos Asignados'">
+        </app-kpi-card>
+        <app-kpi-card 
+            [iconClass]="'fas fa-user-check'" 
+            [value]="resumenGeneral?.atendidos" 
+            [label]="'Turnos Atendidos'">
+        </app-kpi-card>
+        <app-kpi-card 
+            [iconClass]="'fas fa-calendar-times'" 
+            [value]="resumenGeneral?.cancelados" 
+            [label]="'Turnos Cancelados'">
+        </app-kpi-card>
+        <app-kpi-card 
+            [iconClass]="'fas fa-clock'" 
+            [value]="formatHMS(resumenGeneral?.promedio_atencion_global)" 
+            [label]="'Atención Prom. Global'">
+        </app-kpi-card>
+    </div>
+    
+    <div class="chart-grid">
+        <app-chart-card 
+            [title]="'Distribución por Prioridad'" 
+            [iconClass]="'fas fa-star-half-alt'" 
+            [data]="porPrioritarias" 
+            [type]="'donut'">
+        </app-chart-card>
+        <app-chart-card 
+            [title]="'Turnos por Profesión'" 
+            [iconClass]="'fas fa-user-tie'" 
+            [data]="porProfesiones" 
+            [type]="'donut'">
+        </app-chart-card>
+        <app-chart-card 
+            [title]="'Turnos por Módulos'" 
+            [iconClass]="'fas fa-user-tie'" 
+            [data]="por_modulosenatencion" 
+            [type]="'donut'">
+        </app-chart-card>
+        <app-chart-card 
+            [title]="'Turnos por salas'" 
+            [iconClass]="'fas fa-user-tie'" 
+            [data]="por_salasenatencion" 
+            [type]="'donut'">
+        </app-chart-card>
+         <app-chart-card 
+            [title]="'Turnos por usuarios'" 
+            [iconClass]="'fas fa-user-tie'" 
+            [data]="por_usuarios_asignadores" 
+            [type]="'donut'">
+        </app-chart-card>
+        <app-chart-card 
+            [title]="'Rendimiento de Operarios'" 
+            [iconClass]="'fas fa-users'" 
+            [data]="porOperariosAtendieron" 
+            [type]="'bar'">
+        </app-chart-card>
+        <app-chart-card 
+            [title]="'Estado General de Casos'" 
+            [iconClass]="'fas fa-chart-pie'" 
+            [data]="porEstadoCaso" 
+            [type]="'radialBar'">
+        </app-chart-card>
+    </div>
+    
+    <section class="table-section">
+        <app-data-table 
+            [title]="'Tiempos Promedio por Operario'" 
+            [iconClass]="'fas fa-stopwatch'" 
+            [data]="promediosTiemposOperarios"
+            [headers]="['Operario', 'Espera Promedio', 'Atención Promedio', 'Total Atendidos']"
+            [keys]="['operario_nombre', 'promedio_espera_hms', 'promedio_atencion_hms', 'total_turnos_atendidos']">
+        </app-data-table>
+        <app-data-table 
+            [title]="'Eficiencia de Recepción por Usuario'" 
+            [iconClass]="'fas fa-hand-holding-usd'" 
+            [data]="promediosTiempoRecepcion"
+            [headers]="['Usuario', 'Tiempo Espera Promedio', 'Turnos Procesados']"
+            [keys]="['usuario_nombre', 'promedio_hms', 'total_turnos_procesados']">
+        </app-data-table>
+        <app-data-table 
+            [title]="'Total tiempos operarios'" 
+            [iconClass]="'fas fa-hand-holding-usd'" 
+            [data]="totales_tiempos_operarios"
+            [headers]="['Operario', 'Total hms', 'Total atención horas', 'Total atención segundos', 'Total turnos']"
+            [keys]="['operario_nombre', 'total_atencion_hms', 'total_atencion_horas', 'total_atencion_segundos', 'total_turnos_atendidos']">
+        </app-data-table>
+
+    </section>
+
+</div>

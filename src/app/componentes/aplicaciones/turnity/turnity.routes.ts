@@ -9,6 +9,9 @@ import { TurnosFechasComponent } from './turnos/turnos-fechas/turnos-fechas.comp
 import { EstadisticasFechasComponent } from './turnos/estadisticas-fechas/estadisticas-fechas.component';
 import { AsignarTurnoPantallaComponent } from './turnos/asignar-turno-pantalla/asignar-turno-pantalla.component';
 import { LlamadoSalasComponent } from './turnos/llamado-salas/llamado-salas.component';
+import { LlamadoPantalla2Component } from './turnos/llamado-pantalla2/llamado-pantalla2.component';
+import { ConsultarComponent } from './turnos/estadisticas/consultar/consultar.component';
+import { DashboardComponent } from './turnos/estadisticas/dashboard/dashboard.component';
 
 
 export const turnityGeneral: Routes = [
@@ -39,7 +42,8 @@ export const turnityGeneral: Routes = [
     },
     {
         path: 'llamado-pantalla',
-        component: LlamadoPantallaComponent,
+        //component: LlamadoPantallaComponent,
+        component: LlamadoPantalla2Component,
         canActivate: [AuthGuard]
     },
     {
@@ -55,6 +59,16 @@ export const turnityGeneral: Routes = [
     {
         path: 'estadisticas-fechas',
         component: EstadisticasFechasComponent ,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'estadisticas',
+        component: ConsultarComponent ,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'infoEstadisticas',
+        component: DashboardComponent ,
         canActivate: [AuthGuard]
     },
 ];

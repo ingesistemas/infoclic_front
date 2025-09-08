@@ -77,7 +77,7 @@ export class ObtenerSalasComponent {
   
     ngOnInit(): void {
       this.tamanioForm.actualizarCargando(false, CargandoComponent)
-      this.peticion('/obtener-salas')
+      this.peticion('/obtener-salas-sucursal')
       //console.log(localStorage.getItem('ciudades'))
     }
 
@@ -147,7 +147,7 @@ export class ObtenerSalasComponent {
                 this.tamanioForm.actualizar( true, ErrorComponent)
                 
               }else{      
-                if(url == '/obtener-salas'){
+                if(url == '/obtener-salas-sucursal' || url == '/obtener-salas'){
                   this.salas = data.Data.map((s:any) => ({
                     ...s,
                     created_at: new Date(s.created_at)

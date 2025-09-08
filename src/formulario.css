@@ -3,7 +3,7 @@
 }
 
 .formulario{
-    margin: -70px auto;
+    margin: 20px auto;
     border: 1px solid #efefef;
     border-radius: 10px;
     background-color: #ffffff;
@@ -24,7 +24,7 @@ label{
 }
 
 .tituloFormulario, .botonera{
-     background-color: #e6eef5;
+    background-color: #e6eef5;
     font-weight: bold;
     font-size: 1.2rem;
     height: 50px;
@@ -48,7 +48,6 @@ label{
     color: #00367c !important;
     border: 1px solid rgb(27, 116, 205) !important;
     background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(245, 249, 255), rgb(209, 228, 255), rgb(192, 218, 255), rgb(195, 226, 255));
-
 }
 
 select, option:hover{
@@ -62,8 +61,7 @@ select, option:hover{
 }
 .btn-cancelar:hover{
     background: rgb(234, 234, 234);
-     background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(199, 199, 199), rgb(243, 243, 243), rgb(254, 254, 254));
-    
+    background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(199, 199, 199), rgb(243, 243, 243), rgb(254, 254, 254));
     color: #a80000;
 }
 
@@ -73,7 +71,7 @@ select, option:hover{
 
 .btn-aceptar{
     /*background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(0, 99, 152), rgb(5, 115, 174), rgb(5, 98, 174), rgb(1, 83, 142));*/
-     background-color: rgb(46, 175, 239); 
+    background-color: rgb(46, 175, 239); 
     background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(46, 175, 239), rgb(35, 171, 239), rgb(0, 73, 129));
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     color: #FFF;
@@ -85,16 +83,14 @@ select, option:hover{
 }
 
 .btn-nuevo{
-     background-color: rgb(56, 180, 243) !important; 
+    background-color: rgb(56, 180, 243) !important; 
     border: none;
-
     color: #FFF;
 }
 
 .btn-nuevo:hover{
     color: #ffffff;
-     background-color: rgb(6, 158, 234) !important; 
-
+    background-color: rgb(6, 158, 234) !important; 
 }
 
 /* Label fotantes*/
@@ -194,12 +190,12 @@ select, option:hover{
 }
 
 .li-vertical{
-     padding: 7px 0px 7px 15px
+    padding: 7px 0px 7px 15px
 }
 
 .li-vertical:hover{
     background-color: #005ea5;
-    color: #FFF;
+    color: #FFF !important;
     cursor: pointer;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
@@ -213,7 +209,7 @@ select, option:hover{
 }
 
 .contiene-tabla, .contiene-contenido{
-    margin: -70px auto;
+    margin: 20px auto;
     width: 100% !important;
     background-color: #ffffff;
     padding: 60px;

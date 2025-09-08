@@ -26,6 +26,7 @@ import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { IConsultaTurnos } from '../../../../../interfaces/IConsultaTurnos';
+import { ISucursales } from '../../../../../interfaces/ISucursales';
 
 
 
@@ -62,14 +63,14 @@ dayjs.extend(duration);
 })
 export class TurnosFechasComponent implements OnInit, AfterViewInit, OnDestroy { // Implementamos OnDestroy
 
-    private fb = inject(FormBuilder);
-    private peticionsServicios = inject(PeticionService);
-    private autenticaServicio = inject(AutenticaService);
-    private retornaErroresService = inject(RetornarErroresService);
-    private tamanioForm = inject(TamanioFormModalService);
-    private mensajeErrorServicios = inject(MensajesService);
-    private router = inject(Router);
-    private zone = inject(NgZone);
+    private fb = inject(FormBuilder)
+    private peticionsServicios = inject(PeticionService)
+    private autenticaServicio = inject(AutenticaService)
+    private retornaErroresService = inject(RetornarErroresService)
+    private tamanioForm = inject(TamanioFormModalService)
+    private mensajeErrorServicios = inject(MensajesService)
+    private router = inject(Router)
+    private zone = inject(NgZone)
     
     expandedElement: IConsultaTurnos | null = null;
 
@@ -78,15 +79,15 @@ export class TurnosFechasComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     displayedColumns: string[] = ['opciones', 'paciente', 'prioridad', 'fecha', 'hora_llegada', 'hora_asignacion', 'hora_ini', 'hora_fin', 'sala', 'caso', 'asignado', 'creado'];
-    dataSource: MatTableDataSource<IConsultaTurnos>;
-    turnos: IConsultaTurnos[] = [];
-    mensaje: string = '';
-    mensajeToast: string = '';
-    ahora: Date = new Date();
-    timerSubscription!: Subscription;
+    dataSource: MatTableDataSource<IConsultaTurnos>
+    turnos: IConsultaTurnos[] = []
+    mensaje: string = ''
+    mensajeToast: string = ''
+    ahora: Date = new Date()
+    timerSubscription!: Subscription
     turnoActual: any;
     mostrarReporte: boolean = false
-
+    sucursales!: ISucursales[]
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
@@ -96,7 +97,8 @@ export class TurnosFechasComponent implements OnInit, AfterViewInit, OnDestroy {
         activo: [0],
         fecha_ini: [''],
         fecha_fin: [''],
-        id_sucursal: [this.autenticaServicio.idSucursalActual()],
+        id_sucursal: [''],
+        todas: [0],
         id_usuario: [this.autenticaServicio.idUsuarioActual()]
     });
 
@@ -109,6 +111,8 @@ export class TurnosFechasComponent implements OnInit, AfterViewInit, OnDestroy {
         this.timerSubscription = interval(1000).subscribe(() => {
             this.ahora = new Date(); // Se actualiza cada segundo
         });
+
+        this.obternerSucursales()
     }
 
 
@@ -131,6 +135,10 @@ export class TurnosFechasComponent implements OnInit, AfterViewInit, OnDestroy {
     getTotalLlamados(asignaciones: any[]): number {
         if (!asignaciones) return 0;
         return asignaciones.reduce((acc, asignacion) => acc + (asignacion.llamados?.length || 0), 0);
+    }
+
+    async obternerSucursales(){
+        await this.peticion('/obtener-sucursales')
     }
 
     horaActual: string = new Date().toISOString();
@@ -288,15 +296,18 @@ export class TurnosFechasComponent implements OnInit, AfterViewInit, OnDestroy {
                                 // Este seteo adicional no hace daño y asegura que si los datos llegan tarde, se actualicen.
                                 this.dataSource.paginator = this.paginator;
                                 this.dataSource.sort = this.sort;
-                                console.log(this.turnos)
-                                
+                               
                                 // ¡Llama al setupFilterPredicate AQUÍ después de asignar los datos!
                                 this.setupFilterPredicate(); 
                                 
                                 if (this.dataSource.paginator) {
                                     this.dataSource.paginator.firstPage();
                                 }
-                                console.log("Datos de turnos cargados y procesados:", this.turnos); // Debug
+                                
+                            }
+
+                            if(url == '/obtener-sucursales'){
+                                this.sucursales = data.Data
                             }
                         }
                     }
@@ -331,6 +342,14 @@ export class TurnosFechasComponent implements OnInit, AfterViewInit, OnDestroy {
             return this.retornaErroresService.getErrores(this.formulario, campo)
         }
         return null
+    }
+
+    todas(){
+        this.formulario.controls['id_sucursal'].setValue('')
+    }
+
+    sucursal(){
+        this.formulario.controls['todas'].setValue(0)
     }
 
     

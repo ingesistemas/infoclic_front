@@ -19,8 +19,12 @@ export class AutenticaService {
   private _aplicacionSelect = signal<string>('')
   private _idModuloActual = signal<number>(0)
   private _moduloActual = signal<string>('')
+  private _idSalaActual = signal<number>(0)
+  private _salaActual = signal<string>('')
+  
 
-  actualizarUsuarioActual(id:string,  nombre:string, email:string, idSucursal:number, token:string, nit:string, sucursal: string, id_modulo:number, modulo:string){
+  actualizarUsuarioActual(id:string,  nombre:string, email:string, idSucursal:number, token:string, nit:string, sucursal: string, 
+    id_modulo:number, modulo:string, id_sala:number, sala:string){
     this._nombreUsuarioActual.set(nombre)
     this._idUsuarioActual.set(id)
     this._emailUsuarioActual.set(email)
@@ -30,6 +34,8 @@ export class AutenticaService {
     this._sucursalActual.set(sucursal)
     this._idModuloActual.set(id_modulo)
     this._moduloActual.set(modulo)
+    this._idSalaActual.set(id_sala)
+    this._salaActual.set(sala)
   }
 
   actualizarAplicacionActual(id:string, aplicacion:string, aplicacionSelect: string ){
@@ -50,6 +56,8 @@ export class AutenticaService {
   readonly aplicacionSelect = this._aplicacionSelect.asReadonly()
   readonly nitActual = this._nitActual.asReadonly()
   readonly sucursalActual = this._sucursalActual.asReadonly()
-  readonly id_moduloActual = this._idSucursalActual.asReadonly()
-   readonly moduloActual = this._moduloActual.asReadonly()
+  readonly id_moduloActual = this._idModuloActual.asReadonly()
+  readonly moduloActual = this._moduloActual.asReadonly()
+  readonly idSalaActual = this._idSalaActual.asReadonly()
+  readonly salaActual = this._salaActual.asReadonly()
 }

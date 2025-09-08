@@ -1,10 +1,10 @@
 <form class="formulario" autocomplete="off" [formGroup]="formulario">
     <div class="tituloFormulario">
-        Asignación de turnos....
+        Asignación de turnos
     </div>
 
     <div class="contieneInputRow row">
-        <div class="mb-2 floating-label-group col-md-6">
+        <div class="mb-2 floating-label-group col-md-4">
             <input type="text" id="documento" class="form-control form-control-sm miInput" formControlName="documento" placeholder=" " (blur)="obtenerCliente()" />
             <label  class="form-label" for="documento">Número de documento</label>
             <div class="contieneLabelError">
@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <div class="mb-2 floating-label-group col-md-12">
+        <div class="mb-2 floating-label-group col-md-8">
             <input type="text" id="nombre" class="form-control form-control-sm miInput" formControlName="nombre" placeholder=" " (input)="capitalizarCadaPalabra()"/>
             <label  class="form-label" for="documento" >Nombre del paciente</label>
             <div class="contieneLabelError">
@@ -48,7 +48,7 @@
 
         <div class="mb-2 floating-label-group col-md-6">
             <select id="id_sala" class="form-select form-select-sm miInput" formControlName="id_sala" >
-               
+                    <option value="">Seleccione...</option>
                 @for (sala of salas; track $index) {
                     <option value="{{ sala.id }}">{{ sala.sala }}-{{ sala.piso!.piso }}</option>
                 }
@@ -59,28 +59,45 @@
             </div>
         </div>
 
-        <div class="mb-2 floating-label-group col-md-6">
-            <select id="id_prioritaria" class="form-select form-select-sm miInput" formControlName="id_prioritaria" >
-                @for (prioridad of prioritarias; track $index) {
-                    <option value="{{ prioridad.id }}">{{ prioridad.prioritaria }}</option>
-                }
-            </select>
-            <label for="id_prioritaria" class="form-label">Tipo de prioridad</label>
-            <div class="contieneLabelError">
-                <small class="labelError">{{ retotnaError('id_prioritaria')}}&nbsp;</small>
+        @if(!inhabilitar){
+            <div class="mb-2 floating-label-group col-md-6">
+                <select id="id_prioritaria" class="form-select form-select-sm miInput" formControlName="id_prioritaria" >
+                        
+                    @for (prioridad of prioritarias; track $index) {
+                        <option value="{{ prioridad.id }}">{{ prioridad.prioritaria }}</option>
+                    }
+                </select>
+                <label for="id_prioritaria" class="form-label">Tipo de prioridad</label>
+                <div class="contieneLabelError">
+                    <small class="labelError">{{ retotnaError('id_prioritaria')}}&nbsp;</small>
+                </div>
             </div>
-        </div>
-        
-    </div>
 
-    <div style="text-align: center;" class="alert alert-primary" role="alert">
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        Buscando datos...
+            <div class="mb-2 floating-label-group col-md-3">
+                <input type="time" id="hora_cita" class="form-control form-control-sm miInput" formControlName="hora_cita" placeholder=" " />
+                <label  class="form-label" for="documento" >Hora de la cita</label>
+                <div class="contieneLabelError">
+                    <small class="labelError">{{ retotnaError('hora_cita')}}&nbsp;</small>
+                </div>
+            </div>
+        
+            <div class="alert alert-primary col-md-9" role="alert">
+                <h6 class="alert-heading">Importante!</h6>
+                <small>
+                    La hora de la cita constituye un dato esencial para la generación de estadísticas, utilizadas en los 
+                    informes gerenciales y en los requerimientos de los Entes de Control. 
+                    Por ello, resulta fundamental garantizar la exactitud de este registro, así como la de los demás datos asociados.
+                </small>
+            </div>
+        }
     </div>
    
     <div class="botonera">  
         <div class="btn-group" role="group" aria-label="Basic example">
             <button type="button" class="btn btn-aceptar" (click)="aceptar()" >Asignar turno</button>
+            @if(inhabilitar){
+                <button type="button" class="btn btn-aceptar" (click)="finalizar()"  >Finalizar la atención</button>
+            }
             <button type="button" class="btn btn-cancelar" (click)="cerrar()">Cerrar</button>
         </div>
     </div>

@@ -55,33 +55,50 @@ export class AsignarTurnoComponent {
     documento: ['' , [Validators.required, Validators.minLength(3)]],
     id_profesion: [0 , [Validators.required]],
     id_operario: [0 , [Validators.required]],
-    id_prioritaria: [0 ],
+    id_prioritaria: [0, [Validators.required] ],
+    hora_cita: [''],
     id_sala: [0 , [Validators.required]],
     id_sucursal: [this.autenticaServicio.idSucursalActual()],
-    id_usuario: [this.autenticaServicio.idUsuarioActual()]
+    id_usuario: [this.autenticaServicio.idUsuarioActual()],
+    id_modulo: [this.autenticaServicio.id_moduloActual()],
+    id_caso : [0],
+    id_asigna: [0],
+    hor_ini: [''],
+    hor_ope_ini: ['']
   })
+  inhabilitar: boolean = false
+
+  private getHoraActual(): string {
+    const ahora = new Date();
+    const horas = ahora.getHours().toString().padStart(2, "0");
+    const minutos = ahora.getMinutes().toString().padStart(2, "0");
+    return `${horas}:${minutos}`;
+  }
 
   constructor(private messageService: MessageService){}
   ngOnInit(): void {
     this.peticion('/obtener-profesiones')
-   
     const datos = history.state;
     this.turnoActual = datos
-   
+
+    if(datos && datos.datos && datos.datos.id_asigna){
+      this.formulario.controls['id_asigna'].setValue(datos.datos.id_asigna)
+      this.formulario.controls['hor_ini'].setValue(this.getHoraActual())
+      this.inhabilitar = true
+      this.peticion('/llamado-operario')
+    }
+    this.formulario.controls['hor_ope_ini'].setValue(this.getHoraActual())
     if (datos &&
     typeof datos === 'object' &&
     datos.datos &&
     typeof datos.datos === 'object' &&
     'id' in datos.datos) {
-
         this.formulario.controls['id'].setValue(datos.datos.id)
         this.formulario.controls['id_paciente'].setValue(datos.datos.id_paciente)
         this.formulario.controls['nombre'].setValue(datos.datos.nombre)
         this.formulario.controls['documento'].setValue(datos.datos.documento)
-      
     }
     
-
     if(this.formulario.controls['nombre'].value != ''){
       this.formulario.controls['nombre'].disable()
       this.formulario.controls['documento'].disable()
@@ -110,7 +127,7 @@ export class AsignarTurnoComponent {
   }
 
   obtenerSalas(){
-    this.peticion('/obtener-salas')
+    this.peticion('/obtener-salas-sucursal')
   }
 
   cerrar(){
@@ -124,9 +141,18 @@ export class AsignarTurnoComponent {
     'id' in datosTemp.datos){
       this.peticion('/editar-turno')
     }else{
+      
       this.peticion('/crear-turno')
-    }
+    } 
     const datos = this.formulario.value
+    
+  }
+
+  finalizar(){
+    let idUsuario = parseInt( this.autenticaServicio.idUsuarioActual())
+    this.formulario.controls['id_operario'].setValue(idUsuario)
+    this.formulario.controls['id_caso'].setValue(0)
+    this.peticion('/actualizar-llamado')
   }
 
   capitalizarCadaPalabra() {
@@ -146,8 +172,9 @@ export class AsignarTurnoComponent {
 
   peticion(url:string){
     this.mensaje = ''
-    if(url == '/crear-turno' || url == '/editar-turno'){
-      this.tamanioForm.actualizarCargando(true, CargandoComponent)
+     this.tamanioForm.actualizarCargando(true, CargandoComponent)
+    if(url == '/crear-turno' || url == '/editar-turno' || url == '/actualizar-llamado' || url == '/llamado-operario'){
+     
     }
     const datos = this.formulario.value;
     this.peticionsServicios.peticionPOST(url, datos).subscribe({
@@ -172,7 +199,7 @@ export class AsignarTurnoComponent {
               this.profesiones = data.Data
             }else if(url == '/obtener-usuario-profesion'){
               this.operarios = data.Data
-            }else if(url == '/obtener-salas'){
+            }else if(url == '/obtener-salas-sucursal'){
               this.salas = data.Data
             }else if(url == '/obtener-prioritarias'){
               this.prioritarias = data.Data
@@ -185,11 +212,13 @@ export class AsignarTurnoComponent {
                 this.formulario.controls['nombre'].enable();
               }
             }else{
-              this.mensaje = data.Message
-              this.mostrarToast()
-              setTimeout(()=>{
-                this.cerrar()
-              },2000)
+              if(url != '/llamado-operario'){
+                this.mensaje = data.Message
+                this.mostrarToast()
+                setTimeout(()=>{
+                  this.cerrar()
+                },2000)
+              }
             }
           }
         }else{
@@ -200,6 +229,7 @@ export class AsignarTurnoComponent {
       },
       error: (err) => {
         this.mensaje = "Se presentó un error inesperado. Comunícate con un asesor infoclic.";
+        console.log(err)
         this.mensajeErrorServicios.actualizarError(this.mensaje, '');
         this.tamanioForm.actualizar(false, ErrorComponent);
       },

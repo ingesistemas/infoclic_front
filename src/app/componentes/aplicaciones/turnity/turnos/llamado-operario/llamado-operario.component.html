@@ -8,7 +8,17 @@
                 <mat-label>Buscar...</mat-label>
                 <input matInput (keyup)="applyFilter($event)" #input>
             </mat-form-field>
-        </div>                
+        </div>   
+        
+        <div class="mb-2 floating-label-group col-md-4">
+            <select id="id_usuario" class="form-select form-select-sm miInput" (change)="consultar($any($event.target).value)">
+                <option [value]=""></option>
+                @for (usuario of usuarios; track $index) {
+                    <option  [value]="usuario.id" >{{ usuario.nombre }} </option>
+                }
+            </select>
+            <label for="id_usuario" class="form-label">Llamar pacientes asignados a:</label>
+        </div>
     </div>
 
     <div class="mat-elevation-z8 tabla-scroll" >
@@ -41,7 +51,13 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 7%;"> Fecha </th>
                     <td mat-cell *matCellDef="let row; let i = index" class="fila"> 
                        <span>{{ row.fecha }}</span>  
-                            
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="hora_cita">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 7%;"> Hora cita </th>
+                    <td mat-cell *matCellDef="let row; let i = index" class="fila"> 
+                       <span>{{ row.hora_cita }}</span>  
                     </td>
                 </ng-container>
 
@@ -62,21 +78,21 @@
                 </ng-container>
 
                 <ng-container matColumnDef="sala">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 7%;"> Sala </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 8%;"> Sala </th>
                     <td mat-cell *matCellDef="let row" class="fila"> 
                        <span>{{ row.asignaciones[0].sala.sala }}</span>      
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="asignado">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 20%;"> Asignado a: </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 16%;"> Asignado a: </th>
                     <td mat-cell *matCellDef="let row" class="fila"> 
                        <span>{{ row.asignaciones[0].operario.nombre }}</span>      
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="creado">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 20%;"> Asignado por: </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="fila encabezado-tabla" style="width: 15%;"> Asignado por: </th>
                     <td mat-cell *matCellDef="let row" class="fila"> 
                        <span>{{ row.asignaciones[0].usuarios.nombre }}</span>      
                     </td>

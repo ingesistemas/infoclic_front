@@ -1,0 +1,281 @@
+:root {
+    --bg-light: #f5f7fa; /* Gris muy claro */
+    --text-dark: #2c3e50; /* Azul oscuro */
+    --accent-blue: #3498db;
+    --accent-green: #2ecc71;
+    --accent-red: #e74c3c;
+    --header-bg: #ffffff;
+    --footer-bg: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark) !important;
+    overflow: hidden;
+}
+
+.turno-container{
+    margin: 0 auto !important;
+    width: 100%;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px !important;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    transition: background-color 0.5s ease;
+}
+
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4rem;
+    background-color: var(--header-bg);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    
+}
+.turno-container{
+    background-color: #ffffff;
+    top: -10px;
+}
+
+.logo-container img {
+    height: 50px;
+}
+
+.time-widget {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 3rem;
+    font-weight: 700;
+    color:#0003a1;
+}
+
+/* Contenido Principal */
+.content-area {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra el contenido del área principal */
+    align-items: center; /* Centra el contenido del área principal */
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    background-color: #d0d7e7;
+    color: #FFF;
+    min-height: 550px;
+}
+
+/* Tarjeta del Turno */
+.turno-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    padding: 4rem 6rem;
+    border-left: 10px solid #00bfe6;
+    animation-duration: 0.8s;
+}
+
+.turno-card .label {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.turno-card .numero-turno {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 7rem;
+    font-weight: 700;
+    color: rgb(0, 126, 175);
+    line-height: 1;
+    letter-spacing: -5px;
+    transition: color 0.5s ease;
+}
+
+.turno-card .atencion-info {
+    font-size: 2rem;
+    margin-top: 2rem;
+    color: red;
+}
+
+.turno-card .atencion-info span {
+    font-weight: 600;
+    color: rgb(0, 0, 142);
+    transition: color 0.5s ease;
+    font-size: 3rem;
+}
+
+/* Mensaje de Bienvenida - ¡AJUSTES PARA CENTRADO Y POSICIÓN DEL TEXTO! */
+.welcome-message {
+    animation-duration: 0.8s;
+    display: flex; /* Habilitamos Flexbox para alinear elementos internos */
+    align-items: center; /* Alinea los elementos verticalmente al centro */
+    flex-wrap: wrap; /* Permite que los elementos se apilen en pantallas pequeñas */
+    gap: 30px; /* Espacio entre la imagen y el texto */
+    padding: 2rem; /* Añade un padding general para el contenedor */
+    position: relative; /* Necesario para posicionar el spinner de forma absoluta */
+    max-width: 900px; /* Ancho máximo para el bloque de imagen y texto */
+    margin: 0 auto; /* Centra el bloque .welcome-message dentro de .content-area */
+}
+
+/* Clases para controlar la imagen y el contenido de texto */
+.welcome-image-wrapper { /* Div que contiene la imagen */
+    flex-shrink: 0; /* Evita que la imagen se encoja demasiado */
+    max-width: 150px; /* Tamaño máximo para la imagen en escritorio */
+    width: 100%; /* Asegura que ocupe el espacio disponible hasta el max-width */
+    text-align: center; /* Centra la imagen si es más pequeña que el max-width */
+}
+
+.welcome-image-wrapper img {
+    width: 100%;
+    height: auto;
+}
+
+.welcome-text-content { /* Div que contiene h1 y p */
+    flex-grow: 1; /* Permite que el contenido del texto ocupe el espacio restante */
+    max-width: 500px; /* Limita el ancho del texto para legibilidad */
+    display: flex; /* <-- ¡NUEVO! Habilitamos Flexbox */
+    flex-direction: column; /* <-- ¡NUEVO! Apilamos los elementos verticalmente */
+    justify-content: center; /* <-- ¡NUEVO! Centra el contenido verticalmente */
+    align-items: center; /* <-- ¡NUEVO! Centra el contenido horizontalmente */
+    text-align: center; /* Aseguramos que el texto esté centrado dentro de este contenedor */
+}
+
+
+.welcome-text-content h1 { /* Centra el h1 */
+    font-size: 4rem;
+    font-weight: 700;
+    color: #0003a1;
+    margin-bottom: 1rem; /* <-- Ajustado: Margen inferior para separar del párrafo */
+    /* text-align: center; Ya no es necesario aquí si el padre (.welcome-text-content) es flexbox con align-items: center */
+}
+
+.welcome-text-content p { /* Centra el párrafo */
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #038ccc;
+    margin-bottom: 0; /* <-- Ajustado: Sin margen inferior para el párrafo final */
+    /* text-align: center; Ya no es necesario aquí si el padre (.welcome-text-content) es flexbox con align-items: center */
+}
+
+.spinner {
+    position: absolute; /* Posición absoluta respecto a .welcome-message */
+    bottom: 2rem; /* Ajusta la posición vertical */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 50px;
+    border: 6px solid #ecf0f1;
+    border-top-color: var(--accent-blue);
+    border-radius: 50%;
+    animation: spin 1.2s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+/* Footer con texto que se desplaza */
+.footer {
+    padding: 1rem 0;
+    background-color: rgb(0, 55, 128) !important;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    z-index: 10;
+}
+
+.scrolling-text {
+    font-size: 2rem;
+    white-space: nowrap;
+    padding-left: 100%;
+    animation: scrollText 30s linear infinite;
+    color: #7f8c8d;
+}
+
+.scrolling-text span {
+    font-weight: 600;
+    color: var(--accent-blue);
+}
+
+.footer .scrolling-text .text-footer{
+    color: #FFF !important;
+    font-weight:100;
+}
+
+.footer .scrolling-text .punto-footer{
+    color: greenyellow !important;
+}
+
+/* Animaciones CSS */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes scrollText {
+    to { transform: translateX(-240%); }
+}
+
+/* Media Queries para adaptabilidad */
+@media (max-width: 768px) {
+    .welcome-message {
+        flex-direction: column; /* Apila la imagen y el texto en pantallas pequeñas */
+        text-align: center; /* Centra todo el contenido */
+        gap: 20px;
+    }
+    .welcome-text-content {
+        text-align: center; /* Centra el texto en pantallas pequeñas */
+    }
+    .welcome-image-wrapper { /* Ajusta el tamaño de la imagen en móvil */
+        max-width: 180px; 
+    }
+    .welcome-text-content h1 { /* Centra el h1 en móvil */
+        font-size: 3rem;
+        text-align: center;
+        margin-bottom: 0.5rem; /* Ajuste el margen inferior */
+    }
+    .welcome-text-content p { /* Centra el párrafo en móvil */
+        font-size: 1.2rem;
+        text-align: center;
+        margin-bottom: 0; /* Ajuste el margen inferior */
+    }
+    .spinner {
+        position: static; /* Coloca el spinner en el flujo normal del documento en móvil */
+        margin-top: 2rem;
+        transform: translateX(0);
+    }
+    .header {
+        padding: 1rem 2rem; /* Ajusta el padding del header en pantallas pequeñas */
+        flex-direction: column; /* Apila logo y hora en móvil */
+    }
+    .time-widget {
+        font-size: 2rem; /* Ajusta el tamaño de la hora en móvil */
+        margin-top: 1rem;
+    }
+    .logo-container img {
+        height: 40px; /* Ajusta el tamaño del logo en móvil */
+    }
+    .turno-card {
+        padding: 2.5rem 4rem; /* Ajusta el padding de la tarjeta del turno en móvil */
+    }
+    .turno-card .numero-turno {
+        font-size: 8rem; /* Ajusta el tamaño del número de turno en móvil */
+    }
+    .turno-card .label {
+        font-size: 2rem; /* Ajusta el tamaño del label en móvil */
+    }
+    .turno-card .atencion-info {
+        font-size: 1.5rem; /* Ajusta el tamaño de la información en móvil */
+    }
+    .scrolling-text {
+        font-size: 1rem; /* Ajusta el tamaño del texto desplazable en móvil */
+    }
+}
+

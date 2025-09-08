@@ -12,7 +12,15 @@
             </div>
         </div>
 
-        <div class="mb-2 floating-label-group col-md-6">
+        <div class="mb-2 floating-label-group col-md-4">
+            <input type="text" id="hora_cita" class="form-control form-control-sm miInput" formControlName="hora_cita" placeholder=" " />
+            <label  class="form-label" for="hora_cita">Hora cita</label>
+            <div class="contieneLabelError">
+                <small class="labelError">{{ retotnaError('hora_cita')}}&nbsp;</small>
+            </div>
+        </div>
+
+        <div class="mb-2 floating-label-group col-md-4">
             <input type="text" id="hora_llegada" class="form-control form-control-sm miInput" formControlName="hora_llegada" placeholder=" " />
             <label  class="form-label" for="hora_llegada">Hora llegada</label>
             <div class="contieneLabelError">
@@ -20,7 +28,7 @@
             </div>
         </div>
 
-        <div class="mb-2 floating-label-group col-md-6">
+        <div class="mb-2 floating-label-group col-md-4">
             <input type="text" id="hora_asigna" class="form-control form-control-sm miInput" formControlName="hora_asigna" placeholder=" " />
             <label  class="form-label" for="hora_asigna">Hora asignación</label>
             <div class="contieneLabelError">
@@ -47,7 +55,9 @@
         <div class="mb-2 floating-label-group col-md-6">
             <select id="id_caso" class="form-select form-select-sm miInput" formControlName="id_caso">
                 @for (caso of casos; track $index) {
-                    <option value="{{ caso.id }}">{{ caso.caso }}</option>
+                    @if(caso.id != '5' && caso.id != '6' && caso.id != '7'){
+                        <option value="{{ caso.id }}">{{ caso.caso }}</option>
+                    }
                 }
             </select>
             <label for="id_caso" class="form-label">Destino paciente</label>
@@ -57,7 +67,7 @@
         </div>
     
         @if( formulario.get('id_caso')?.value == 3 ){
-            <div class="mb-2 floating-label-group col-md-6">
+            <!-- <div class="mb-2 floating-label-group col-md-6">
                 <select id="id_profesion" class="form-select form-select-sm miInput" formControlName="id_profesion" (blur)="obtenerOperarios()" >
                     @for (profesion of profesiones; track $index) {
                         <option value="{{ profesion.id }}">{{ profesion.profesion }}</option>
@@ -81,7 +91,7 @@
                 <div class="contieneLabelError">
                     <small class="labelError">{{ retotnaError('id_operario')}}&nbsp;</small>
                 </div>
-            </div>
+            </div> -->
 
             <div class="mb-2 floating-label-group col-md-6">
                 <select id="id_sala" class="form-select form-select-sm miInput" formControlName="id_sala" >
@@ -101,7 +111,7 @@
     <div class="botonera">  
         <div class="btn-group" role="group" aria-label="Basic example">
             <button type="button" class="btn btn-aceptar" (click)="aceptar()" >Actualizar llamado</button>
-            <button type="button" class="btn btn-cancelar" (click)="cerrar(true)">Cerrar</button>
+            <button type="button" class="btn btn-cancelar" (click)="cerrar(true)">Cancelar</button>
         </div>
     </div>
 

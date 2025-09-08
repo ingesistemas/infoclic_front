@@ -96,7 +96,7 @@ export class AsignarTurnoPantallaComponent {
   obtenerCliente(){
     this.nombreInput.nativeElement.focus();
     this.formulario.controls['nombre'].setValue('')
-    this.formulario.controls['nombre'].enable();
+    this.formulario.controls['nombre'].enable(); 
     this.peticion('/obtener-cliente')
   }
 
@@ -114,7 +114,7 @@ export class AsignarTurnoPantallaComponent {
   }
 
   obtenerSalas(){
-    this.peticion('/obtener-salas')
+    this.peticion('/obtener-salas-sucursal')
   }
 
   cerrar(){
@@ -181,7 +181,7 @@ export class AsignarTurnoPantallaComponent {
               this.profesiones = data.Data
             }else if(url == '/obtener-usuario-profesion'){
               this.operarios = data.Data
-            }else if(url == '/obtener-salas'){
+            }else if(url == '/obtener-salas-sucursal'){
               this.salas = data.Data
             }else if(url == '/obtener-prioritarias'){
               this.prioritarias = data.Data

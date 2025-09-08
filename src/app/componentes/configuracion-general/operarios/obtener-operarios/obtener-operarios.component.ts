@@ -58,7 +58,7 @@ export class ObtenerOperariosComponent {
       this.dataSource = new MatTableDataSource();
     }
    
-    displayedColumns: string[] = ['opciones', 'id', 'nombre', 'profesion', 'celular', 'email', 'creado'];
+    displayedColumns: string[] = ['opciones', 'id', 'nombre', 'profesion', 'celular', 'email', 'sucursal', 'creado'];
     dataSource: MatTableDataSource<any>;
     operarios: any[] = []
     mensaje: string = ''
@@ -76,7 +76,7 @@ export class ObtenerOperariosComponent {
   
     ngOnInit(): void {
       this.tamanioForm.actualizarCargando(false, CargandoComponent)
-      this.peticion('/obtener-usuarios')
+      this.peticion('/obtener-usuarios-sucursal')
       //console.log(localStorage.getItem('ciudades'))
     }
   
@@ -139,7 +139,7 @@ export class ObtenerOperariosComponent {
                 this.tamanioForm.actualizar( true, ErrorComponent)
                 
               }else{      
-                if(url == '/obtener-usuarios'){
+                if(url == '/obtener-usuarios' || url == '/obtener-usuarios-sucursal'){
                   this.operarios = data.Data.map((s:any) => ({
                     ...s,
                     created_at: new Date(s.created_at)
@@ -156,7 +156,7 @@ export class ObtenerOperariosComponent {
                   if (!Array.isArray(this.operarios)) {
                     this.operarios = Object.values(this.operarios);
                   }
-  
+                  console.log(this.operarios)
                   const index = this.operarios.findIndex(s => s.id == id);
                   if (index !== -1) {
                     this.operarios[index].activo = activo === 1 ? 0 : 1;

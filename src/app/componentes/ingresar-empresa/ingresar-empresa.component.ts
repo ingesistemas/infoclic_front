@@ -38,6 +38,8 @@ export class IngresarEmpresaComponent implements OnInit {
   aplicacion: string = ''
   aplicacionSelect = this.autenticaServicio.aplicacionSelect()
   modulos: any = []
+  id_sala = 0
+  sala = ''
 
   formulario = this.fb.group({
     id : [0],
@@ -57,7 +59,11 @@ export class IngresarEmpresaComponent implements OnInit {
   get moduloSeleccionadoTexto(): string | undefined {
     const idSeleccionado = this.formulario.get('id_modulo')?.value;
     const modulo = this.modulos.find((m: any) => m.id.toString() === idSeleccionado);
+    console.log(modulo)
+    this.id_sala = modulo?.id_sala
+    this.sala = modulo?.sala.sala
     return modulo?.modulo;
+    
   }
 
   cerrarModal(){
@@ -100,7 +106,7 @@ export class IngresarEmpresaComponent implements OnInit {
   peticion(url:string){
     let nit = this.formulario.controls['nit'].value
     
-    this.autenticaServicio.actualizarUsuarioActual('','','',0,'',nit!, '', 0, '')
+    this.autenticaServicio.actualizarUsuarioActual('','','',0,'',nit!, '', 0, '', 0,'')
     if(url == '/sucursalesUsuarios'){
       this.mostrarCargandoSucursales = true
     }
@@ -134,6 +140,7 @@ export class IngresarEmpresaComponent implements OnInit {
               }
               if(url == '/obtener-modulos-sucursal'){
                 this.modulos = data.Data
+                console.log(this.modulos)
               }   
               
               if(url == '/sucursalesUsuarios'){
@@ -160,9 +167,11 @@ export class IngresarEmpresaComponent implements OnInit {
                 let nit = this.formulario.controls['nit'].value
                 let id_modulo = this.formulario.controls['id_modulo'].value
                 let modulo = this.moduloSeleccionadoTexto
+
+                console.log("Sala actual " + this.sala)
                 
                 this.tamanioForm.actualizarCargando(false, null)
-                this.autenticaServicio.actualizarUsuarioActual(usuario.id, usuario.nombre, usuario.email, id_sucursal!, data.token!, nit!, usuario.sucursales[0].sucursal, id_modulo!, modulo! )
+                this.autenticaServicio.actualizarUsuarioActual(usuario.id, usuario.nombre, usuario.email, id_sucursal!, data.token!, nit!, usuario.sucursales[0].sucursal, id_modulo!, modulo!, this.id_sala, this.sala )
                 this.router.navigateByUrl('/turnity')
               },2000)
             }

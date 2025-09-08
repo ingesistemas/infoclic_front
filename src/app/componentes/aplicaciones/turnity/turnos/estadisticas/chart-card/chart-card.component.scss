@@ -1,0 +1,28 @@
+/* src/app/chart-card/chart-card.component.scss */
+
+.chart-card {
+    background-color: var(--bg-card);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    box-shadow: var(--shadow-elevation-1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.chart-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-elevation-2);
+}
+.chart-card h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-title);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+}
+.chart-card h2 i {
+    margin-right: 10px;
+    color: var(--primary-color);
+}

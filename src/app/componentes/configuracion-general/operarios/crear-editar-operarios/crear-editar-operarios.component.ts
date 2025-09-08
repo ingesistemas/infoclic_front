@@ -14,6 +14,7 @@ import { ToastModule } from 'primeng/toast';
 import { ICiudades } from '../../../../interfaces/ICiudades';
 import { IDptos } from '../../../../interfaces/IDptos';
 import { IProfesiones } from '../../../../interfaces/IProfesiones';
+import { ISucursales } from '../../../../interfaces/ISucursales';
 
 @Component({
   selector: 'app-crear-editar-operarios',
@@ -41,6 +42,8 @@ export class CrearEditarOperariosComponent {
   mensajeToast: string = ''
   profesiones!: IProfesiones[]
   accion = this.tamanioForm.accionActual()
+  roles: any[] = []
+  sucursales: ISucursales[] = []
 
   formulario = this.fb.group({
     id: [0],
@@ -49,7 +52,15 @@ export class CrearEditarOperariosComponent {
     celular: ['', [Validators.required, Validators.minLength(10)]],
     email: ['', [Validators.required]],
     id_sucursal: [this.autenticaServicio.idSucursalActual()],
-    id_usuario: [this.autenticaServicio.idUsuarioActual()]
+    id_usuario: [this.autenticaServicio.idUsuarioActual()],
+    id_rol: [0],
+    sucursal: [0] //ID sucursal permiso acceso a usuario
+  })
+
+  formSucursales = this.fb.group({
+    "id_sucursal": [0],
+    "id_usuario": [0],
+    "estado": [false]
   })
 
   constructor(private messageService: MessageService){}
@@ -65,6 +76,13 @@ export class CrearEditarOperariosComponent {
       this.formulario.controls['celular'].setValue(datos.datos.celular)
       this.formulario.controls['email'].setValue(datos.datos.email)
     }
+    this.peticion('/obtener-roles')
+    if(this.accion == 'Editar'){
+        this.peticion('/obtener-usuarios-sucursales')
+    }else{
+        this.peticion('/obtener-sucursales')
+    }
+
   }
 
   mostrarToast() {
@@ -83,11 +101,32 @@ export class CrearEditarOperariosComponent {
     }
   }
 
+  editarRol(){
+    this.peticion('/editar-rol')
+  }
+
+  sucursalUsuarios(event: Event, id: number){
+    const check = event.target as HTMLInputElement
+    const estado = check.checked
+
+    this.formSucursales.controls['id_sucursal'].setValue(id)
+    this.formSucursales.controls['estado'].setValue(estado)
+    this.formSucursales.controls['id_usuario'].setValue(this.formulario.controls['id'].value)
+    
+ 
+    this.peticion('/usuarios-sucursales')
+  }
+
   peticion(url:string){
     this.mensaje = ''
     this.tamanioForm.actualizarCargando(true, CargandoComponent)
-    const datos = this.formulario.value;
-    console.log(datos)
+    let datos = null
+    if(url == '/usuarios-sucursales'){
+       datos = this.formSucursales.value;
+    }else{
+       datos = this.formulario.value;
+    }
+   
     this.peticionsServicios.peticionPOST(url, datos).subscribe({
       next: (data) => {
         if(data.Status == 200){
@@ -108,6 +147,13 @@ export class CrearEditarOperariosComponent {
           }else{
             if(url == '/obtener-profesiones'){
               this.profesiones = data.Data
+            }else if(url == '/obtener-roles'){
+              this.roles = data.Data
+            }else if(url == '/editar-rol'){
+              this.mensaje = data.Message
+              this.mostrarToast()
+            }else if(url == '/obtener-usuarios-sucursales' || url == '/obtener-sucursales'){
+              this.sucursales = data.Data
             }else{
               this.mensaje = data.Message
               this.mostrarToast()

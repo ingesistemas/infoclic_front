@@ -1,0 +1,56 @@
+
+
+    <div class="turno-container">
+        
+        <header class="header">
+            <div class="logo-container">
+                <img >
+            </div>
+            <!-- Muestra la hora actual formateada desde el componente TS -->
+            <div class="time-widget">{{ horaActual | date:'mediumTime' }}</div>
+        </header>
+
+        <main class="content-area">
+            <!-- La tarjeta del turno se muestra si 'turnoActual' tiene un valor -->
+            @if (turnoActual) {
+                <div class="turno-card" @zoomInOut>
+                    <div class="label">Su turno</div>
+                    <!-- Accede a las propiedades del objeto 'turnoActual' -->
+                    <div class="numero-turno">{{ turnoActual.nombre }}</div>
+                    
+                    <div class="atencion-info">
+                        <span>{{ turnoActual.sala }}</span> - <span>{{ turnoActual.piso }}</span> - <span>{{ turnoActual.modulo }}</span>
+                    </div>
+                </div>
+            }
+
+            <!-- El mensaje de bienvenida se muestra si 'showWelcomeMessage' es true -->
+            @if (showWelcomeMessage) {
+                <div class="welcome-message" @fadeInOut>
+                    <!-- ¡CORRECCIÓN AQUÍ! Envolvemos la imagen con la clase adecuada -->
+                    <div class="welcome-image-wrapper"> 
+                        <img src="images/asesora3.png" alt="Asesora de Turnos" width="100%">
+                    </div>
+                    <!-- ¡CORRECCIÓN AQUÍ! Envolvemos el H1 y el P con la clase adecuada -->
+                    <div class="welcome-text-content">
+                        <h1>Bienvenido(a)</h1>
+                        <p>Por favor, espere su llamado en pantalla.</p>
+                    </div>
+                  
+                </div>
+            }
+        </main>
+
+        <footer class="footer">
+            <div class="scrolling-text">
+                <span class="punto-footer">• </span> 
+                <span class="text-footer"> Su atención es nuestra prioridad.</span> 
+                
+                <span class="punto-footer">&nbsp;&nbsp;• </span> 
+                <span class="text-footer"> Recuerde tener su documento de identidad a mano.</span> 
+                <span class="punto-footer">&nbsp;&nbsp;• </span> 
+                <span class="text-footer"> Visite nuestra página web para más servicios.</span>
+            </div>
+        </footer>
+
+    </div>

@@ -1,0 +1,17 @@
+<div class="table-card">
+    <h2><i [class]="iconClass"></i>{{ title }}</h2>
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th *ngFor="let header of headers">{{ header }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of data">
+                    <td *ngFor="let key of keys">{{ item[key] }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

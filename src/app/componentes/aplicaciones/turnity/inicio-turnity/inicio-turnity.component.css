@@ -1,5 +1,11 @@
 .body-turnity{
     margin: 0 !important;
-    height: 100vh;
-    background-color: aquamarine;
+    min-height: 100vh !important;
+    background-color: rgb(223, 225, 243) !important;
 }
+
+.contenedor{
+    background-color: rgb(223, 225, 243) !important;
+    padding-top: 15px;
+}
+

@@ -1,7 +1,7 @@
 
 
 .formulario{
-   width: 30%;
+  width: 30%;
   margin: 0px auto;
   margin-bottom: 130px;
 }
@@ -11,15 +11,19 @@
   font-size: .9em !important;
 }
 
+.subTitulo{
+  color: #020f9a !important;
+}
+
 /* Estilos visuales llamativos y profesionales para el componente de estadísticas */
 
 .estadisticas-container {
   padding: 2rem;
-  background: linear-gradient(to right, #f8fafc, #e2e8f0);
+  background: linear-gradient(to right, #43b5db, #b1d1f0);
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-  max-width: 1200px;
-  margin: -40px auto;
+  max-width: 1000px;
+  margin: 20px auto;
   font-family: 'Segoe UI', sans-serif;
 }
 
@@ -103,8 +107,8 @@
 }
 
 .tabla th {
-  background-color: #ededed;
-  color: rgb(0, 143, 210);
+  background-color: #ffffff;
+  color: #1f75ae;
   padding: 0.75rem;
   text-align: left;
   border-top-left-radius: 8px;
@@ -112,6 +116,7 @@
   font-size: 0.95rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  border-bottom: 2px solid #cfcfcf;
 }
 
 .tabla td {
@@ -149,4 +154,23 @@
 .subtitulo{
   font-size: .7em !important;
   color: #0f172a !important;
+}
+
+/* Responsividad */
+@media (max-width: 992px) {
+  .formulario {
+    width: 30% !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .formulario {
+    width: 45% !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .formulario {
+    width: 90% !important;
+  }
 }

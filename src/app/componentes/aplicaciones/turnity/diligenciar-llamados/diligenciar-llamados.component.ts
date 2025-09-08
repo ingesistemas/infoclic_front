@@ -59,7 +59,7 @@ export class DiligenciarLlamadosComponent {
     id_caso: [0, [Validators.min(1)]],
     id_sala: [0],
     id_profesion: [0],
-    //id_operario_asig: [0],
+    hora_cita: [{value:'', disabled: true} ],
     id_operario: [0],
     id_asigna: [0],
     creado: [{value:'', disabled: true} , [Validators.required]],
@@ -70,15 +70,6 @@ export class DiligenciarLlamadosComponent {
 
   constructor(private messageService: MessageService){}
   async ngOnInit() {
-
-    /* await setTimeout(() => {
-      this.echoServicio.listenToLlamado((turno) => {
-        this.zone.run(() => {
-          this.mensajes.push(turno);
-          this.cdRef.detectChanges(); // asegura que la vista se actualice
-        });
-      });
-    },5000)  */
 
     await this.peticion('/obtener-salas')
     await this.peticion('/obtener-profesiones')
@@ -91,7 +82,7 @@ export class DiligenciarLlamadosComponent {
       this.formulario.controls['hora_llegada'].setValue(datos.datos.hora_llegada)
       this.formulario.controls['hora_asigna'].setValue(datos.datos.asignaciones[0].hora_asigna)
       this.formulario.controls['id_prioritaria'].setValue(datos.datos.prioritaria.prioritaria)
-      //this.formulario.controls['id_operario_asig'].setValue(datos.datos.asignaciones[0].operario.id)
+      this.formulario.controls['hora_cita'].setValue(datos.datos.hora_cita)
       this.formulario.controls['id_caso'].setValue(0)
       this.formulario.controls['creado'].setValue(datos.datos.asignaciones[0].usuarios.nombre)
       this.formulario.controls['id_asigna'].setValue(datos.datos.asignaciones[0].id)

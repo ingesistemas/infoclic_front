@@ -77,7 +77,7 @@ export class ObtenerPisosComponent {
 
   ngOnInit(): void {
     this.tamanioForm.actualizarCargando(false, CargandoComponent)
-    this.peticion('/obtener-pisos')
+    this.peticion('/obtener-pisos-sucursal')
     //console.log(localStorage.getItem('ciudades'))
   }
 
@@ -139,7 +139,7 @@ export class ObtenerPisosComponent {
               this.tamanioForm.actualizar( true, ErrorComponent)
               
             }else{      
-              if(url == '/obtener-pisos'){
+              if(url == '/obtener-pisos-sucursal' || url == '/obtener-pisos'){
                 this.pisos = data.Data.map((s:any) => ({
                   ...s,
                   created_at: new Date(s.created_at)

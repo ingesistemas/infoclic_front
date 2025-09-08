@@ -52,7 +52,7 @@ export class CrearEditarModulosComponent {
 
   constructor(private messageService: MessageService){}
   ngOnInit(): void {
-    this.peticion('/obtener-salas')
+    this.peticion('/obtener-salas-sucursal')
     if(this.tamanioForm.accionActual() == 'Editar'){
       
       const datos = history.state;
@@ -101,7 +101,7 @@ export class CrearEditarModulosComponent {
             this.tamanioForm.actualizar( true, ErrorComponent)
             
           }else{
-            if(url == '/obtener-salas'){
+            if(url == '/obtener-salas-sucursal'){
               this.salas = data.Data
               console.log(data.Data)
             }else{

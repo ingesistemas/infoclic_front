@@ -1,0 +1,65 @@
+/* src/app/data-table/data-table.component.scss */
+
+.table-card {
+    background-color: var(--bg-card);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    box-shadow: var(--shadow-elevation-1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+.table-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-elevation-2);
+}
+.table-card h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-title);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+}
+.table-card h2 i {
+    margin-right: 10px;
+    color: var(--secondary-color);
+}
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+.data-table thead th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+    padding: 15px 20px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+.data-table thead th:first-child { border-top-left-radius: var(--border-radius); }
+.data-table thead th:last-child { border-top-right-radius: var(--border-radius); }
+.data-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+.data-table tbody tr:last-child {
+    border-bottom: none;
+}
+.data-table tbody tr:hover {
+    background-color: #eaf1f8;
+}
+.data-table td {
+    padding: 15px 20px;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border-color);
+}
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}

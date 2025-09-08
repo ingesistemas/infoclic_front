@@ -34,8 +34,9 @@ body {
     color: var(--dark-text); /* Color de texto principal */
     overflow-x: hidden; /* Evitar scroll horizontal por animaciones */
     background-color: #ffffff; /* Fondo general muy suave */
-    overflow-y: scroll;
-    height: 100vh !important;
+    overflow-y: scroll !important;
+    /*height: 100vh !important;*/
+    min-height: 100vh;
 }
 
 a{
@@ -258,3 +259,36 @@ section h2::after {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+:root {
+    --primary-color: #0084d0;
+    --secondary-color: #00bcd4;
+    --accent-color: #ff9800;
+    --text-dark: #333333;
+    --text-light: #666666;
+    --text-azul:rgb(0, 0, 174);
+    --text-title: rgb(50, 92, 134);
+    --text-valor: rgb(0, 126, 176);
+    --bg-body: #f5f7fa;
+    --bg-card: #ffffff;
+    --border-color: #e0e0e0;
+    --shadow-elevation-1: 0 2px 4px rgba(0,0,0,0.08);
+    --shadow-elevation-2: 0 4px 8px rgba(0,0,0,0.12);
+    --border-radius: 8px;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-dark);
+    margin: 0;
+    padding: 40px 20px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.dashboard-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    display: grid;
+    gap: 25px;
+}

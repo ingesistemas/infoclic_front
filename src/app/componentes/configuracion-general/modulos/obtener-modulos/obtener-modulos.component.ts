@@ -75,7 +75,7 @@ export class ObtenerModulosComponent {
 
   ngOnInit(): void {
     this.tamanioForm.actualizarCargando(false, CargandoComponent)
-    this.peticion('/obtener-modulos')
+    this.peticion('/obtener-modulos-sucursal')
     //console.log(localStorage.getItem('ciudades'))
   }
 
@@ -138,7 +138,7 @@ export class ObtenerModulosComponent {
               this.tamanioForm.actualizar( true, ErrorComponent)
               
             }else{      
-              if(url == '/obtener-modulos'){
+              if(url == '/obtener-modulos' || url == '/obtener-modulos-sucursal'){
                 this.modulos = data.Data.map((s:any) => ({
                   ...s,
                   created_at: new Date(s.created_at)

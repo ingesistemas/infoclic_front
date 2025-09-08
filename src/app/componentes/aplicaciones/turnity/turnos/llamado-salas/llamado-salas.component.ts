@@ -23,6 +23,7 @@ import { CargandoComponent } from '../../../../compartidos/cargando/cargando.com
 import { ErrorComponent } from '../../../../compartidos/mensajes/error/error.component';
 import { interval, Subscription } from 'rxjs';
 import { EchoService } from '../../../../../servicios/echo.service';
+import { Isalas } from '../../../../../interfaces/ISalas';
 
 @Component({
   selector: 'app-llamado-salas',
@@ -65,10 +66,11 @@ export class LlamadoSalasComponent {
   llamados: any[] = []
   mensaje: string = ''
   mensajeToast: string = ''
-  ahora: Date = new Date();
-  timerSubscription!: Subscription;
+  ahora: Date = new Date()
+  timerSubscription!: Subscription
   turnoActual: any 
-  mensajes: string[] = [];
+  mensajes: string[] = []
+  salas!: Isalas[]
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -98,6 +100,8 @@ export class LlamadoSalasComponent {
     this.timerSubscription = interval(1000).subscribe(() => {
       this.ahora = new Date();
     });
+
+    this.peticion('/obtener-salas-sucursal')
   }
 
   ngOnDestroy(): void {
@@ -105,7 +109,6 @@ export class LlamadoSalasComponent {
   }
 
   actualizarTurno(objeto: any){
-    console.log("Este es. ",objeto)
     this.turnoActual = {
       id: objeto.id,
       id_paciente: objeto.paciente.id,
@@ -113,7 +116,8 @@ export class LlamadoSalasComponent {
       documento: objeto.paciente.documento,
       sala: objeto.asignaciones[0].sala.sala,
       piso: objeto.asignaciones[0].sala.piso.piso,
-      modulo: this.autenticaServicio.moduloActual()
+      id_asigna: objeto.asignaciones[0].id,
+      modulo: this.autenticaServicio.moduloActual()      
     }
     
     this.peticion('/disparar')
@@ -209,14 +213,21 @@ export class LlamadoSalasComponent {
               
             }else{      
               if(url == '/listar-turnos-salas'){
-                this.llamados = data.Data.map((s:any) => ({
+                let id_sala = this.autenticaServicio.idSalaActual()
+                this.llamados = data.Data
+                let respuesta = data.Data
+                .map((s: any) => ({
                   ...s,
-                  created_at: new Date(s.created_at)
-                }));
-                this.dataSource.data = this.llamados
+                  created_at: new Date(s.created_at),
+                  asignaciones: s.asignaciones.filter((asig: any) => asig.id_sala === id_sala)
+                }))
+                .filter((s: any) => s.asignaciones.length > 0);
+                this.dataSource.data = respuesta
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
-                console.log(this.llamados)
+              }
+              if(url = '/obtener-salas-sucursal'){
+                this.salas = data.Data
               }
             }
           }
@@ -237,10 +248,20 @@ export class LlamadoSalasComponent {
             this.tamanioForm.actualizarCargando(false, null);
           }, 2000);
         });
-      }
-      
-        
+      }  
     })
+  }
+
+  consultar(id_sala: number){
+    const filtrados = this.llamados.map(item =>({
+      ...item,
+      asignaciones: item.asignaciones.filter((asig:any) => asig.id_sala == id_sala )
+    })).filter(item => item.asignaciones.length > 0)
+
+    this.dataSource.data = filtrados
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
 
   }
+
 }

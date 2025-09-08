@@ -57,7 +57,7 @@ export class CrearEditarSalasComponent implements AfterViewInit  {
 
   constructor(private messageService: MessageService){}
   ngOnInit(): void {
-    this.peticion('/obtener-pisos')
+    this.peticion('/obtener-pisos-sucursal')
     if(this.tamanioForm.accionActual() == 'Editar'){
       
       const datos = history.state;
@@ -115,7 +115,7 @@ export class CrearEditarSalasComponent implements AfterViewInit  {
             this.tamanioForm.actualizar( true, ErrorComponent)
             
           }else{
-            if(url == '/obtener-pisos'){
+            if(url == '/obtener-pisos-sucursal'){
               this.pisos = data.Data
             }else{
               this.mensaje = data.Message

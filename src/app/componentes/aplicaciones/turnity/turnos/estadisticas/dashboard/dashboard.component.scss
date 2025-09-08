@@ -1,0 +1,84 @@
+/* src/app/dashboard/dashboard.component.scss */
+
+.dashboard-header {
+    text-align: center;
+    padding: 30px 0;
+    margin-bottom: 0;
+    background-color: var(--bg-card);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-elevation-1);
+    animation: fadeInDown 0.8s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+.dashboard-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 50%, var(--accent-color) 100%);
+    animation: gradientBorder 3s infinite alternate;
+}
+.dashboard-header h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+}
+.dashboard-header p {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    margin-top: 0;
+}
+.header-actions {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    z-index: 10;
+}
+#download-pdf-btn {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+#download-pdf-btn:hover {
+    background-color: #008c9e;
+    transform: translateY(-2px);
+}
+#download-pdf-btn i {
+    margin-right: 8px;
+}
+.chart-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); /* <-- CRÍTICO: Define el tamaño de cada columna */
+    gap: 25px; /* <-- CRÍTICO: Define el espacio entre los gráficos */
+}
+.kpi-section{
+    display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 5px;
+}
+
+/* Media query para hacer el grid responsivo en pantallas más pequeñas */
+@media (max-width: 1200px) {
+    .chart-grid {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .chart-grid {
+        grid-template-columns: 1fr; /* Una columna en pantallas muy pequeñas */
+    }
+}

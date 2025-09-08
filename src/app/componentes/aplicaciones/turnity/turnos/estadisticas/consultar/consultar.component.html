@@ -1,0 +1,58 @@
+<form class="formulario" autocomplete="off" [formGroup]="formulario">
+      <div class="tituloFormulario">
+          Reporte estadístico
+      </div>
+
+      <div class="contieneInputRow row">
+          <div class="mb-2 floating-label-group col-md-12">
+              <input type="date" id="fecha_ini" class="form-control form-control-sm miInput" formControlName="fecha_ini" placeholder=" " />
+              <label  class="form-label" for="fecha_ini">Fecha inicial</label>
+              <div class="contieneLabelError">
+                  <small class="labelError">{{ retotnaError('fecha_ini')}}&nbsp;</small>
+              </div>
+          </div>
+
+          <div class="mb-2 floating-label-group col-md-12">
+              <input type="date" id="fecha_fin" class="form-control form-control-sm miInput" formControlName="fecha_fin" placeholder=" " />
+              <label  class="form-label" for="fecha_fin">Fecha final</label>
+              <div class="contieneLabelError">
+                  <small class="labelError">{{ retotnaError('fecha_fin')}}&nbsp;</small>
+              </div>
+          </div>
+
+          <div class="mb-2 floating-label-group col-md-12">
+              <select id="id_sucursal" class="form-select form-select-sm miInput" formControlName="id_sucursal" (click)="sucursal()"  >
+                  @for (sucursal of sucursales; track $index) {
+                      @if( sucursal.activo == 0 ){
+                          <option value="{{ sucursal.id }}">{{ sucursal.sucursal }}</option>
+                      }
+                  }
+              </select>
+              <label for="id_sucursal" class="form-label">Sucursal</label>
+              <div class="contieneLabelError">
+                  <small class="labelError">{{ retotnaError('id_sucursal')}}&nbsp;</small>
+              </div>
+          </div>
+
+          <div class="mb-2 form-check col-md-6">
+              <input class="form-check-input" type="checkbox" value="" id="todas" formControlName="todas" (click)="todas()">
+              <label class="form-check-label" for="todas">
+                  Todas la sucursales
+              </label>
+          </div>
+          
+      </div>
+
+      <div class="botonera">  
+          <div class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" class="btn btn-aceptar" (click)="aceptar()" >Aceptar</button>
+              <button type="button" class="btn btn-cancelar" (click)="cerrar()">Cerrar</button>
+          </div>
+      </div>
+
+      <div class="card flex justify-center" style="border: none;">
+          <p-toast [showTransformOptions]="'translateY(100%)'" [showTransitionOptions]="'1000ms'" [hideTransitionOptions]="'1000ms'" [showTransformOptions]="'translateX(100%)'" />
+          {{ mensajeToast }} 
+      </div>
+
+  </form>

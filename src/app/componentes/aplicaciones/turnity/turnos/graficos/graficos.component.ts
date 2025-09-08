@@ -56,7 +56,14 @@ export class GraficosComponent {
           label: (context) => {
             const label = context.dataset.label || '';
             const index = context.dataIndex;
-            const cantidad = context.parsed.y;
+             const tipoGrafico = (context.chart.config as any).type; 
+            let cantidad;
+
+            if (['bar', 'line', 'scatter'].includes(tipoGrafico)) {
+              cantidad = context.parsed.y;
+            } else {
+              cantidad = context.raw;
+            }
 
             const datos = this.datosGraficoServicio.datosGrafico();
             const dato = datos[index];
@@ -130,7 +137,7 @@ export class GraficosComponent {
           labels: datos.map(d => d.nombre),
           datasets: [{
             label: 'Cantidad',
-            data: datos.map(d => d.cantidad),
+            data: datos.map(d => d.cantidad ?? 0),
             backgroundColor: [
               'rgba(66, 165, 245, 0.8)',
               'rgba(102, 187, 106, 0.8)',

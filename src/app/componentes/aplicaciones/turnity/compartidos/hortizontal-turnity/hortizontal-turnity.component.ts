@@ -22,7 +22,8 @@ export class HortizontalTurnityComponent {
   aplicacionActual = this.autenticaServicio.aplicacionActual
   nombreUsuarioActual = this.autenticaServicio.nombreUsuarioActual
   sucursalActual = this.autenticaServicio.sucursalActual
-  modulo = this.autenticaServicio.id_moduloActual
+  modulo = this.autenticaServicio.moduloActual
+  sala = this.autenticaServicio.salaActual
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
@@ -30,7 +31,7 @@ export class HortizontalTurnityComponent {
   }
   
   cerrarSesion(){
-    this.autenticaServicio.actualizarUsuarioActual('','','',0,'','','',0,'')
+    this.autenticaServicio.actualizarUsuarioActual('','','',0,'','','',0,'',0,'')
     this.autenticaServicio.actualizarAplicacionActual('', '', '');
     localStorage.clear()
     this.router.navigate(['/']);

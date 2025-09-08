@@ -11,7 +11,7 @@
 .navbar {
     transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    background-color: var(--primary-blue) !important;
+    background-color: rgb(29, 136, 186) !important;
     padding-top: 1rem; /* Añade un poco de padding para altura inicial */
     padding-bottom: 1rem;
 }
@@ -88,8 +88,8 @@
 
 .datosModulo{
     margin-top: 88px;
-    background-color: rgba(0, 72, 130, 0.98) !important;
-    width: 20%;
+    background-color: rgb(29, 122, 165) !important;
+    width: 30%;
     margin-left: 0px;
     border-radius: 0 0 10px 0;
 }

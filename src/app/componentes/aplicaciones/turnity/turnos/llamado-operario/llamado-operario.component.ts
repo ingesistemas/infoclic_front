@@ -22,6 +22,7 @@ import { MensajesService } from '../../../../../servicios/mensajes.service';
 import { CargandoComponent } from '../../../../compartidos/cargando/cargando.component';
 import { ErrorComponent } from '../../../../compartidos/mensajes/error/error.component';
 import { interval, Subscription } from 'rxjs';
+import { IOperarios } from '../../../../../interfaces/IOperarios';
 
 @Component({
   selector: 'app-llamado-operario',
@@ -57,14 +58,15 @@ export class LlamadoOperarioComponent {
     this.dataSource = new MatTableDataSource();
   }
   
-  displayedColumns: string[] = ['opciones', 'paciente', 'prioridad', 'fecha', 'hora_llegada', 'hora_asignacion', 'sala', 'asignado', 'creado'];
+  displayedColumns: string[] = ['opciones', 'paciente', 'prioridad', 'fecha', 'hora_cita', 'hora_llegada', 'hora_asignacion', 'sala', 'asignado', 'creado'];
   dataSource: MatTableDataSource<any>;
   llamados: any[] = []
   mensaje: string = ''
   mensajeToast: string = ''
   ahora: Date = new Date();
   timerSubscription!: Subscription;
-  turnoActual: any 
+  turnoActual: any
+  usuarios: IOperarios[] = []
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -81,10 +83,11 @@ export class LlamadoOperarioComponent {
 
   ngOnInit(): void {
     this.tamanioForm.actualizarCargando(false, CargandoComponent)
-    this.peticion('/listar-turnos')
+    this.peticion('/listar-todos-turnos')
     this.timerSubscription = interval(1000).subscribe(() => {
       this.ahora = new Date();
     });
+    this.peticion('/obtener-usuarios-sucursal')
   }
 
   ngOnDestroy(): void {
@@ -192,15 +195,20 @@ export class LlamadoOperarioComponent {
               this.tamanioForm.actualizar( true, ErrorComponent)
               
             }else{      
-              if(url == '/listar-turnos'){
-                this.llamados = data.Data.map((s:any) => ({
+              if(url == '/listar-todos-turnos'){
+                let id_usuario = this.autenticaServicio.idUsuarioActual()
+                this.llamados = data.Data
+                let respuesta = data.Data.map((s:any) => ({
                   ...s,
-                  created_at: new Date(s.created_at)
-                }));
-                this.dataSource.data = this.llamados
-                this.dataSource.paginator = this.paginator;
-                this.dataSource.sort = this.sort;
-                console.log(this.llamados)
+                  created_at: new Date(s.created_at),
+                  asignaciones: s.asignaciones.filter((asig: any) => asig.id_operario === id_usuario)
+                })).filter((s: any) => s.asignaciones.length > 0);
+                this.dataSource.data = respuesta
+                this.dataSource.paginator = this.paginator
+                this.dataSource.sort = this.sort
+              }
+              if(url == '/obtener-usuarios-sucursal'){
+                this.usuarios = data.Data
               }
             }
           }
@@ -222,9 +230,17 @@ export class LlamadoOperarioComponent {
           }, 2000);
         });
       }
-      
-        
     })
+  }
 
+  consultar(id_usuario: number){
+    const filtrados = this.llamados.map(item =>({
+      ...item,
+      asignaciones: item.asignaciones.filter((asig:any) => asig.id_operario == id_usuario )
+    })).filter(item => item.asignaciones.length > 0)
+
+    this.dataSource.data = filtrados
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 }

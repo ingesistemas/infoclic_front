@@ -19,19 +19,16 @@ export class VerticalTurnityAdmin {
   
   async actualizarDatos(){
     this.cerrarVertical()
-    this.actualizaDatos.actualizar(false, null)
-     
+    //this.actualizaDatos.actualizar(false, null)  
   }
 
-
   cerrarVertical(){
-    
     const offcanvasElement = document.getElementById('offcanvasExample');
     if (offcanvasElement) {
       const offcanvasInstance = bootstrap.Offcanvas.getInstance(offcanvasElement)
         || new bootstrap.Offcanvas(offcanvasElement);
       offcanvasInstance.hide();
+      
     }
-
   }
 }

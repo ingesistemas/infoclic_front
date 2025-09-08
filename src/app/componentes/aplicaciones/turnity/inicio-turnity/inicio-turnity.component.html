@@ -1,13 +1,16 @@
+<div class="body-turnity">
 
-@if (!isLlamadoPantalla()) {
-  <app-hortizontal-turnity></app-hortizontal-turnity>
-}
+  @if (!isLlamadoPantalla()) {
+    <app-hortizontal-turnity></app-hortizontal-turnity>
+  }
 
-@if(mostrarVerticalServicio.mostrarVerticalTurnity()){
-    
-}
+  @if(mostrarVerticalServicio.mostrarVerticalTurnity()){
+      
+  }
 
-<app-vertical-turnity-admin></app-vertical-turnity-admin>
-<div class="contenedor">
-    <router-outlet />
+  <app-vertical-turnity-admin></app-vertical-turnity-admin>
+  <div class="contenedor">
+      <router-outlet />
+  </div>
+
 </div>

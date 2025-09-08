@@ -20,7 +20,7 @@
         </div>
         <div class="mb-2 floating-label-group">            
             <input type="text" class="form-control form-control-sm miInput" id="nit" formControlName="nit" placeholder=" " (blur)="obternerSucursales()">
-            <label for="nit" class="form-label">NIT</label>
+            <label for="nit" class="form-label">NIT.</label>
             <div class="contieneLabelError">
                 <small class="labelError">{{ retotnaError('nit')}}&nbsp;</small>
             </div>
@@ -43,7 +43,7 @@
             <div class="mb-2 floating-label-group">
                 <select id="id_modulo" class="form-select form-select-sm miInput" formControlName="id_modulo" required>
                     @for (modulo of modulos; track $index) {
-                        <option value="{{ modulo.id }}">{{ modulo.modulo }}-{{ modulo.sala.sala }}-{{ modulo.sala.piso.piso }}</option>
+                        <option value="{{ modulo.id }}">{{ modulo.modulo }}&nbsp;&nbsp;&nbsp;Sala&nbsp;{{ modulo.sala.sala }}&nbsp;&nbsp;&nbsp;{{ modulo.sala.piso.piso }}</option>
                     }
                 </select>
                 <label for="id_modulo" class="form-label">Módulo</label>

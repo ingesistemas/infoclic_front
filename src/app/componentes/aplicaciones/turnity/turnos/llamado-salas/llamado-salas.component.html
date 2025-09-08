@@ -8,7 +8,17 @@
                 <mat-label>Buscar...</mat-label>
                 <input matInput (keyup)="applyFilter($event)" #input>
             </mat-form-field>
-        </div>                
+        </div>          
+        
+        <div class="mb-2 floating-label-group col-md-4">
+            <select id="id_sala" class="form-select form-select-sm miInput" (change)="consultar($any($event.target).value)">
+                <option [value]=""></option>
+                @for (sala of salas; track $index) {
+                    <option  [value]="sala.id" >{{ sala.sala }} - {{ sala.piso?.piso }}</option>
+                }
+            </select>
+            <label for="id_sala" class="form-label">Llamar a los de la sala</label>
+        </div>
     </div>
 
     <div class="mat-elevation-z8 tabla-scroll" >

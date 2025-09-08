@@ -1,4 +1,7 @@
 /* Media Queries para Responsividad */
+.mSelect{
+    color: red !important;
+}
 @media (max-width: 5000px) {
     .formulario {
         width: 30%;

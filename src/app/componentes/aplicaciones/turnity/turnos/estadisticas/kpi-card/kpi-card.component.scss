@@ -1,0 +1,52 @@
+/* src/app/kpi-card/kpi-card.component.scss */
+
+.kpi-card {
+    background-color: var(--bg-card);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--shadow-elevation-1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    overflow: hidden;
+    position: relative;
+    width: auto !important;
+}
+.kpi-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-elevation-2);
+    background-color: #f9fbfd;
+}
+.kpi-icon {
+    font-size: 2.8rem;
+    color: var(--primary-color);
+    margin-right: 20px;
+    position: relative;
+    opacity: 0.8;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.kpi-card:hover .kpi-icon {
+    transform: scale(1.1);
+    opacity: 1;
+}
+.kpi-content {
+    flex-grow: 1;
+    text-align: right;
+}
+.kpi-value {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: var(--text-valor);
+    line-height: 1;
+    display: block;
+    margin-bottom: 5px;
+    animation: counterAnimation 1.5s ease-out forwards;
+}
+.kpi-label {
+    font-size: 1.1rem;
+    color: var(--text-azul);
+    font-weight: 600;
+    display: block;
+}

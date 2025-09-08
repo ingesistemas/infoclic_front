@@ -1,53 +1,96 @@
 <form class="formulario" autocomplete="off" [formGroup]="formulario">
     <div class="tituloFormulario">
-        Crear operarios
+        {{ accion }} operarios
     </div>
+    <div class="row">
+        <div class="col-md-6" style="border-right: 1px solid #ccc;">
+            <div class="contieneInputRow row">
+                <div class="mb-2 floating-label-group col-md-12">
+                    <input type="text" id="nombre" class="form-control form-control-sm miInput" formControlName="nombre" placeholder=" " />
+                    <label  class="form-label" for="nombre">Nombre operario/usuario</label>
+                    <div class="contieneLabelError">
+                        <small class="labelError">{{ retotnaError('nombre')}}&nbsp;</small>
+                    </div>
+                </div>
+                <div class="mb-2 floating-label-group col-md-8">
+                    <select id="id_profesion" class="form-select form-select-sm miInput" formControlName="id_profesion" >
+                        @for (profesion of profesiones; track $index) {
+                            <option value="{{ profesion.id }}">{{ profesion.profesion }}</option>
+                        }
+                    </select>
+                    <label for="id_dep" class="form-label">Profesión</label>
+                    <div class="contieneLabelError">
+                        <small class="labelError">{{ retotnaError('id_profesion')}}&nbsp;</small>
+                    </div>
+                </div>
 
-    <div class="contieneInputRow row">
-        <div class="mb-2 floating-label-group col-md-12">
-            <input type="text" id="nombre" class="form-control form-control-sm miInput" formControlName="nombre" placeholder=" " />
-            <label  class="form-label" for="nombre">Nombre operario/usuario</label>
-            <div class="contieneLabelError">
-                <small class="labelError">{{ retotnaError('nombre')}}&nbsp;</small>
+                <div class="mb-2 floating-label-group col-md-4">
+                    <input type="text" class="form-control form-control-sm miInput"  id="celular" formControlName="celular"  placeholder=" ">
+                    <label for="celular" class="form-label">No. celular</label>
+                    <div class="contieneLabelError">
+                        <small class="labelError">{{ retotnaError('celular')}}&nbsp;</small>
+                    </div>
+                </div>
+                
+                <div class="mb-2 floating-label-group col-md-12">            
+                    <input type="text" class="form-control form-control-sm miInput" id="email" formControlName="email" placeholder=" " >
+                    <label for="email" class="form-label">Correo electónico</label>
+                    <div class="contieneLabelError">
+                        <small class="labelError">{{ retotnaError('email')}}&nbsp;</small>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="mb-2 floating-label-group col-md-8">
-            <select id="id_profesion" class="form-select form-select-sm miInput" formControlName="id_profesion" >
-                @for (profesion of profesiones; track $index) {
-                    <option value="{{ profesion.id }}">{{ profesion.profesion }}</option>
-                }
-            </select>
-            <label for="id_dep" class="form-label">Profesión</label>
-            <div class="contieneLabelError">
-                <small class="labelError">{{ retotnaError('id_profesion')}}&nbsp;</small>
+
+            <div class="botonera">  
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-aceptar" (click)="aceptar()" >{{ accion }} operario</button>
+                    <button type="button" class="btn btn-cancelar" (click)="cerrar()">Cerrar</button>
+                </div>
             </div>
         </div>
 
-        <div class="mb-2 floating-label-group col-md-4">
-            <input type="text" class="form-control form-control-sm miInput"  id="celular" formControlName="celular"  placeholder=" ">
-            <label for="celular" class="form-label">No. celular</label>
-            <div class="contieneLabelError">
-                <small class="labelError">{{ retotnaError('celular')}}&nbsp;</small>
+        @if(accion == "Editar"){
+
+            <div class="col-md-6">
+                <div class="contieneInputRow row">
+                    <h6>Roles</h6>
+                    <hr>
+                    <div class="mb-2 floating-label-group col-md-8">
+                        <select id="id_rol" class="form-select form-select-sm miInput" formControlName="id_rol" (change)="editarRol()" >
+                            @for (rol of roles; track $index) {
+                                <option value="{{ rol.id }}">{{ rol.rol }}</option>
+                            }
+                        </select>
+                        <label for="id_dep" class="form-label">Rol</label>
+                        <div class="contieneLabelError">
+                            <small class="labelError">{{ retotnaError('id_rol')}}&nbsp;</small>
+                        </div>
+                    </div>
+                    <h6>Acceso a sucursales</h6>
+                    <hr>
+                    <ul class="list-group">
+                        @for (sucursal of sucursales; track $index) {
+                            @if(sucursal.activo == 0){
+                                <li class="list-group-item">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" [checked]="sucursal.asignada" value="{{ sucursal.id }}" (click)="sucursalUsuarios($event, sucursal.id! )">
+                                        <label class="form-check-label" for="{{ sucursal.id }}">{{ sucursal.sucursal }}</label>
+                                    </div>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
             </div>
-        </div>
-        
-        <div class="mb-2 floating-label-group col-md-12">            
-            <input type="text" class="form-control form-control-sm miInput" id="email" formControlName="email" placeholder=" " >
-            <label for="email" class="form-label">Correo electónico</label>
-            <div class="contieneLabelError">
-                <small class="labelError">{{ retotnaError('email')}}&nbsp;</small>
+        }@else {
+            <div class="col-md-5 mt-3" >
+                <p>Una vez creado el usuario y confirmada la necesidad de generar sus credenciales, el administrador del sistema, podrá proceder con la edición de 
+                    su perfil, para la asignación de los roles correspondientes y la definición de permisos de acceso a las distintas sucursales.
+                </p>
             </div>
-        </div>
-       
-        
+        }
     </div>
-
-    <div class="botonera">  
-        <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-aceptar" (click)="aceptar()" >{{ accion }} operario</button>
-            <button type="button" class="btn btn-cancelar" (click)="cerrar()">Cerrar</button>
-        </div>
-    </div>
+    
 
      <div class="card flex justify-center" style="border: none;">
     <p-toast [showTransformOptions]="'translateY(100%)'" [showTransitionOptions]="'1000ms'" [hideTransitionOptions]="'1000ms'" [showTransformOptions]="'translateX(100%)'" />
