@@ -78,7 +78,6 @@ export class ObtenerSalasComponent {
     ngOnInit(): void {
       this.tamanioForm.actualizarCargando(false, CargandoComponent)
       this.peticion('/obtener-salas-sucursal')
-      //console.log(localStorage.getItem('ciudades'))
     }
 
     ngAfterViewInit() {

@@ -124,3 +124,18 @@
   color: white;
   border: none;
 }
+
+.datos_ultimo{
+  margin-top: 20px;
+}
+
+.nombreTemp, .salaTemp{
+  font-weight: bold;
+  font-size: 30px;
+  color: #003b94;
+}
+
+.salaTemp{
+  font-size: 24px;
+  color: #003b94;
+}

@@ -1,7 +1,5 @@
 
-
-    <div class="turno-container">
-        
+    <div class="turno-container">  
         <header class="header">
             <div class="logo-container">
                 <img >
@@ -14,7 +12,6 @@
             <!-- La tarjeta del turno se muestra si 'turnoActual' tiene un valor -->
             @if (turnoActual) {
                 <div class="turno-card" @zoomInOut>
-                    <div class="label">Su turno</div>
                     <!-- Accede a las propiedades del objeto 'turnoActual' -->
                     <div class="numero-turno">{{ turnoActual.nombre }}</div>
                     
@@ -26,20 +23,26 @@
 
             <!-- El mensaje de bienvenida se muestra si 'showWelcomeMessage' es true -->
             @if (showWelcomeMessage) {
-                <div class="welcome-message" @fadeInOut>
-                    <!-- ¡CORRECCIÓN AQUÍ! Envolvemos la imagen con la clase adecuada -->
-                    <div class="welcome-image-wrapper"> 
-                        <img src="images/asesora3.png" alt="Asesora de Turnos" width="100%">
-                    </div>
-                    <!-- ¡CORRECCIÓN AQUÍ! Envolvemos el H1 y el P con la clase adecuada -->
-                    <div class="welcome-text-content">
-                        <h1>Bienvenido(a)</h1>
-                        <p>Por favor, espere su llamado en pantalla.</p>
-                    </div>
-                  
+                <div class="tituloLlamado row">
+                    <div class="col-md-5"><p>Paciente</p></div>
+                    <div class="col-md-3" ><p>Módulo</p></div>
+                    <div class="col-md-2"><p>Sala</p></div>
+                    <div class="col-md-2"><p>Piso</p></div>
                 </div>
+                @for (llamado of historial; track $index) {
+                    <div class="llamado row">
+                        <div class="nombre col-md-5 datoHistorial"><p>{{ llamado.nombre }}</p></div>
+                        <div class="modulo col-md-2 datoHistorial detalle ml-1"><p>{{ llamado.modulo }}</p></div>
+                        <div class="sala col-md-3 datoHistorial detalle"><p>{{ llamado.sala }}</p></div>
+                        <div class="piso col-md-2 datoHistorial detalle"><p>{{ llamado.piso }}</p></div>
+                    </div>
+                }   
             }
         </main>
+
+        @if (!showWelcomeMessage) {
+            
+        }
 
         <footer class="footer">
             <div class="scrolling-text">

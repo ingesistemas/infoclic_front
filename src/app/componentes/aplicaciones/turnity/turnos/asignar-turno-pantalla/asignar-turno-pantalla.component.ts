@@ -49,7 +49,9 @@ export class AsignarTurnoPantallaComponent {
   accion = this.tamanioForm.accionActual()
   salas!: Isalas[]
   prioritarias!: any[]
-  botonActivo: number | null = null;
+  botonActivo: number | null = null
+  nombreTemp: string | null = ''
+  salaTemp: string = ''
 
   formulario = this.fb.group({
     id: [0],
@@ -58,8 +60,9 @@ export class AsignarTurnoPantallaComponent {
     documento: ['' , [Validators.required, Validators.minLength(3)]],
     id_profesion: [0],
     id_operario: [0],
-    id_prioritaria: [0 ],
-    id_sala: [0 , [Validators.required]],
+    id_prioritaria: [11 ],
+    id_sala: [0 , [Validators.required, Validators.min(1)]],
+    hor_ope_ini: [''],
     id_sucursal: [this.autenticaServicio.idSucursalActual()],
     id_usuario: [this.autenticaServicio.idUsuarioActual()]
   })
@@ -75,18 +78,30 @@ export class AsignarTurnoPantallaComponent {
       this.formulario.controls['nombre'].setValue(datos.datos.nombre)
       this.formulario.controls['documento'].setValue(datos.datos.documento)
     }
+     this.formulario.controls['hor_ope_ini'].setValue(this.getHoraActual())
     if(!localStorage.getItem('prioritarias')){
         this.peticion('/obtener-prioritarias')
     }else{
       const prioritariasString = localStorage.getItem('prioritarias')
       this.prioritarias = prioritariasString ? JSON.parse(prioritariasString) : [];
     }
-    this.obtenerSalas()
+    setTimeout(()=>{
+      this.obtenerSalas()
+    })
+    
   }
 
-  datoSala(id: number){
+  datoSala(id: number, sala: string){
     this.formulario.controls['id_sala'].setValue(id)
-    this.botonActivo = id;
+    this.salaTemp = sala
+    this.botonActivo = id;  
+  }
+
+  private getHoraActual(): string {
+    const ahora = new Date();
+    const horas = ahora.getHours().toString().padStart(2, "0");
+    const minutos = ahora.getMinutes().toString().padStart(2, "0");
+    return `${horas}:${minutos}`;
   }
 
   mostrarToast() {
@@ -140,24 +155,25 @@ export class AsignarTurnoPantallaComponent {
     if(this.formulario.valid){
       this.peticion('/crear-turno-pantalla')
       this.botonActivo = 0
+      this.nombreTemp = this.formulario.controls['nombre'].value
     }else{
       this.mensaje = "No se ha podido asignar el turno. Por favor verifique que los datos solicitado esten totalmente diligenciados."
       this.mensajeErrorServicios.actualizarError(this.mensaje, '')
       this.tamanioForm.actualizar( true, ErrorComponent)
     }
-      
   }
 
   limpiar(){
+      this.formulario.controls['id_paciente'].setValue(0)
+      this.formulario.controls['documento'].setValue('')
+      this.formulario.controls['nombre'].setValue('')
+      this.formulario.controls['id_sala'].setValue(0)
       this.botonActivo = 0
-      this.formulario.reset()
   }
 
   peticion(url:string){
     this.mensaje = ''
-  
     this.tamanioForm.actualizarCargando(true, CargandoComponent)
-    
     const datos = this.formulario.value;
     this.peticionsServicios.peticionPOST(url, datos).subscribe({
       next: (data) => {
@@ -175,7 +191,9 @@ export class AsignarTurnoPantallaComponent {
               } 
             this.mensajeErrorServicios.actualizarError(this.mensaje, '')
             this.tamanioForm.actualizar( true, ErrorComponent)
-            
+            this.formulario.controls['id_paciente'].setValue(0)
+            this.formulario.controls['documento'].setValue('')
+            this.formulario.controls['nombre'].setValue('')
           }else{
             if(url == '/obtener-profesiones'){
               this.profesiones = data.Data
@@ -189,8 +207,7 @@ export class AsignarTurnoPantallaComponent {
               if(data.Data[0].nombre != ''){
                 this.formulario.controls['id_paciente'].setValue(data.Data[0].id)
                 this.formulario.controls['nombre'].setValue(data.Data[0].nombre)
-                this.formulario.controls['nombre'].disable();
-               
+                this.formulario.controls['nombre'].disable();               
               }else{
                 this.formulario.controls['nombre'].enable();  
               }
@@ -198,7 +215,11 @@ export class AsignarTurnoPantallaComponent {
               this.mensaje = data.Message
               this.mostrarToast()
               setTimeout(()=>{
-                this.cerrar()
+                if(url != '/crear-turno-pantalla'){
+                  this.cerrar()
+                }else{
+                  this.limpiar()
+                }
               },2000)
             }
           }
@@ -233,8 +254,6 @@ export class AsignarTurnoPantallaComponent {
 
     recognition.onresult = (event: any) => {
       const transcript = event.results[0][0].transcript.toLowerCase().trim();
-      console.log('Texto dictado:', transcript);
-
       let numeroDetectado = transcript.replace(/\D/g, '');
 
       if (!numeroDetectado || numeroDetectado.length < 3) {

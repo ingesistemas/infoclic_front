@@ -59,7 +59,7 @@
             </div>
         </div>
 
-        @if(!inhabilitar){
+        <!--@if(!inhabilitar){-->
             <div class="mb-2 floating-label-group col-md-6">
                 <select id="id_prioritaria" class="form-select form-select-sm miInput" formControlName="id_prioritaria" >
                         
@@ -74,7 +74,7 @@
             </div>
 
             <div class="mb-2 floating-label-group col-md-3">
-                <input type="time" id="hora_cita" class="form-control form-control-sm miInput" formControlName="hora_cita" placeholder=" " />
+                <input type="time" step="60" id="hora_cita" class="form-control form-control-sm miInput" formControlName="hora_cita" placeholder=" " />
                 <label  class="form-label" for="documento" >Hora de la cita</label>
                 <div class="contieneLabelError">
                     <small class="labelError">{{ retotnaError('hora_cita')}}&nbsp;</small>
@@ -89,7 +89,7 @@
                     Por ello, resulta fundamental garantizar la exactitud de este registro, así como la de los demás datos asociados.
                 </small>
             </div>
-        }
+        <!--}-->
     </div>
    
     <div class="botonera">  

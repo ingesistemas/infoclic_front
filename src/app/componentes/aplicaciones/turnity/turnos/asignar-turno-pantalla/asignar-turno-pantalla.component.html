@@ -43,11 +43,18 @@
         <div class="listarSalar col-md-6">
             @for (sala of salas; track $index) {
                 @if( sala.atencion_inicial == 'SI'){
-                    <div (click)="datoSala( sala.id )" class="sala" [ngClass]="{ 'activo': botonActivo === sala.id }">{{ sala.sala }}</div>
+                    <div (click)="datoSala( sala.id, sala.sala )" class="sala" [ngClass]="{ 'activo': botonActivo === sala.id }">{{ sala.sala }}</div>
                 }
             }
-
+            <div class="datos_ultimo">
+                <h3 class="titulo_ultimo">Último turno asignado</h3><hr>
+                <div class="nombreTemp"> {{ nombreTemp }} </div>
+                <div class="salaTemp"> {{ salaTemp }} </div>
+            </div>
+            
         </div>
+
+
     </div>
 
      <div class="card flex justify-center" style="border: none;">

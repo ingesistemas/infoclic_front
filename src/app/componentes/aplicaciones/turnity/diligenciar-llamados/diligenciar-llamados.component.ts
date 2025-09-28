@@ -71,7 +71,7 @@ export class DiligenciarLlamadosComponent {
   constructor(private messageService: MessageService){}
   async ngOnInit() {
 
-    await this.peticion('/obtener-salas')
+    await this.peticion('/obtener-salas-sucursal')
     await this.peticion('/obtener-profesiones')
 
     if(this.tamanioForm.accionActual() == 'Editar'){
@@ -90,8 +90,7 @@ export class DiligenciarLlamadosComponent {
     }
 
     const casosString = localStorage.getItem('casos')
-    this.casos = casosString ? JSON.parse(casosString) : [];
-
+    this.casos = casosString ? JSON.parse(casosString) : []
     await this.peticion('/llamado-operario')
     await this.peticion('/hora-inicial-turno')    
     
@@ -106,9 +105,8 @@ export class DiligenciarLlamadosComponent {
   }
 
   obtenerSalas(){
-    this.peticion('/obtener-salas')
+    this.peticion('/obtener-salas-sucursal')
   }
-
 
   async cerrar(restablece: boolean){
     if(restablece){
@@ -122,15 +120,12 @@ export class DiligenciarLlamadosComponent {
     this.peticion('/actualizar-llamado')
   }
 
-
-
   peticion(url:string){
     this.mensaje = ''
     this.tamanioForm.actualizarCargando(true, CargandoComponent)
     const datos = this.formulario.value;
     this.peticionsServicios.peticionPOST(url, datos).subscribe({
       next: (data) => {
-        console.log(data.Data)
         if(data.Status == 200){
           if(data.Error == true){
               if ((typeof data.Message === 'string')) {
@@ -151,7 +146,7 @@ export class DiligenciarLlamadosComponent {
               this.casos = data.Data
             }else if(url == '/obtener-profesiones'){
               this.profesiones = data.Data
-            }else if(url == '/obtener-salas'){
+            }else if(url == '/obtener-salas-sucursal'){
               this.salas = data.Data
             }else if(url == '/obtener-usuario-profesion'){
                 this.operarios = data.Data

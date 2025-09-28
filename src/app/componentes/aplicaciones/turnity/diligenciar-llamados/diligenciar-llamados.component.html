@@ -55,7 +55,7 @@
         <div class="mb-2 floating-label-group col-md-6">
             <select id="id_caso" class="form-select form-select-sm miInput" formControlName="id_caso">
                 @for (caso of casos; track $index) {
-                    @if(caso.id != '5' && caso.id != '6' && caso.id != '7'){
+                    @if(caso.id != '5' && caso.id != '6' && caso.id != '7' && caso.id != '4'){
                         <option value="{{ caso.id }}">{{ caso.caso }}</option>
                     }
                 }

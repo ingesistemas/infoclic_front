@@ -79,7 +79,6 @@ export class SucursalesComponent implements OnInit {
   ngOnInit(): void {
     this.tamanioForm.actualizarCargando(false, CargandoComponent)
     this.peticion('/obtener-sucursales')
-    //console.log(localStorage.getItem('ciudades'))
   }
 
   applyFilter(event: Event) {

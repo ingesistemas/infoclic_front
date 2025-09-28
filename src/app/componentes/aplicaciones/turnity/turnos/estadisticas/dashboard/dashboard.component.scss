@@ -61,7 +61,7 @@
 }
 .chart-grid{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); /* <-- CRÍTICO: Define el tamaño de cada columna */
+    grid-template-columns: repeat(auto-fit, minmax(33%, 1fr)); /* <-- CRÍTICO: Define el tamaño de cada columna */
     gap: 25px; /* <-- CRÍTICO: Define el espacio entre los gráficos */
 }
 .kpi-section{

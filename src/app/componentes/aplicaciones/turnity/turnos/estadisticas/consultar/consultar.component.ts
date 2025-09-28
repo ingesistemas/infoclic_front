@@ -48,7 +48,6 @@ export class ConsultarComponent implements OnInit {
   }
 
   aceptar(){
-    console.log(this.formulario)
     this.tamanioForm.actualizarCargando(false, CargandoComponent);
     this.peticion('/estadisticas-fechas');
   }
@@ -87,7 +86,6 @@ export class ConsultarComponent implements OnInit {
     this.tamanioForm.actualizarCargando(true, CargandoComponent);
     this.peticionsServicios.peticionPOST(url, datos).subscribe({
         next: (data) => {
-            console.log(data)
             if(data.Status == 200){
                 if(data.Error == true){
                     if ((typeof data.Message === 'string')) {

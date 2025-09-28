@@ -43,8 +43,8 @@ export class IngresarEmpresaComponent implements OnInit {
 
   formulario = this.fb.group({
     id : [0],
-    usuario: ['sinfhos' , [Validators.required, Validators.minLength(5)]],
-    password: ['1234567890' , [Validators.required, Validators.minLength(5)]],
+    usuario: ['ingesistemas.silva@gmail.com' , [Validators.required, Validators.minLength(5)]],
+    password: ['admin' , [Validators.required, Validators.minLength(5)]],
     nit: ['900800800' , [Validators.required, Validators.minLength(5)]],
     id_sucursal: [0, [Validators.required]],
     id_modulo: [0, [Validators.required]],
@@ -59,7 +59,6 @@ export class IngresarEmpresaComponent implements OnInit {
   get moduloSeleccionadoTexto(): string | undefined {
     const idSeleccionado = this.formulario.get('id_modulo')?.value;
     const modulo = this.modulos.find((m: any) => m.id.toString() === idSeleccionado);
-    console.log(modulo)
     this.id_sala = modulo?.id_sala
     this.sala = modulo?.sala.sala
     return modulo?.modulo;
@@ -140,7 +139,6 @@ export class IngresarEmpresaComponent implements OnInit {
               }
               if(url == '/obtener-modulos-sucursal'){
                 this.modulos = data.Data
-                console.log(this.modulos)
               }   
               
               if(url == '/sucursalesUsuarios'){
@@ -151,25 +149,13 @@ export class IngresarEmpresaComponent implements OnInit {
             if(url == '/login'){
               this.autenticaServicio.actualizarAplicacionActual(this.idAplicacion, this.aplicacionSelect, '')
               this.tamanioForm.actualizarCargando(true, CargandoComponent)
-              console.log(data.Data)
-              console.log(data.token)
-              console.log(data)
-              
               const usuario = data.Data?.[0];
-              console.log("id usuario: ", usuario.id)
-              console.log("Nombre :", usuario.nombre)
-              console.log("Email : ", usuario.email)
               let id_sucursal = this.formulario.controls['id_sucursal'].value
-
               this.tamanioForm.actualizar( false, null)
-              
               setTimeout(()=>{
                 let nit = this.formulario.controls['nit'].value
                 let id_modulo = this.formulario.controls['id_modulo'].value
                 let modulo = this.moduloSeleccionadoTexto
-
-                console.log("Sala actual " + this.sala)
-                
                 this.tamanioForm.actualizarCargando(false, null)
                 this.autenticaServicio.actualizarUsuarioActual(usuario.id, usuario.nombre, usuario.email, id_sucursal!, data.token!, nit!, usuario.sucursales[0].sucursal, id_modulo!, modulo!, this.id_sala, this.sala )
                 this.router.navigateByUrl('/turnity')

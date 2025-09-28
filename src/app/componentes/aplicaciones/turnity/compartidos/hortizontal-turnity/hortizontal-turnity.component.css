@@ -11,7 +11,7 @@
 .navbar {
     transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    background-color: rgb(29, 136, 186) !important;
+    background-color: rgb(0, 105, 203) !important;
     padding-top: 1rem; /* Añade un poco de padding para altura inicial */
     padding-bottom: 1rem;
 }
@@ -48,7 +48,7 @@
 
 /* Estilo para la navbar al hacer scroll (añadido via JS) */
 .navbar-scrolled {
-    background-color: rgba(10, 61, 98, 0.98) !important;
+    background-color: rgba(0, 27, 149, 0.98) !important;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
     padding-top: 0.7rem; /* Reduce un poco el padding al scrollear */
     padding-bottom: 0.7rem;
@@ -88,7 +88,8 @@
 
 .datosModulo{
     margin-top: 88px;
-    background-color: rgb(29, 122, 165) !important;
+    background-color: rgb(11, 0, 137) !important;
+     background-color: rgb(2, 69, 163) !important;
     width: 30%;
     margin-left: 0px;
     border-radius: 0 0 10px 0;

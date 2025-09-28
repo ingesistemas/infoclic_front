@@ -96,7 +96,6 @@ export class CrearEditarSalasComponent implements AfterViewInit  {
     this.mensaje = ''
     this.tamanioForm.actualizarCargando(true, CargandoComponent)
     const datos = this.formulario.value;
-    console.log(datos)
     this.peticionsServicios.peticionPOST(url, datos).subscribe({
       next: (data) => {
         if(data.Status == 200){

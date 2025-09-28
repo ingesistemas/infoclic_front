@@ -76,7 +76,6 @@ export class ObtenerCentrosComponent {
   ngOnInit(): void {
     this.tamanioForm.actualizarCargando(false, CargandoComponent)
     this.peticion('/obtener-centros')
-    //console.log(localStorage.getItem('ciudades'))
   }
 
   applyFilter(event: Event) {

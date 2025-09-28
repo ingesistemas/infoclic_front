@@ -77,7 +77,6 @@ export class ObtenerOperariosComponent {
     ngOnInit(): void {
       this.tamanioForm.actualizarCargando(false, CargandoComponent)
       this.peticion('/obtener-usuarios-sucursal')
-      //console.log(localStorage.getItem('ciudades'))
     }
   
     applyFilter(event: Event) {
@@ -116,7 +115,6 @@ export class ObtenerOperariosComponent {
       this.tamanioForm.actualizarCargando(true, CargandoComponent)
       this.peticionsServicios.peticionPOST(url, datos).subscribe({  
         next: (data) => {
-          console.log(data)
           if(data.Status == 200){
             if(data.Error == true){
                 if ((typeof data.Message === 'string')) {
@@ -156,7 +154,6 @@ export class ObtenerOperariosComponent {
                   if (!Array.isArray(this.operarios)) {
                     this.operarios = Object.values(this.operarios);
                   }
-                  console.log(this.operarios)
                   const index = this.operarios.findIndex(s => s.id == id);
                   if (index !== -1) {
                     this.operarios[index].activo = activo === 1 ? 0 : 1;

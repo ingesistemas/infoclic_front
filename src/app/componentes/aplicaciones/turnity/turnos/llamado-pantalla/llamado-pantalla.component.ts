@@ -3,6 +3,7 @@ import { EchoService } from '../../../../../servicios/echo.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { PeticionService } from '../../../../../servicios/peticion.service';
 import { MensajesService } from '../../../../../servicios/mensajes.service';
+import { HistorialLlamadoService } from '../../../../../servicios/historial-llamado.service';
 
 @Component({
   selector: 'app-llamado-pantalla',
@@ -15,6 +16,7 @@ export class LlamadoPantallaComponent {
   private peticionsServicios = inject(PeticionService);
   private cdRef = inject(ChangeDetectorRef)
   private mensajeServicio = inject(MensajesService)
+  private historialLlamadoServicio = inject(HistorialLlamadoService)
   mensajeLlamado: string = '';
   nombre: string = ''
   sala: string = ''
@@ -24,7 +26,6 @@ export class LlamadoPantallaComponent {
   async ngOnInit() {
     await this.echoServicio.listenToLlamado((turno) => {
       this.zone.run(() => {
-        console.log('🎯 Turno recibido en Angular:', turno);
         this.nombre = turno.nombre 
         this.sala = turno.sala
         this.piso = turno.piso
@@ -33,23 +34,29 @@ export class LlamadoPantallaComponent {
         this.cdRef.detectChanges(); // asegura que la vista se actualice
       });
       this.mensajeServicio.mensajellamado(this.mensajeLlamado)
-
+      this.historialLlamadoServicio.actualizarHistorialLlamado(turno)
     });
   }
 
   peticion(url: string) {
     this.peticionsServicios.peticionPOST(url, null).subscribe({
       next: (data) => {
-        console.log('✅ Respuesta del backend:', data);
+        
       }
     });
   }
 
    // Escucha cuando el usuario intenta salir (cerrar o recargar)
-  @HostListener('window:beforeunload', ['$event'])
+  /* @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: BeforeUnloadEvent) {
     $event.preventDefault();
-    $event.returnValue = ''; // Necesario para mostrar el confirm
+    $event.returnValue = ''; 
+  } */
+
+    @HostListener('window:beforeunload', ['$event'])
+    unloadNotification($event: BeforeUnloadEvent): void {
+    // Simplemente llama a preventDefault() para activar la alerta nativa del navegador.
+    $event.preventDefault(); 
   }
 }
 

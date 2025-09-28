@@ -12,10 +12,8 @@
 }
 
 .encabezado-tabla{
-    background-color: #c1e0f3 !important;
-    background-color: rgb(0, 122, 179) !important;
+    background-color: #ededed !important;
     color: #165a84 !important;
-    color: #FFF !important;
     font-size: 1.2rem !important;
     padding-left: 5px !important;
 }

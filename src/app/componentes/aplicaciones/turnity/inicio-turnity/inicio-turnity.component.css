@@ -1,11 +1,12 @@
 .body-turnity{
     margin: 0 !important;
     min-height: 100vh !important;
-    background-color: rgb(223, 225, 243) !important;
 }
 
 .contenedor{
-    background-color: rgb(223, 225, 243) !important;
     padding-top: 15px;
 }
 
+.body-turnity, .contenedor{
+  background-color: rgb(235, 236, 253) !important;
+}

@@ -6,12 +6,13 @@ import { Observable, of } from 'rxjs';
 import { KpiCardComponent } from '../kpi-card/kpi-card.component';
 import { ChartCardComponent } from '../chart-card/chart-card.component';
 import { DataTableComponent } from '../data-table/data-table.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  imports: [KpiCardComponent, ChartCardComponent, DataTableComponent]
+  imports: [KpiCardComponent, ChartCardComponent, DataTableComponent, CommonModule]
 })
 export class DashboardComponent implements OnInit {
   resumenGeneral: any;
@@ -25,14 +26,18 @@ export class DashboardComponent implements OnInit {
   por_salasenatencion!: any[]
   por_usuarios_asignadores!: any[]
   totales_tiempos_operarios!: any[]
+  promedios_tiempos_operarios!: any[]
+  total_atencion_horas! : any[]
   
   fechaInicio = '01/09/2025';
   fechaFin = '30/09/2025';
+   resumenAnaliticoIA: string = '';
+   cargandoAnalisis: boolean = false;
 
 
   constructor(
     private dashboardService: DashboardService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) { }
 
   // **MÉTODO FALTANTE:** Define la propiedad 'fetchDataSimulation'
@@ -40,13 +45,8 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     const datos = history.state;
-    console.log("EStO ES LA CONSULTA ", datos)
     this.dashboardService.updateDashboardData(datos);
-    /* this.dashboardService.fetchDataSimulation().subscribe((data:any) => {
-      console.log("EStO ME DEVUELVE EL SERVICIO ", data)
-      this.resumenGeneral = data.resumen_general;
-      this.porProfesiones = datos.datos.por_profesiones;
-    }) */
+
      this.resumenGeneral = datos.datos.resumen_general;
       this.porProfesiones = datos.datos.por_profesiones;
       this.porPrioritarias = datos.datos.por_prioritarias;
@@ -58,6 +58,7 @@ export class DashboardComponent implements OnInit {
       this.por_salasenatencion = datos.datos.por_salasenatencion;
       this.por_usuarios_asignadores = datos.datos.por_usuarios_asignadores
       this.totales_tiempos_operarios = datos.datos.totales_tiempos_operarios 
+      this.total_atencion_horas = datos.datos.total_atencion_horas
     //this.resumenGeneral = datos.resumen_general;
     
       //this.porPrioritarias = datos.por_prioritarias;
@@ -87,6 +88,7 @@ export class DashboardComponent implements OnInit {
       this.totales_tiempos_operarios = data.totales_tiempos_operarios
     }); */
   }
+
 
   downloadPDF(): void {
     const dashboardContainer = document.querySelector('.dashboard-container') as HTMLElement;
@@ -156,5 +158,7 @@ export class DashboardComponent implements OnInit {
       .filter((v, i) => v !== '00' || i > 0 || h > 0)
       .join(':');
   }
+
+  
 
 }

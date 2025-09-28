@@ -19,7 +19,7 @@
 
 .estadisticas-container {
   padding: 2rem;
-  background: linear-gradient(to right, #43b5db, #b1d1f0);
+  /*background: linear-gradient(to right, #43b5db, #b1d1f0);*/
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   max-width: 1000px;

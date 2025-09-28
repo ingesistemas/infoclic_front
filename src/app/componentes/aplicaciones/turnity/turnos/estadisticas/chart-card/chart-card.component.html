@@ -1,4 +1,21 @@
 <div class="chart-card">
-    <h2><i [class]="iconClass"></i>{{ title }}</h2>
+    <div class="header">
+        <div class="title-container">
+            <i [class]="iconClass"></i>
+            <h2>{{ title }}</h2>
+        </div>
+        <div class="menu-container">
+            <button class="menu-button btn" (click)="toggleDropdown()">
+              <i class="fa fa-download" aria-hidden="true"></i>
+            </button>
+            <div class="dropdown-menu" [class.show]="showDropdown">
+                <a class="dropdown-item" (click)="downloadChart('svg')">Descargar SVG</a>
+                <a class="dropdown-item" (click)="downloadChart('png')">Descargar PNG</a>
+                <a class="dropdown-item" (click)="downloadChart('jpg')">Descargar JPG</a>
+                <a class="dropdown-item" (click)="downloadChart('csv')">Descargar CSV</a>
+            </div>
+        </div>
+        
+    </div>
     <div #chartElement></div>
 </div>

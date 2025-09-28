@@ -78,7 +78,6 @@ export class ObtenerPisosComponent {
   ngOnInit(): void {
     this.tamanioForm.actualizarCargando(false, CargandoComponent)
     this.peticion('/obtener-pisos-sucursal')
-    //console.log(localStorage.getItem('ciudades'))
   }
 
   applyFilter(event: Event) {

@@ -56,7 +56,7 @@ export class AsignarTurnoComponent {
     id_profesion: [0 , [Validators.required]],
     id_operario: [0 , [Validators.required]],
     id_prioritaria: [0, [Validators.required] ],
-    hora_cita: [''],
+    hora_cita: ['', [Validators.required]],
     id_sala: [0 , [Validators.required]],
     id_sucursal: [this.autenticaServicio.idSucursalActual()],
     id_usuario: [this.autenticaServicio.idUsuarioActual()],
@@ -84,6 +84,7 @@ export class AsignarTurnoComponent {
     if(datos && datos.datos && datos.datos.id_asigna){
       this.formulario.controls['id_asigna'].setValue(datos.datos.id_asigna)
       this.formulario.controls['hor_ini'].setValue(this.getHoraActual())
+      this.formulario.controls['hora_cita'].setValue(this.getHoraActual())
       this.inhabilitar = true
       this.peticion('/llamado-operario')
     }
@@ -136,15 +137,13 @@ export class AsignarTurnoComponent {
 
   aceptar(){
     let datosTemp = this.turnoActual 
-   
+    
     if (datosTemp && typeof datosTemp === 'object' && datosTemp.datos && typeof datosTemp.datos === 'object' &&
     'id' in datosTemp.datos){
       this.peticion('/editar-turno')
     }else{
-      
       this.peticion('/crear-turno')
     } 
-    const datos = this.formulario.value
     
   }
 
@@ -229,7 +228,6 @@ export class AsignarTurnoComponent {
       },
       error: (err) => {
         this.mensaje = "Se presentó un error inesperado. Comunícate con un asesor infoclic.";
-        console.log(err)
         this.mensajeErrorServicios.actualizarError(this.mensaje, '');
         this.tamanioForm.actualizar(false, ErrorComponent);
       },

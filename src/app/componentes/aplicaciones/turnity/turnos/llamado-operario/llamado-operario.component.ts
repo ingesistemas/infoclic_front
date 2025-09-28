@@ -95,12 +95,15 @@ export class LlamadoOperarioComponent {
   }
 
   actualizarTurno(objeto: any){
+    let sala = this.autenticaServicio.salaActual()
     this.turnoActual = {
       id: objeto.id,
       nombre: objeto.paciente.nombre,
-      sala: objeto.asignaciones[0].sala.sala,
+      sala: sala,
+      //sala: objeto.asignaciones[0].sala.sala,
       piso: objeto.asignaciones[0].sala.piso.piso,
-      modulo: this.autenticaServicio.moduloActual()
+      modulo: this.autenticaServicio.moduloActual(),
+      id_sucursal: this.autenticaServicio.idSucursalActual(),
     }
     
     this.peticion('/disparar')

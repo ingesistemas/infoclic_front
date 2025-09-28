@@ -46,8 +46,8 @@ label{
 .miInput:focus, select:focus{
     box-shadow: rgba(80, 128, 165, 0.536) 0px 10px 15px !important;
     color: #00367c !important;
-    border: 1px solid rgb(27, 116, 205) !important;
-    background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(245, 249, 255), rgb(209, 228, 255), rgb(192, 218, 255), rgb(195, 226, 255));
+    border: 2px solid rgb(27, 116, 205) !important;
+    /*background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(245, 249, 255), rgb(209, 228, 255), rgb(192, 218, 255), rgb(195, 226, 255));*/
 }
 
 select, option:hover{

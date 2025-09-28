@@ -79,7 +79,6 @@ export class ObtenerProfesionesComponent {
   ngOnInit(): void {
     this.tamanioForm.actualizarCargando(false, CargandoComponent)
     this.peticion('/obtener-profesiones')
-    //console.log(localStorage.getItem('ciudades'))
   }
 
   applyFilter(event: Event) {
@@ -118,7 +117,6 @@ export class ObtenerProfesionesComponent {
     this.tamanioForm.actualizarCargando(true, CargandoComponent)
     this.peticionsServicios.peticionPOST(url, datos).subscribe({  
       next: (data) => {
-        console.log(data)
         if(data.Status == 200){
           if(data.Error == true){
               if ((typeof data.Message === 'string')) {

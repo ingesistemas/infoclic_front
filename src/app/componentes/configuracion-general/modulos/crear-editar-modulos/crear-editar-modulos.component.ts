@@ -82,7 +82,6 @@ export class CrearEditarModulosComponent {
     this.mensaje = ''
     this.tamanioForm.actualizarCargando(true, CargandoComponent)
     const datos = this.formulario.value;
-    console.log(datos)
     this.peticionsServicios.peticionPOST(url, datos).subscribe({
       next: (data) => {
         if(data.Status == 200){
@@ -103,7 +102,6 @@ export class CrearEditarModulosComponent {
           }else{
             if(url == '/obtener-salas-sucursal'){
               this.salas = data.Data
-              console.log(data.Data)
             }else{
               this.mensaje = data.Message
               this.mostrarToast()

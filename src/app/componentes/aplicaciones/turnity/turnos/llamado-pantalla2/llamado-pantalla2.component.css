@@ -57,7 +57,7 @@ body {
 
 .time-widget {
     font-family: 'Roboto Mono', monospace;
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 700;
     color:#0003a1;
 }
@@ -65,26 +65,29 @@ body {
 /* Contenido Principal */
 .content-area {
     flex-grow: 1;
-    display: flex;
+    min-height: 550px;
+    /*display: flex;
     flex-direction: column;
-    justify-content: center; /* Centra el contenido del área principal */
-    align-items: center; /* Centra el contenido del área principal */
+    justify-content: center; 
+    align-items: center; 
     text-align: center;
     padding: 2rem;
     position: relative;
     background-color: #d0d7e7;
     color: #FFF;
-    min-height: 550px;
+    min-height: 550px; */
 }
 
 /* Tarjeta del Turno */
 .turno-card {
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    /*background: #ffffff;*/
     padding: 4rem 6rem;
-    border-left: 10px solid #00bfe6;
     animation-duration: 0.8s;
+    text-align: center;
+    width: 80%;
+    margin: 40px auto;
+    background-color: #0e6ba4;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 .turno-card .label {
@@ -98,7 +101,9 @@ body {
     font-family: 'Roboto Mono', monospace;
     font-size: 7rem;
     font-weight: 700;
-    color: rgb(0, 126, 175);
+    /*color: rgb(0, 126, 175);*/
+    
+     color: #FFFF;
     line-height: 1;
     letter-spacing: -5px;
     transition: color 0.5s ease;
@@ -107,14 +112,16 @@ body {
 .turno-card .atencion-info {
     font-size: 2rem;
     margin-top: 2rem;
-    color: red;
+    color: #91ff00;
 }
 
 .turno-card .atencion-info span {
     font-weight: 600;
-    color: rgb(0, 0, 142);
+    /*color: rgb(0, 0, 142);*/
     transition: color 0.5s ease;
     font-size: 3rem;
+    color: #FFF;
+    color: #91ff00;
 }
 
 /* Mensaje de Bienvenida - ¡AJUSTES PARA CENTRADO Y POSICIÓN DEL TEXTO! */
@@ -126,7 +133,7 @@ body {
     gap: 30px; /* Espacio entre la imagen y el texto */
     padding: 2rem; /* Añade un padding general para el contenedor */
     position: relative; /* Necesario para posicionar el spinner de forma absoluta */
-    max-width: 900px; /* Ancho máximo para el bloque de imagen y texto */
+    /*max-width: 900px; /* Ancho máximo para el bloque de imagen y texto */
     margin: 0 auto; /* Centra el bloque .welcome-message dentro de .content-area */
 }
 
@@ -255,10 +262,7 @@ body {
         padding: 1rem 2rem; /* Ajusta el padding del header en pantallas pequeñas */
         flex-direction: column; /* Apila logo y hora en móvil */
     }
-    .time-widget {
-        font-size: 2rem; /* Ajusta el tamaño de la hora en móvil */
-        margin-top: 1rem;
-    }
+
     .logo-container img {
         height: 40px; /* Ajusta el tamaño del logo en móvil */
     }
@@ -279,3 +283,33 @@ body {
     }
 }
 
+.nombre{
+   padding-left: 10px;
+    color: #ffffff !important;
+    font-weight: bold;
+    background: linear-gradient(to bottom, #1ea5ed, #006ca7, #03529c);
+}
+.detalle{
+
+    background-color: #f2f2f2 !important;
+    color: #005da9 !important;
+    box-shadow: rgba(207, 211, 216, 0.488) 0px -23px 25px 0px inset, rgba(170, 170, 170, 0.29) 0px -36px 30px 0px inset;
+}
+
+.datoHistorial{
+    font-size: 30px;
+}
+
+.tituloLlamado{
+     padding: 10px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #027baa;
+    background-color: #f5f5f5;
+    border-bottom: 3px solid #008de5;
+}
+
+.llamado{
+    margin-top: 20px;
+    padding: 0 5px 0 10px;
+}

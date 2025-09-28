@@ -268,7 +268,6 @@ export class ListadoTurnosDiariosComponent implements OnInit, AfterViewInit, OnD
                                 if (this.dataSource.paginator) {
                                     this.dataSource.paginator.firstPage();
                                 }
-                                console.log("Datos de turnos cargados y procesados:", this.turnos); // Debug
                             }
                         }
                     }
@@ -307,7 +306,6 @@ export class ListadoTurnosDiariosComponent implements OnInit, AfterViewInit, OnD
         this.peticionsServicios.peticionPOST(url, datos).subscribe({
             next: (data) => {
                 this.turnos = data.Data
-                 console.log(data)
             },
             error: (err) => {
                 this.mensaje = "Error inesperado al obtener llamados. " ;

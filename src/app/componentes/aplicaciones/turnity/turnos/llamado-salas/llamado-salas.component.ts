@@ -117,7 +117,8 @@ export class LlamadoSalasComponent {
       sala: objeto.asignaciones[0].sala.sala,
       piso: objeto.asignaciones[0].sala.piso.piso,
       id_asigna: objeto.asignaciones[0].id,
-      modulo: this.autenticaServicio.moduloActual()      
+      modulo: this.autenticaServicio.moduloActual(),
+      id_sucursal: this.autenticaServicio.idSucursalActual(),   
     }
     
     this.peticion('/disparar')

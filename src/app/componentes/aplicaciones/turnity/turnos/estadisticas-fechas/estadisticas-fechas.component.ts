@@ -105,9 +105,7 @@ export class EstadisticasFechasComponent implements OnInit {
         this.peticion('/obtener-sucursales')
     }
 
- 
     aceptar(){
-        console.log(this.formulario)
         this.mostrarReporte = true
         this.tamanioForm.actualizarCargando(false, CargandoComponent);
         this.peticion('/estadisticas-fechas');
@@ -117,7 +115,7 @@ export class EstadisticasFechasComponent implements OnInit {
         this.router.navigate(['/turnity'])
     }
 
-    calcularDuracion(inicio: string, fin: string): string {
+    /* calcularDuracion(inicio: string, fin: string): string {
         const hIni = dayjs(`2000-01-01T${inicio}`);
         const hFin = dayjs(`2000-01-01T${fin}`);
 
@@ -142,7 +140,36 @@ export class EstadisticasFechasComponent implements OnInit {
         if (segundos > 0 || resultado === '') resultado += `${segundos}s`;
 
         return resultado.trim();
+    } */
+    calcularDuracion(inicio: string, fin: string): string {
+        const hIni = dayjs(`2000-01-01T${inicio}`);
+        const hFin = dayjs(`2000-01-01T${fin}`);
+
+        if (!hIni.isValid() || !hFin.isValid()) return '';
+
+        let diffMs = hFin.diff(hIni);
+
+        if (diffMs < 0) {
+            diffMs = dayjs(`2000-01-02T${fin}`).diff(hIni);
+        }
+
+        if (diffMs <= 0) return '0 min';
+
+        const duracion = dayjs.duration(diffMs);
+
+        // Usamos "as" para evitar el bug de minutos en 0
+        const horas = Math.floor(duracion.asHours());
+        const minutos = Math.floor(duracion.asMinutes() % 60);
+        const segundos = Math.floor(duracion.asSeconds() % 60);
+
+        let resultado = '';
+        if (horas > 0) resultado += `${horas}h `;
+        if (minutos > 0 || (horas === 0 && segundos === 0)) resultado += `${minutos}min `;
+        if (segundos > 0 || resultado === '') resultado += `${segundos}s`;
+
+        return resultado.trim();
     }
+
 
   // --- ¡Esta es la función clave para el filtro de datos anidados! ---
   
@@ -169,7 +196,6 @@ export class EstadisticasFechasComponent implements OnInit {
         this.tamanioForm.actualizarCargando(true, CargandoComponent);
         this.peticionsServicios.peticionPOST(url, datos).subscribe({
             next: (data) => {
-                console.log(data)
                 if(data.Status == 200){
                     if(data.Error == true){
                         if ((typeof data.Message === 'string')) {
