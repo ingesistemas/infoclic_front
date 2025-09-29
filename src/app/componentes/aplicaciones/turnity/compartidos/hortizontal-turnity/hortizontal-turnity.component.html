@@ -17,16 +17,26 @@
                     <a class="nav-link" >Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link">Pantalla inteligente</a>
+                    <a [routerLink]="['/turnity/turnity-general/llamado-operario']" class="nav-link">Llamado por operario</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" >Asignar turno</a>
+                    <a [routerLink]="['/turnity/turnity-general/llamado-salas']" class="nav-link">Llamado por salas</a>
                 </li>
+               
+                @if( idRolActual == '1' || idRolActual == '2' ){
+                    <li class="nav-item">
+                        <a [routerLink]="['/turnity/turnity-general/crear-turno-pantalla']" class="nav-link">Pantalla inteligente</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a [routerLink]="['/turnity/turnity-general/crear-turno']" class="nav-link" >Asignar turno</a>
+                    </li>
+                    <li class="nav-item">
+                        <a [routerLink]="['/turnity/turnity-general/listado-turnos-diarios']" class="nav-link" >Monitoreo</a>
+                    </li>
+                }
                 <li class="nav-item">
-                    <a class="nav-link" >Monitoreo</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" (click)="cerrarSesion()">Cerrar sesión</a>
+                    <a class="nav-link cerrar" (click)="cerrarSesion()">Cerrar sesión</a>
                 </li>
                 <!--<li>Aplicación: {{ aplicacionActual() }}</li>-->
                 <li class="nav-item dropdown">
@@ -34,7 +44,7 @@
                         {{ nombreUsuarioActual() }}
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item">Datos personales</a></li>
+                        <li><a class="dropdown-item" (click)="datosPersonales()">Datos personales</a></li>
                         <li><a class="dropdown-item" [routerLink]="['/infoclic/configuracion-general/editar-credenciales']"  >Cambiar contraseña</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>

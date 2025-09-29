@@ -12,61 +12,65 @@
         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
           <div class="accordion-body">
             <ul class="ul-vertical">
-              <li class="li-vertical" [routerLink]="['/turnity/turnity-general/crear-turno']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Asignar turno</li>
-              <li class="li-vertical" [routerLink]="['/turnity/turnity-general/crear-turno-pantalla']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Asignar turno pantalla</li>
-              <hr>
+              @if( idRolActual == '1' || idRolActual == '2' ){
+                <li class="li-vertical" [routerLink]="['/turnity/turnity-general/crear-turno']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Asignar turno</li>
+                <li class="li-vertical" [routerLink]="['/turnity/turnity-general/crear-turno-pantalla']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Asignar turno pantalla</li>
+                <hr>
+              }
+              
               <li class="li-vertical" [routerLink]="['/turnity/turnity-general/llamado-operario']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Llamado por operario</li>
               <li class="li-vertical" [routerLink]="['/turnity/turnity-general/llamado-salas']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Llamado por salas</li>
               <hr>
-              <li style="color: rgb(2, 172, 13);" class="li-vertical" [routerLink]="['/turnity/turnity-general/llamado-pantalla']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Llamado por pantalla</li>
-              <hr>
+              @if( idRolActual == '1' || idRolActual == '2' ){
+                <li style="color: rgb(2, 172, 13);" class="li-vertical" [routerLink]="['/turnity/turnity-general/llamado-pantalla']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Llamado por pantalla</li>
+                <hr>
+              }
             </ul>
           </div>
         </div>
       </div>
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingTwo">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-            Reportes
-          </button>
-        </h2>
-        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            <ul class="ul-vertical">
-             
-              <li class="li-vertical" [routerLink]="['/turnity/turnity-general/listado-turnos-diarios']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Seguimiento de turnos diario</li>
-              <li class="li-vertical" [routerLink]="['/turnity/turnity-general/turnos-fechas']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Reporte general de turnos</li>
-              <li class="li-vertical" [routerLink]="['/turnity/turnity-general/estadisticas-fechas']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Estadística general de turnos</li>
-              <li class="li-vertical" [routerLink]="['/turnity/turnity-general/estadisticas']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Estadísticas</li>
-              
-
-            </ul>
+      @if( idRolActual == '1' || idRolActual == '2' ){
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+              Reportes
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <ul class="ul-vertical">
+                <li class="li-vertical" [routerLink]="['/turnity/turnity-general/listado-turnos-diarios']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Seguimiento de turnos diario</li>
+                <li class="li-vertical" [routerLink]="['/turnity/turnity-general/turnos-fechas']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Reporte general de turnos</li>
+                <li class="li-vertical" [routerLink]="['/turnity/turnity-general/estadisticas-fechas']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Estadística general de turnos</li>
+                <li class="li-vertical" [routerLink]="['/turnity/turnity-general/estadisticas']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Estadísticas</li>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingThree">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThre">
-            Configuración
-          </button>
-        </h2>
-        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThre" data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            <ul class="ul-vertical">
-              
-              <li class="li-vertical" [routerLink]="['/infoclic/configuracion-general/salas']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Salas de espera</li>
-              <li class="li-vertical" [routerLink]="['/infoclic/configuracion-general/sucursales']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Sucursales</li>
-              <li class="li-vertical" [routerLink]="['/infoclic/configuracion-general/pisos']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Pisos</li>
-              <!--<li class="li-vertical" [routerLink]="['/infoclic/configuracion-general/centros']" (click)="actualizarDatos()" routerLinkActive="router-link-active" >Centros de atención</li>-->
-              <li class="li-vertical" [routerLink]="['/infoclic/configuracion-general/modulos']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Módulos de atención</li>
-              
-              <li class="li-vertical" [routerLink]="['/infoclic/configuracion-general/operarios']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Operarios</li>
-              <li class="li-vertical" [routerLink]="['/infoclic/configuracion-general/profesiones']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Profesiones</li>
-              
-            </ul>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingThree">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThre">
+              Configuración
+            </button>
+          </h2>
+          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThre" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <ul class="ul-vertical">
+                
+                <li class="li-vertical" [routerLink]="['/infoclic/configuracion-general/salas']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Salas de espera</li>
+                <li class="li-vertical" [routerLink]="['/infoclic/configuracion-general/sucursales']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Sucursales</li>
+                <li class="li-vertical" [routerLink]="['/infoclic/configuracion-general/pisos']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Pisos</li>
+                <!--<li class="li-vertical" [routerLink]="['/infoclic/configuracion-general/centros']" (click)="actualizarDatos()" routerLinkActive="router-link-active" >Centros de atención</li>-->
+                <li class="li-vertical" [routerLink]="['/infoclic/configuracion-general/modulos']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Módulos de atención</li>
+                
+                <li class="li-vertical" [routerLink]="['/infoclic/configuracion-general/operarios']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Operarios</li>
+                <li class="li-vertical" [routerLink]="['/infoclic/configuracion-general/profesiones']" (click)="actualizarDatos()" routerLinkActive="router-link-active" data-bs-dismiss="offcanvas">Profesiones</li>
+                
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
+      }
       
     </div>
     

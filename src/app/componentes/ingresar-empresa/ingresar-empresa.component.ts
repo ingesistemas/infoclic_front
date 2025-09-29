@@ -105,7 +105,7 @@ export class IngresarEmpresaComponent implements OnInit {
   peticion(url:string){
     let nit = this.formulario.controls['nit'].value
     
-    this.autenticaServicio.actualizarUsuarioActual('','','',0,'',nit!, '', 0, '', 0,'')
+    this.autenticaServicio.actualizarUsuarioActual('','','',0,'',nit!, '', 0, '', 0,'','')
     if(url == '/sucursalesUsuarios'){
       this.mostrarCargandoSucursales = true
     }
@@ -149,17 +149,29 @@ export class IngresarEmpresaComponent implements OnInit {
             if(url == '/login'){
               this.autenticaServicio.actualizarAplicacionActual(this.idAplicacion, this.aplicacionSelect, '')
               this.tamanioForm.actualizarCargando(true, CargandoComponent)
-              const usuario = data.Data?.[0];
-              let id_sucursal = this.formulario.controls['id_sucursal'].value
-              this.tamanioForm.actualizar( false, null)
-              setTimeout(()=>{
-                let nit = this.formulario.controls['nit'].value
-                let id_modulo = this.formulario.controls['id_modulo'].value
-                let modulo = this.moduloSeleccionadoTexto
+              if(data.Data[0].roles.length == 0){
+                this.mensaje = "Aún no te han asignado roles para el ingreso al sistema. Comunícate con el administrador de Turnity."
+                this.mensajeErrorServicios.actualizarError(this.mensaje, '')
+                this.cerrarModal()
+                this.tamanioForm.actualizar( true, ErrorComponent)
                 this.tamanioForm.actualizarCargando(false, null)
-                this.autenticaServicio.actualizarUsuarioActual(usuario.id, usuario.nombre, usuario.email, id_sucursal!, data.token!, nit!, usuario.sucursales[0].sucursal, id_modulo!, modulo!, this.id_sala, this.sala )
-                this.router.navigateByUrl('/turnity')
-              },2000)
+                
+              }else{
+                const usuario = data.Data?.[0];
+                let id_rol = data.Data[0].roles[0].pivot.id_rol
+                let id_sucursal = this.formulario.controls['id_sucursal'].value
+                this.tamanioForm.actualizar( false, null)
+                setTimeout(()=>{
+                  let nit = this.formulario.controls['nit'].value
+                  let id_modulo = this.formulario.controls['id_modulo'].value
+                  let modulo = this.moduloSeleccionadoTexto
+                  this.tamanioForm.actualizarCargando(false, null)
+                  this.autenticaServicio.actualizarUsuarioActual(usuario.id, usuario.nombre, usuario.email, id_sucursal!, data.token!, nit!, usuario.sucursales[0].sucursal, id_modulo!, modulo!, this.id_sala, this.sala, id_rol )
+                  this.router.navigateByUrl('/turnity')
+                },2000)
+              }
+              console.log(data.Data)
+              
             }
             if(url == '/dptos'){
               localStorage.setItem('dptos', JSON.stringify(data.Data))

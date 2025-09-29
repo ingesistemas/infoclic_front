@@ -23,8 +23,12 @@
     color: rgb(0, 225, 255);
 }
 
-.tituloAplicacion {
+.tituloAplicacion, .cerrar {
     color: #7bff00 !important;
+}
+
+.cerrar:hover{
+    color: orangered !important;
 }
 .navbar-dark .navbar-nav .nav-link {
     color: rgb(255, 255, 255);

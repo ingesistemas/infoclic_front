@@ -44,6 +44,7 @@ export class CrearEditarOperariosComponent {
   accion = this.tamanioForm.accionActual()
   roles: any[] = []
   sucursales: ISucursales[] = []
+  idOPerario: any
 
   formulario = this.fb.group({
     id: [0],
@@ -75,7 +76,10 @@ export class CrearEditarOperariosComponent {
       this.formulario.controls['id_profesion'].setValue(datos.datos.id_profesion)
       this.formulario.controls['celular'].setValue(datos.datos.celular)
       this.formulario.controls['email'].setValue(datos.datos.email)
+      this.idOPerario = datos.datos.id
+     
     }
+   
     this.peticion('/obtener-roles')
     if(this.accion == 'Editar'){
         this.peticion('/obtener-usuarios-sucursales')
@@ -126,7 +130,7 @@ export class CrearEditarOperariosComponent {
     }else{
        datos = this.formulario.value;
     }
-   
+    console.log(datos)
     this.peticionsServicios.peticionPOST(url, datos).subscribe({
       next: (data) => {
         if(data.Status == 200){
